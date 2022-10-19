@@ -1,0 +1,51 @@
+.event_card_wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-basis: fit-content;
+    overflow: hidden;
+    /*height: 80%;*/
+    /*overflow-y: scroll;*/
+    direction: rtl;
+    align-items: center;
+    /*background-color: #909590;*/
+    width: 300px;
+    flex-grow: 1;
+    border-radius: 40px;
+    margin: 0 40px;
+}
+
+/*.event_card_wrapper ::-webkit-scrollbar {*/
+/*  width: 10px;*/
+/*}*/
+
+/*!* Track *!*/
+/*.event_card_wrapper ::-webkit-scrollbar-track {*/
+/*  background: #f1f1f1;*/
+/*}*/
+
+/*!* Handle *!*/
+/*.event_card_wrapper ::-webkit-scrollbar-thumb {*/
+/*  background: #888;*/
+/*}*/
+
+/*!* Handle on hover *!*/
+/*.event_card_wrapper ::-webkit-scrollbar-thumb:hover {*/
+/*  background: #555;*/
+/*}*/
+
+.event_card {
+    background-color: #8499B1;
+    height: 200px;
+    width: 250px;
+    margin: 10px 0;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 0 20px;
+    overflow-wrap: break-word;
+    justify-content: left;
+}
+
+.event_card p {
+    margin: 0;
+    text-align: left;
+}

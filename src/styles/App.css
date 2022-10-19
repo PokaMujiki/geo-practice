@@ -1,0 +1,25 @@
+.App-link {
+  color: #61dafb;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  background-color: #282c34;
+  align-items: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  padding: 100px 20px 20px 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
