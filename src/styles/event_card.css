@@ -8,7 +8,7 @@
     direction: rtl;
     align-items: center;
     /*background-color: #909590;*/
-    width: 300px;
+    width: 250px;
     flex-grow: 1;
     border-radius: 40px;
     margin: 0 40px;
@@ -35,12 +35,11 @@
 
 .event_card {
     background-color: #8499B1;
-    height: 200px;
     width: 250px;
     margin: 10px 0;
     font-size: 18px;
     border-radius: 20px;
-    padding: 0 20px;
+    padding: 10px 20px;
     overflow-wrap: break-word;
     justify-content: left;
 }

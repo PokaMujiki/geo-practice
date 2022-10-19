@@ -3,6 +3,7 @@ import '../styles/App.css';
 import '../styles/Map.css';
 import '../styles/event_card.css';
 import '../styles/date_time_picker.css';
+import '../styles/b_value_plot_wrapper.css';
 import {EventCard} from "./EventCard";
 import {MapComponent} from "./map_components/MapComponent";
 import {parseGeoEvents, parseStations} from "../lib/parsers";
@@ -93,7 +94,7 @@ export const App = () => {
             }} />
           </Theme>
           {selectedGeoEvents &&
-            <div>
+            <div className="b_value_plot_wrapper">
               <BValuePlot geoEvents={selectedGeoEvents}/>
             </div>
           }

@@ -4,8 +4,8 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
-    height: 150%;
-    flex-basis: 80%;
+    height: 200%;
+    flex-basis: 70%;
 }
 
 .map_options_wrapper {
@@ -15,7 +15,7 @@
 }
 
 .leaflet-container {
-    height: 55%;
+    height: 45%;
     width: 100%;
     z-index: 1;
     border-radius: 20px;
