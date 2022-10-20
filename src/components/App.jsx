@@ -26,6 +26,8 @@ export const App = () => {
   const [geoEvents, setGeoEvents] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
+  const [a_value, setA_value] = useState([1]);
+  const [b_value, setB_value] = useState([1])
 
   useEffect(() => {
     const setInitialStations = async (network) => {
@@ -95,7 +97,9 @@ export const App = () => {
           </Theme>
           {selectedGeoEvents &&
             <div className="b_value_plot_wrapper">
-              <BValuePlot geoEvents={selectedGeoEvents}/>
+              <BValuePlot geoEvents={selectedGeoEvents}
+                          b_value={b_value}
+                          a_value={a_value}/>
             </div>
           }
         </div>
