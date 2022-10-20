@@ -8,10 +8,11 @@ import {EventCard} from "./EventCard";
 import {MapComponent} from "./map_components/MapComponent";
 import {parseGeoEvents, parseStations} from "../lib/parsers";
 import {BASENAME_API} from "../lib/constants";
-import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
+import {Theme, presetGpnDark} from '@consta/uikit/Theme';
 import {DatePicker} from "@consta/uikit/DatePicker";
 import {format} from "date-fns";
 import {BValuePlot} from "./BValuePlot";
+import {Slider} from "@consta/uikit/Slider";
 
 export const App = () => {
   const [center, setCenter] = useState({
@@ -26,8 +27,8 @@ export const App = () => {
   const [geoEvents, setGeoEvents] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
-  const [a_value, setA_value] = useState([1]);
-  const [b_value, setB_value] = useState([1])
+  // const [a_value, setA_value] = useState(1);
+  const [b_value, setB_value] = useState(1)
 
   useEffect(() => {
     const setInitialStations = async (network) => {
@@ -82,24 +83,45 @@ export const App = () => {
           geoEvents={geoEvents}
           setSelectedGeoEvents={setSelectedGeoEvents}/>
 
-        <div className="map_options_wrapper">
-          <Theme preset={presetGpnDefault}>
-            <DatePicker
-              className="date_time_picker"
-              type="date-time-range"
-              value={[startTime, endTime]}
-              style={{zIndex: 3}}
-              format="dd.MM.yyyy HH:mm:ss"
-              onChange={({value: [newStartTime, newEndTime]}) => {
-                setStartTime(newStartTime);
-                setEndTime(newEndTime);
-            }} />
+        <div className="map_related_wrapper">
+          <Theme preset={presetGpnDark}>
+            <div className="map_options_wrapper">
+              <DatePicker
+                className="date_time_picker"
+                type="date-time-range"
+                value={[startTime, endTime]}
+                style={{zIndex: 3}}
+                format="dd.MM.yyyy HH:mm:ss"
+                onChange={({value: [newStartTime, newEndTime]}) => {
+                  setStartTime(newStartTime);
+                  setEndTime(newEndTime);
+              }} />
+              <div className="sliders_wrapper">
+                {/*<Slider*/}
+                {/*  label="a-value"*/}
+                {/*  onChange={({ value }) => setA_value(value)}*/}
+                {/*  value={a_value}*/}
+                {/*  min={0.1}*/}
+                {/*  max={3}*/}
+                {/*  withTooltip*/}
+                {/*  step={0.005}*/}
+                {/*/>*/}
+                <Slider
+                  label="b-value"
+                  onChange={({ value }) => setB_value(value)}
+                  value={b_value}
+                  min={0.1}
+                  max={3}
+                  withTooltip
+                  step={0.005}
+                />
+              </div>
+            </div>
           </Theme>
           {selectedGeoEvents &&
             <div className="b_value_plot_wrapper">
               <BValuePlot geoEvents={selectedGeoEvents}
-                          b_value={b_value}
-                          a_value={a_value}/>
+                          b_value={b_value}/>
             </div>
           }
         </div>

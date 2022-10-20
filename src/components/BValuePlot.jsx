@@ -2,15 +2,15 @@ import Plot from "react-plotly.js";
 import React from "react";
 import {MAX_DOTS} from "../lib/constants";
 
-export const BValuePlot = ({geoEvents, a_value, b_value}) => {
+export const BValuePlot = ({geoEvents, b_value}) => {
   if (!geoEvents?.length) {
     return;
   }
-  
-  let plotTitle = `B-value for ${geoEvents.length} selected events`;
+
+  let plotTitle = `Gutenberg–Richter law for ${geoEvents.length} selected events`;
   
   if (geoEvents.length <= 1) {
-    plotTitle = `B-value for ${geoEvents.length} selected event`;
+    plotTitle = `Gutenberg–Richter law for ${geoEvents.length} selected event`;
   }
 
   const y_axis = [];
@@ -26,22 +26,24 @@ export const BValuePlot = ({geoEvents, a_value, b_value}) => {
   const user_y_axis = [];
   const user_x_axis = [];
   for (let i = 0; i < MAX_DOTS; i++) {
-    x_axis[i] = i * 10 / MAX_DOTS;
-    y_axis[i] = Math.pow(10, a_value - b_value * x_axis[i]) / Math.pow(10, a_value);
+    user_x_axis[i] = i * 10 / MAX_DOTS;
+    user_y_axis[i] = Math.pow(10,-b_value * user_x_axis[i]);
   }
 
   const trace_dots = {
     x: x_axis,
     y: y_axis,
+    name: "actual events",
     mode: 'markers',
     type: 'scatter'
   };
 
   const trace_function = {
     x: user_x_axis,
-    y: y_axis,
+    y: user_y_axis,
+    name: "user prediction",
     mode: 'lines',
-    type: 'scatter',
+    type: 'scatter'
   }
 
   return (
@@ -51,8 +53,12 @@ export const BValuePlot = ({geoEvents, a_value, b_value}) => {
       width: 600,
       height: 400,
       title: plotTitle,
-      xaxis: {range: [0, 4]},
-      yaxis: {range: [0, 1]},
+      xaxis: {
+        title: "Magnitude",
+        range: [0, 4]},
+      yaxis: {
+        title: "Occurrences, N : N_total",
+        range: [0, 1]},
     }}
   />);
 }
