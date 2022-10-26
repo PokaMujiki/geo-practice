@@ -48,3 +48,7 @@
     margin: 0;
     text-align: left;
 }
+
+.event_card label {
+    text-decoration: underline;
+}

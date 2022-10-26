@@ -28,7 +28,8 @@ export const App = () => {
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
   // const [a_value, setA_value] = useState(1);
-  const [b_value, setB_value] = useState(1)
+  const [b_value, setB_value] = useState(1);
+  const [openedGeoEvent, setOpenedGeoEvent] = useState([]);
 
   useEffect(() => {
     const setInitialStations = async (network) => {
@@ -499,13 +500,15 @@ export const App = () => {
   return (
     <div className="App">
       <div className="event_card_wrapper">
-        { geoEvents?.map((item, index) => <EventCard geoEvent={item} key={index}/>) }
+        { geoEvents?.map((item, index) =>
+          <EventCard geoEvent={item} setOpenedGeoEvent={setOpenedGeoEvent} key={index}/>) }
       </div>
       <div className="map_wrapper">
         <MapComponent
           center={center}
           stations={stations}
           geoEvents={geoEvents}
+          openedGeoEvent={openedGeoEvent}
           setSelectedGeoEvents={setSelectedGeoEvents}/>
 
         <div className="map_related_wrapper">

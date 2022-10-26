@@ -5,7 +5,7 @@ import {GeoEvent} from "./GeoEvent";
 import LeafletRuler from "./leaflet-ruler/code/LeafletRuler";
 import {SelectMapArea} from "./SelectMapArea";
 
-export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents}) => {
+export const MapComponent = ({center, stations, geoEvents, openedGeoEvent, setSelectedGeoEvents}) => {
   // TODO: починить линейку
   return (
     <MapContainer center={[center.lng, center.lat]} zoom={center.zoom}>
@@ -17,7 +17,7 @@ export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents}
       />
       <SelectMapArea geoEvents={geoEvents} setSelectedGeoEvents={setSelectedGeoEvents}/>
       { stations?.map((item, index) => <Station station={item} key={index}/>) }
-      { geoEvents?.map((item, index) => <GeoEvent geoEvent={item} key={index}/>) }
+      { geoEvents?.map((item, index) => <GeoEvent geoEvent={item} openedGeoEvent={openedGeoEvent} key={index}/>) }
     </MapContainer>
   )
 }

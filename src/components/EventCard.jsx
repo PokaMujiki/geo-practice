@@ -1,6 +1,6 @@
 import {format} from "date-fns";
 
-export const EventCard = ({geoEvent}) => {
+export const EventCard = ({geoEvent, setOpenedGeoEvent}) => {
   const date = format(new Date(geoEvent.time), "yyyy MMMM do");
   const time = format(new Date(geoEvent.time), "HH:mm:ss");
   return (
@@ -8,11 +8,9 @@ export const EventCard = ({geoEvent}) => {
       <p>{date} {time}</p>
       <p>
         {geoEvent.type[0].toUpperCase() +
-          geoEvent.type.substring(1)} magnitude: {geoEvent.magnitude}({geoEvent.magnitudeType})
+          geoEvent.type.substring(1)} magnitude: {geoEvent.magnitude} {geoEvent.magnitudeType}
       </p>
-      <p>Lng: {geoEvent.longitude} Lat: {geoEvent.latitude}</p>
-      <p>Network code: {geoEvent.networkCode}</p>
-      <p>Depth: {geoEvent.depth}({geoEvent.depthType}, uncertainty: {geoEvent.depthUncertainty})</p>
+      <label onClick={() => console.log(geoEvent)}>Show on map</label>
     </div>
   )
 }
