@@ -14,10 +14,14 @@ export const GeoEvent = ({geoEvent}) => {
       <Popup>
         <p> Event type: {geoEvent.type} </p>
         <p> Date: {geoEvent.time} </p>
-        <p> Magnitude: {geoEvent.magnitude}({geoEvent.magnitudeType}) </p>
+        <p> Magnitude: {geoEvent.magnitude} {geoEvent.magnitudeType} </p>
         <p> longitude: {geoEvent.longitude} latitude: {geoEvent.latitude} </p>
-        <p> Network code: {geoEvent.networkCode} </p>
-        <p> Depth: {geoEvent.depth}({geoEvent.depthType}, uncertainty: {geoEvent.depthUncertainty}) </p>
+        {geoEvent.networkCode &&
+          <p> Network code: {geoEvent.networkCode} </p>
+        }
+        {geoEvent.depth &&
+          <p> Depth: {geoEvent.depth} {geoEvent.depthType}, uncertainty: {geoEvent.depthUncertainty}) </p>
+        }
       </Popup>
     </Marker>)
 }
