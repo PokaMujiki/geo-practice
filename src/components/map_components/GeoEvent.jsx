@@ -1,5 +1,7 @@
-import {Marker, Popup} from "react-leaflet";
+import {Marker, Popup, useMap} from "react-leaflet";
 import L from "leaflet";
+import {useEffect, useRef} from "react";
+import {Popup as LeafletPopup} from 'leaflet';
 
 const getGeoEventIcon = (_iconSize) => {
   return L.icon({
@@ -9,6 +11,18 @@ const getGeoEventIcon = (_iconSize) => {
 }
 
 export const GeoEvent = ({geoEvent}) => {
+  // const popupRef = useRef();
+  // const map = useMap();
+  //
+  // useEffect(() => {
+  //
+  //   console.log("fasfasdf");
+  //   const popup = popupRef.current;
+  //   if (!!popup && !!map) {
+  //     map.openPopup(popup);
+  //   }
+  // }, [map, popupRef]);
+
   return (
     <Marker position={[geoEvent.latitude, geoEvent.longitude]} icon={getGeoEventIcon(10 + geoEvent.magnitude * 3)}>
       <Popup>
@@ -20,8 +34,10 @@ export const GeoEvent = ({geoEvent}) => {
           <p> Network code: {geoEvent.networkCode} </p>
         }
         {geoEvent.depth &&
-          <p> Depth: {geoEvent.depth} {geoEvent.depthType}, uncertainty: {geoEvent.depthUncertainty}) </p>
+          <span> Depth: {geoEvent.depth} {geoEvent.depthType}</span>
         }
+        {geoEvent.depthUncertainty &&
+        <span>, uncertainty: {geoEvent.depthUncertainty} </span>}
       </Popup>
     </Marker>)
 }

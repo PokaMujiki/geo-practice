@@ -35,7 +35,7 @@ export const parseGeoEvents = (data) => {
     const origin = eventsXML[i].getElementsByTagName("origin")[0];
     const magInfo = eventsXML[i].getElementsByTagName("magnitude")[0];
     events[i] = {};
-    events[i].type = eventsXML[i].getElementsByTagName("type")?.[1]
+    events[i].type = eventsXML[i].getElementsByTagName("type")?.[0]
       ?.childNodes?.[0]?.nodeValue; // may be missing
     events[i].networkCode = eventsXML[i].getElementsByTagName("pick")?.[0]
       ?.getElementsByTagName("waveformID")?.[0]

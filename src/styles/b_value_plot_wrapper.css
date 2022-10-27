@@ -1,3 +1,11 @@
-.b_value_plot_wrapper {
+.plots_wrapper {
     padding-top: 20px;
+    display: flex;
+    flex-flow: nowrap column;
+    align-items: center;
+    gap: 40px;
+}
+
+.repeatability_plot_wrapper {
+    align-self: stretch;
 }
