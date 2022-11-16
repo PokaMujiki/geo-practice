@@ -1,0 +1,605 @@
+<?xml version='1.0' encoding='utf-8'?>
+<q:quakeml xmlns="http://quakeml.org/xmlns/bed/1.2" xmlns:q="http://quakeml.org/xmlns/quakeml/1.2">
+    <eventParameters publicID="smi:local/f746e987-01da-4437-a48e-ea5315239fa6">
+        <event publicID="smi:ippg_nsk.ippg.org/event/ipggsbrasippg2021fulf">
+            <preferredOriginID>smi:ippg_nsk.ippg.org/origin/ipggsbrasippg2021fulf</preferredOriginID>
+            <preferredMagnitudeID>smi:ippg_nsk.ippg.org/magnitude/ipggsbrasippg2021fulf/ml</preferredMagnitudeID>
+            <type>earthquake</type>
+            <typeCertainty>known</typeCertainty>
+            <creationInfo>
+                <agencyID>IPGGSBRAS</agencyID>
+                <creationTime>2022-03-29T16:10:12.000000Z</creationTime>
+            </creationInfo>
+            <origin publicID="smi:ippg_nsk.ippg.org/origin/ipggsbrasippg2021fulf">
+                <time>
+                    <value>2021-10-01T04:54:07.268000Z</value>
+                    <uncertainty>0.210857</uncertainty>
+                </time>
+                <latitude>
+                    <value>51.3364</value>
+                </latitude>
+                <longitude>
+                    <value>53.2162</value>
+                </longitude>
+                <depth>
+                    <value>3474.0</value>
+                    <uncertainty>1544.11</uncertainty>
+                </depth>
+                <depthType>from location</depthType>
+                <creationInfo>
+                    <agencyID>IPGGSBRAS</agencyID>
+                    <creationTime>2022-03-29T16:10:12.000000Z</creationTime>
+                </creationInfo>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST001.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST001.HHZ</pickID>
+                    <phase>P</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST001.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST001.HHN</pickID>
+                    <phase>P</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST001.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST001.HHE</pickID>
+                    <phase>P</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST002.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST002.HHZ</pickID>
+                    <phase>P</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST002.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST002.HHN</pickID>
+                    <phase>P</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST002.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST002.HHE</pickID>
+                    <phase>P</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST003.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST003.HHZ</pickID>
+                    <phase>P</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST003.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST003.HHN</pickID>
+                    <phase>P</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAST003.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAST003.HHE</pickID>
+                    <phase>P</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW3657.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHN</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW3657.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHZ</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW3657.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHE</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW4162.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHN</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW4162.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHZ</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/P/KAW4162.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHE</pickID>
+                    <phase>P</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST001.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST001.HHN</pickID>
+                    <phase>S</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST001.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST001.HHZ</pickID>
+                    <phase>S</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST001.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST001.HHE</pickID>
+                    <phase>S</phase>
+                    <azimuth>278.269</azimuth>
+                    <distance>4.38737</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST002.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST002.HHZ</pickID>
+                    <phase>S</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST002.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST002.HHN</pickID>
+                    <phase>S</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST002.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST002.HHE</pickID>
+                    <phase>S</phase>
+                    <azimuth>339.994</azimuth>
+                    <distance>4.99963</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST003.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST003.HHE</pickID>
+                    <phase>S</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST003.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST003.HHN</pickID>
+                    <phase>S</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAST003.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST003.HHZ</pickID>
+                    <phase>S</phase>
+                    <azimuth>191.643</azimuth>
+                    <distance>5.48319</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW3657.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHE</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW3657.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHN</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW3657.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHZ</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW4162.HHN">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHN</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW4162.HHZ">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHZ</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+                <arrival publicID="smi:ippg_nsk.ippg.org/arrival/S/KAW4162.HHE">
+                    <pickID>smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHE</pickID>
+                    <phase>S</phase>
+                    <azimuth>100.146</azimuth>
+                    <distance>8.8841</distance>
+                </arrival>
+            </origin>
+            <magnitude publicID="smi:ippg_nsk.ippg.org/magnitude/ipggsbrasippg2021fulf/ml">
+                <mag>
+                    <value>1.5</value>
+                </mag>
+                <type>ml</type>
+                <originID>smi:ippg_nsk.ippg.org/origin/ipggsbrasippg2021fulf</originID>
+                <creationInfo>
+                    <agencyID>ipggsbras</agencyID>
+                    <creationTime>2022-03-29T16:10:12.000000Z</creationTime>
+                </creationInfo>
+            </magnitude>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST001.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:08.457700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST001.HHN">
+                <time>
+                    <value>2021-10-01T04:54:08.457700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST001.HHE">
+                <time>
+                    <value>2021-10-01T04:54:08.457700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST002.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:09.099600Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST002.HHN">
+                <time>
+                    <value>2021-10-01T04:54:09.099600Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST002.HHE">
+                <time>
+                    <value>2021-10-01T04:54:09.099600Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST003.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:09.238100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST003.HHN">
+                <time>
+                    <value>2021-10-01T04:54:09.238100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAST003.HHE">
+                <time>
+                    <value>2021-10-01T04:54:09.238100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHN">
+                <time>
+                    <value>2021-10-01T04:54:09.592700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:09.592700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW3657.HHE">
+                <time>
+                    <value>2021-10-01T04:54:09.592700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHN">
+                <time>
+                    <value>2021-10-01T04:54:09.577400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:09.577400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/P/KAW4162.HHE">
+                <time>
+                    <value>2021-10-01T04:54:09.577400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>P</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST001.HHN">
+                <time>
+                    <value>2021-10-01T04:54:09.534100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST001.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:09.534100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST001.HHE">
+                <time>
+                    <value>2021-10-01T04:54:09.534100Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST002.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:10.466400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST002.HHN">
+                <time>
+                    <value>2021-10-01T04:54:10.466400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST002.HHE">
+                <time>
+                    <value>2021-10-01T04:54:10.466400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST003.HHE">
+                <time>
+                    <value>2021-10-01T04:54:10.811400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST003.HHN">
+                <time>
+                    <value>2021-10-01T04:54:10.811400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAST003.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:10.811400Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHE">
+                <time>
+                    <value>2021-10-01T04:54:11.489000Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHN">
+                <time>
+                    <value>2021-10-01T04:54:11.489000Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW3657.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:11.489000Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W3657" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHN">
+                <time>
+                    <value>2021-10-01T04:54:11.445700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHN"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHZ">
+                <time>
+                    <value>2021-10-01T04:54:11.445700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHZ"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <pick publicID="smi:ippg_nsk.ippg.org/pick/S/KAW4162.HHE">
+                <time>
+                    <value>2021-10-01T04:54:11.445700Z</value>
+                </time>
+                <waveformID networkCode="KA" stationCode="W4162" locationCode="00" channelCode="HHE"></waveformID>
+                <phaseHint>S</phaseHint>
+                <polarity>undecidable</polarity>
+                <evaluationMode>manual</evaluationMode>
+                <evaluationStatus>final</evaluationStatus>
+            </pick>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST001.HHN">
+                <genericAmplitude>
+                    <value>0.268527</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.04</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST001.HHN</pickID>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHN"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST001.HHE">
+                <genericAmplitude>
+                    <value>0.102926</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.05</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST001.HHE</pickID>
+                <waveformID networkCode="KA" stationCode="ST001" locationCode="00" channelCode="HHE"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST002.HHN">
+                <genericAmplitude>
+                    <value>0.0750518</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.07</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST002.HHN</pickID>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHN"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST002.HHE">
+                <genericAmplitude>
+                    <value>0.0991262</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.05</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST002.HHE</pickID>
+                <waveformID networkCode="KA" stationCode="ST002" locationCode="00" channelCode="HHE"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST003.HHE">
+                <genericAmplitude>
+                    <value>0.164162</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.07</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST003.HHE</pickID>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHE"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+            <amplitude publicID="smi:ippg_nsk.ippg.org/amplitude/S/KAST003.HHN">
+                <genericAmplitude>
+                    <value>0.133192</value>
+                </genericAmplitude>
+                <type>END</type>
+                <unit>m/s</unit>
+                <period>
+                    <value>0.07</value>
+                </period>
+                <pickID>smi:ippg_nsk.ippg.org/pick/S/KAST003.HHN</pickID>
+                <waveformID networkCode="KA" stationCode="ST003" locationCode="00" channelCode="HHN"></waveformID>
+                <magnitudeHint>ml</magnitudeHint>
+            </amplitude>
+        </event>
+    </eventParameters>
+</q:quakeml>

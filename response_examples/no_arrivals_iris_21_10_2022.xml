@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<q:quakeml xmlns:q="http://quakeml.org/xmlns/quakeml/1.2" xmlns:iris="http://service.iris.edu/fdsnws/event/1/" xmlns="http://quakeml.org/xmlns/bed/1.2" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance" xsi:schemaLocation="http://quakeml.org/schema/xsd http://quakeml.org/schema/xsd/QuakeML-1.2.xsd">
+    <eventParameters publicID="smi:service.iris.edu/fdsnws/event/1/query">
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493364">
+            <type>earthquake</type>
+            <origin>
+                <time>
+                    <value>2021-10-31T23:47:49.759</value>
+                </time>
+                <creationInfo>
+                    <author>us</author>
+                </creationInfo>
+                <latitude>
+                    <value>-17.968</value>
+                </latitude>
+                <longitude>
+                    <value>-178.4765</value>
+                </longitude>
+                <depth>
+                    <value>571930.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208080219">
+                <mag>
+                    <value>4.4</value>
+                </mag>
+                <type>mb</type><creationInfo>
+                <author>us</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493111">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="36">
+                <type>Flinn-Engdahl region</type>
+                <text>NORTHERN CALIFORNIA</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208041840</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46047408</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46047408" iris:contributorOriginId="nc73647215" iris:contributor="nc" iris:contributorEventId="nc73647215" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:42:49.670</value>
+                </time>
+                <creationInfo>
+                    <author>nc</author>
+                </creationInfo>
+                <latitude>
+                    <value>38.790833</value>
+                </latitude>
+                <longitude>
+                    <value>-122.760834</value>
+                </longitude>
+                <depth>
+                    <value>1470.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208041840">
+                <mag>
+                    <value>0.85</value>
+                </mag>
+                <type>Md</type><creationInfo>
+                <author>NC</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493112">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="171">
+                <type>Flinn-Engdahl region</type>
+                <text>SOUTH OF FIJI ISLANDS</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208166714</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46047409</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46047409" iris:contributorOriginId="us7000fqca" iris:contributor="us" iris:contributorEventId="us7000fqca" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:39:39.089</value>
+                </time>
+                <creationInfo>
+                    <author>us</author>
+                </creationInfo>
+                <latitude>
+                    <value>-25.3189</value>
+                </latitude>
+                <longitude>
+                    <value>179.1626</value>
+                </longitude>
+                <depth>
+                    <value>496530.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208166714">
+                <mag>
+                    <value>4.4</value>
+                </mag>
+                <type>mb</type><creationInfo>
+                <author>us</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493822">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="613">
+                <type>Flinn-Engdahl region</type>
+                <text>HAWAII</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208055213</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46052888</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46052888" iris:contributorOriginId="hv72777307" iris:contributor="hv" iris:contributorEventId="hv72777307" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:37:23.860</value>
+                </time>
+                <creationInfo>
+                    <author>hv</author>
+                </creationInfo>
+                <latitude>
+                    <value>19.201667</value>
+                </latitude>
+                <longitude>
+                    <value>-155.412833</value>
+                </longitude>
+                <depth>
+                    <value>33670.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208055213">
+                <mag>
+                    <value>1.52</value>
+                </mag>
+                <type>Md</type><creationInfo>
+                <author>HV</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493113">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="39">
+                <type>Flinn-Engdahl region</type>
+                <text>CENTRAL CALIFORNIA</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208047455</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46047410</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46047410" iris:contributorOriginId="ci39845863" iris:contributor="ci" iris:contributorEventId="ci39845863" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:34:04.820</value>
+                </time>
+                <creationInfo>
+                    <author>ci</author>
+                </creationInfo>
+                <latitude>
+                    <value>35.711167</value>
+                </latitude>
+                <longitude>
+                    <value>-117.583833</value>
+                </longitude>
+                <depth>
+                    <value>9140.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208047455">
+                <mag>
+                    <value>1.46</value>
+                </mag>
+                <type>Ml</type><creationInfo>
+                <author>CI</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493369">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="228">
+                <type>Flinn-Engdahl region</type>
+                <text>NEAR EAST COAST OF HONSHU, JAPAN</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208080283</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46048136</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46048136" iris:contributorOriginId="us7000fqce" iris:contributor="us" iris:contributorEventId="us7000fqce" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:27:25.244</value>
+                </time>
+                <creationInfo>
+                    <author>us</author>
+                </creationInfo>
+                <latitude>
+                    <value>40.6211</value>
+                </latitude>
+                <longitude>
+                    <value>141.7102</value>
+                </longitude>
+                <depth>
+                    <value>90560.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208080283">
+                <mag>
+                    <value>4.2</value>
+                </mag>
+                <type>mb</type><creationInfo>
+                <author>us</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493114">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="39">
+                <type>Flinn-Engdahl region</type>
+                <text>CENTRAL CALIFORNIA</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208047457</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46047411</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46047411" iris:contributorOriginId="ci39845855" iris:contributor="ci" iris:contributorEventId="ci39845855" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:25:18.960</value>
+                </time>
+                <creationInfo>
+                    <author>ci</author>
+                </creationInfo>
+                <latitude>
+                    <value>35.0325</value>
+                </latitude>
+                <longitude>
+                    <value>-117.673</value>
+                </longitude>
+                <depth>
+                    <value>-820.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208047457">
+                <mag>
+                    <value>1.33</value>
+                </mag>
+                <type>Ml</type><creationInfo>
+                <author>CI</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493115">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="613">
+                <type>Flinn-Engdahl region</type>
+                <text>HAWAII</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208041846</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46047412</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46047412" iris:contributorOriginId="hv72777287" iris:contributor="hv" iris:contributorEventId="hv72777287" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:24:00.470</value>
+                </time>
+                <creationInfo>
+                    <author>hv</author>
+                </creationInfo>
+                <latitude>
+                    <value>19.160999</value>
+                </latitude>
+                <longitude>
+                    <value>-155.45433</value>
+                </longitude>
+                <depth>
+                    <value>32990.002</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208041846">
+                <mag>
+                    <value>1.85000002</value>
+                </mag>
+                <type>Md</type><creationInfo>
+                <author>HV</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11493377">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="613">
+                <type>Flinn-Engdahl region</type>
+                <text>HAWAII</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208046336</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46048144</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46048144" iris:contributorOriginId="hv72777282" iris:contributor="hv" iris:contributorEventId="hv72777282" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:19:18.820</value>
+                </time>
+                <creationInfo>
+                    <author>hv</author>
+                </creationInfo>
+                <latitude>
+                    <value>19.150833</value>
+                </latitude>
+                <longitude>
+                    <value>-155.484167</value>
+                </longitude>
+                <depth>
+                    <value>31370.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208046336">
+                <mag>
+                    <value>1.67</value>
+                </mag>
+                <type>Md</type><creationInfo>
+                <author>HV</author>
+            </creationInfo>
+            </magnitude>
+        </event>
+        <event publicID="smi:service.iris.edu/fdsnws/event/1/query?eventid=11498261">
+            <type>earthquake</type>
+            <description xmlns:iris="http://service.iris.edu/fdsnws/event/1/" iris:FEcode="1">
+                <type>Flinn-Engdahl region</type>
+                <text>CENTRAL ALASKA</text>
+            </description><preferredMagnitudeID>smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208145936</preferredMagnitudeID>
+            <preferredOriginID>smi:service.iris.edu/fdsnws/event/1/query?originid=46103411</preferredOriginID>
+            <origin xmlns:iris="http://service.iris.edu/fdsnws/event/1/" publicID="smi:service.iris.edu/fdsnws/event/1/query?originid=46103411" iris:contributorOriginId="ak021dz554id" iris:contributor="ak" iris:contributorEventId="ak021dz554id" iris:catalog="NEIC PDE">
+                <time>
+                    <value>2021-10-31T23:12:36.658</value>
+                </time>
+                <creationInfo>
+                    <author>ak</author>
+                </creationInfo>
+                <latitude>
+                    <value>64.9858</value>
+                </latitude>
+                <longitude>
+                    <value>-147.3622</value>
+                </longitude>
+                <depth>
+                    <value>4800.0</value>
+                </depth>
+            </origin>
+            <magnitude publicID="smi:service.iris.edu/fdsnws/event/1/query?magnitudeid=208145936">
+                <mag>
+                    <value>1.0</value>
+                </mag>
+                <type>ml</type></magnitude>
+        </event>
+    </eventParameters>
+</q:quakeml>
