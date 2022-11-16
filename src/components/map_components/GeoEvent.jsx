@@ -1,4 +1,4 @@
-import {Marker, Popup, useMap} from "react-leaflet";
+import {CircleMarker, Marker, Popup, useMap} from "react-leaflet";
 import L from "leaflet";
 import {useEffect, useRef} from "react";
 import {Popup as LeafletPopup} from 'leaflet';
@@ -9,6 +9,7 @@ const getGeoEventIcon = (_iconSize) => {
     iconSize: [_iconSize, _iconSize],
   });
 }
+
 
 export const GeoEvent = ({geoEvent}) => {
   // const popupRef = useRef();
@@ -23,8 +24,15 @@ export const GeoEvent = ({geoEvent}) => {
   //   }
   // }, [map, popupRef]);
 
+  const pathOptions = {
+    fillColor: "#fa2f2f",
+    fillOpacity: 0.5,
+    color: "black",
+    weight: 1,
+  };
+
   return (
-    <Marker position={[geoEvent.latitude, geoEvent.longitude]} icon={getGeoEventIcon(10 + geoEvent.magnitude * 3)}>
+    <CircleMarker center={[geoEvent.latitude, geoEvent.longitude]} radius={geoEvent.magnitude > 0 ? 5 + geoEvent.magnitude * 3 : 5} pathOptions={pathOptions}>
       <Popup>
         <p> Event type: {geoEvent.type} </p>
         <p> Date: {geoEvent.time} </p>
@@ -39,5 +47,5 @@ export const GeoEvent = ({geoEvent}) => {
         {geoEvent.depthUncertainty &&
         <span>, uncertainty: {geoEvent.depthUncertainty} </span>}
       </Popup>
-    </Marker>)
+    </CircleMarker>)
 }

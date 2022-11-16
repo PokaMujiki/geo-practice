@@ -28,8 +28,12 @@ export const RepeatabilityPlot = ({geoEvents}) => {
   const trace_function = {
     x: x_dots,
     y: y_dots,
-    mode: 'lines',
-    type: 'scatter'
+    mode: 'markers',
+    type: 'scatter',
+    marker: {
+      color: 'rgb(17, 157, 255)',
+      size: 4,
+    },
   }
 
   return (

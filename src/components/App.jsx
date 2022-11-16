@@ -74,14 +74,13 @@ export const App = () => {
   //TODO: добавить checkbox для показа станций
   //TODO: сделать скоролл для контейнера с карточками
 
-  // TODO: график повторяемости, поменять тип графика на точки
-  // TODO: пофиксить лаги карты
   // TODO: добавить возможность выбора интервала для аппроксимации
   // TODO: https://www.usgs.gov/
   // TODO: https://earthquake.usgs.gov/earthquakes/map/?extent=3.16246,-146.16211&extent=65.40344,-5.53711
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
   // TODO: попытаться загрузить ивенты снова, связаться с человеком который это уже делал
-  // TODO: знак b-value
+
+  console.log("rerender app")
 
   return (
     <div className="App">
