@@ -1,15 +1,15 @@
 import Plot from "react-plotly.js";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 
 const MAGNITUDE_MIN = -1.5;
 const MAGNITUDE_MAX = 3;
 const PREDICTED_PLOT_MAX_POINTS = 200;
 
-const NOT_APPROXIMATED_POINTS_PLOT_NAME = "points used in approximation";
+const NOT_APPROXIMATED_POINTS_PLOT_NAME = "points not used in approximation";
 const NOT_APPROXIMATED_POINTS_PLOT_MODE = "markers";
 const NOT_APPROXIMATED_POINTS_PLOT_TYPE = "scatter";
 
-const APPROXIMATED_POINTS_PLOT_NAME = "points not used in approximation";
+const APPROXIMATED_POINTS_PLOT_NAME = "points used in approximation";
 const APPROXIMATED_POINTS_PLOT_MODE = "markers";
 const APPROXIMATED_POINTS_PLOT_TYPE = "scatter";
 
@@ -22,6 +22,9 @@ const selectLastPointForApproximation = (data, approximatedPoints, notApproximat
   let useInApproximation_y = [];
   let notUseInApproximation_x = [];
   let notUseInApproximation_y = [];
+
+  console.log("on click")
+  console.log(data)
 
   approximatedPoints.y.concat(notApproximatedPoints.y).map((item) => {
     // use all points below marked one
@@ -52,7 +55,7 @@ const selectLastPointForApproximation = (data, approximatedPoints, notApproximat
   });
 }
 
-export const BValuePlot = ({geoEvents, step}) => {
+const calculateValues = (geoEvents, step) => {
   const y_points = [];
   const x_points = [];
 
@@ -63,7 +66,6 @@ export const BValuePlot = ({geoEvents, step}) => {
       break;
     }
   }
-  console.log(y_points);
 
   const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
   const y_sum = y_points.reduce((prev, cur) => prev + cur, 0);
@@ -92,6 +94,20 @@ export const BValuePlot = ({geoEvents, step}) => {
     y_predicted_plot[i] = beta_1_th + beta_2_th * x_predicted_plot[i];
   }
 
+  return {
+    x_points,
+    y_points,
+    x_predicted_plot,
+    y_predicted_plot,
+    beta_1_th,
+    beta_2_th,
+  }
+}
+
+export const BValuePlot = ({geoEvents, step}) => {
+  const {x_points, y_points, x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th} =
+    useMemo(() => calculateValues(geoEvents, step), [geoEvents, step]);
+
   const trace_function = {
     x: x_predicted_plot,
     y: y_predicted_plot,
@@ -108,6 +124,18 @@ export const BValuePlot = ({geoEvents, step}) => {
     type: APPROXIMATED_POINTS_PLOT_TYPE,
   });
 
+  useEffect(() => {
+    setApproximatedPoints({
+      x: x_points,
+      y: y_points,
+      name: APPROXIMATED_POINTS_PLOT_NAME,
+      mode: APPROXIMATED_POINTS_PLOT_MODE,
+      type: APPROXIMATED_POINTS_PLOT_TYPE,
+    });
+  }, [x_points, y_points]);
+
+  console.log(approximatedPoints)
+
   const [notApproximatedPoints, setNotApproximatedPoints] = useState({
     x: [],
     y: [],
@@ -123,7 +151,6 @@ export const BValuePlot = ({geoEvents, step}) => {
   const plotTitle = `b-value: ${-beta_2_th.toFixed(3)}, a-value: ${beta_1_th.toFixed(3)}`;
 
   // TODO: подбирать b-value для фрагмента середины графика после среза начального и конечного фрагментов с низким коэффициентом наклона
-  console.log(y_points);
 
   return (
   <Plot
