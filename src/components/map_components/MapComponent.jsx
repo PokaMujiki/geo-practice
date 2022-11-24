@@ -10,7 +10,6 @@ import L from "leaflet";
 
 export const MapComponent = ({center, stations, geoEvents, openedGeoEvent, setSelectedGeoEvents}) => {
   const geoEventsComponent = useMemo(() => {
-    console.log("recomputing...");
     return geoEvents?.map((item, index) =>
       <GeoEvent geoEvent={item} key={index}/>);
   }, [geoEvents]);
