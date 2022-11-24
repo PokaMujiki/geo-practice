@@ -1,5 +1,5 @@
 import Plot from "react-plotly.js";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const MAGNITUDE_MIN = -1.5;
 const MAGNITUDE_MAX = 3;
@@ -18,33 +18,25 @@ const PREDICTED_FUNCTION_PLOT_MODE = "lines";
 const PREDICTED_FUNCTION_PLOT_TYPE = "scatter"
 
 const splitDatasets =
-  (data, approximatedPoints, notApproximatedPoints) => {
-  let useInApproximation_x = [];
-  let useInApproximation_y = [];
-  let notUseInApproximation_x = [];
-  let notUseInApproximation_y = [];
+  (point, all_y, all_x) => {
+    let useInApproximation_x = [];
+    let useInApproximation_y = [];
+    let notUseInApproximation_x = [];
+    let notUseInApproximation_y = [];
 
-  const all_y = approximatedPoints.y.concat(notApproximatedPoints.y);
-  const all_x = approximatedPoints.x.concat(notApproximatedPoints.x);
+    for (let i = 0; i < all_y.length; i++) {
+      if (point.x <= all_x[i]) {
+        useInApproximation_y.push(all_y[i]);
+        useInApproximation_x.push(all_x[i]);
+      }
+      else {
+        notUseInApproximation_y.push(all_y[i]);
+        notUseInApproximation_x.push(all_x[i]);
+      }
+    }
 
-  for (let i = 0; i < all_y.length; i++) {
-    if (data.points[0].x <= all_x[i]) {
-      useInApproximation_y.push(all_y[i]);
-      useInApproximation_x.push(all_x[i]);
-    }
-    else {
-      notUseInApproximation_y.push(all_y[i]);
-      notUseInApproximation_x.push(all_x[i]);
-    }
+    return { useInApproximation_y, useInApproximation_x, notUseInApproximation_y, notUseInApproximation_x };
   }
-
-  console.log(useInApproximation_x)
-  console.log(useInApproximation_y)
-  console.log(notUseInApproximation_x)
-  console.log(notUseInApproximation_y);
-
-  return { useInApproximation_y, useInApproximation_x, notUseInApproximation_y, notUseInApproximation_x }
-}
 
 const approximate = (x_points, y_points) => {
   const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
@@ -100,46 +92,70 @@ const calculatePoint = (geoEvents, step) => {
 }
 
 export const BValuePlot = ({geoEvents, step}) => {
-  let { x_points, y_points } = calculatePoint(geoEvents, step);
+  const { x_points, y_points } = useMemo(() => calculatePoint(geoEvents, step), [geoEvents, step]);
   let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } = approximate(x_points, y_points);
-  console.log("x_points")
-  console.log(x_points)
-  console.log("y_points")
-  console.log(y_points)
+  let x_use = x_points;
+  let y_use = y_points;
+  let x_notUse = [];
+  let y_notUse = [];
+
+  const [x_trace, setX_trace] = useState(x_predicted_plot);
+  const [y_trace, setY_trace] = useState(y_predicted_plot);
+
+  const[x_useInApproximation, setX_useInApproximation] = useState(x_use);
+  const[y_useInApproximation, setY_useInApproximation] = useState(y_use);
+
+  const[x_notUseInApproximation, setX_notUseInApproximation] = useState(x_notUse);
+  const[y_notUseInApproximation, setY_notUseInApproximation] = useState(y_notUse);
 
   const [beta1_th, setBeta1_th] = useState(beta_1_th);
   const [beta2_th, setBeta2_th] = useState(beta_2_th);
 
-  const [trace_function, setTrace_function] = useState({
-    x: x_predicted_plot,
-    y: y_predicted_plot,
-    name: PREDICTED_FUNCTION_PLOT_NAME,
-    mode: PREDICTED_FUNCTION_PLOT_MODE,
-    type: PREDICTED_FUNCTION_PLOT_TYPE,
-  });
+  const [selectedPoint, setSelectedPoint] = useState({x: 0, y: 0});
 
-  const [approximatedPoints, setApproximatedPoints] = useState({
-    x: x_points,
-    y: y_points,
-    name: APPROXIMATED_POINTS_PLOT_NAME,
-    mode: APPROXIMATED_POINTS_PLOT_MODE,
-    type: APPROXIMATED_POINTS_PLOT_TYPE,
-  });
+  useEffect(() => {
+    const dataset = splitDatasets(selectedPoint, y_points, x_points);
+    setX_useInApproximation(dataset.useInApproximation_x);
+    setY_useInApproximation(dataset.useInApproximation_y);
 
+    setX_notUseInApproximation(dataset.notUseInApproximation_x);
+    setY_notUseInApproximation(dataset.notUseInApproximation_y);
 
-  const [notApproximatedPoints, setNotApproximatedPoints] = useState({
-    x: [],
-    y: [],
-    name: NOT_APPROXIMATED_POINTS_PLOT_NAME,
-    mode: NOT_APPROXIMATED_POINTS_PLOT_MODE,
-    type: NOT_APPROXIMATED_POINTS_PLOT_TYPE,
-  });
+    const approximated = approximate(dataset.useInApproximation_x, dataset.useInApproximation_y);
+
+    setX_trace(approximated.x_predicted_plot);
+    setY_trace(approximated.y_predicted_plot);
+
+    setBeta1_th(approximated.beta_1_th);
+    setBeta2_th(approximated.beta_2_th);
+  }, [selectedPoint, step, geoEvents, x_points, y_points]);
 
   const plotTitle = `b-value: ${-beta2_th.toFixed(3)}, a-value: ${beta1_th.toFixed(3)}`;
 
-  useEffect(() => {
+  const trace_function = {
+    x: x_trace,
+    y: y_trace,
+    name: PREDICTED_FUNCTION_PLOT_NAME,
+    mode: PREDICTED_FUNCTION_PLOT_MODE,
+    type: PREDICTED_FUNCTION_PLOT_TYPE,
+  };
 
-  }, [])
+  const approximatedPoints= {
+    x: x_useInApproximation,
+    y: y_useInApproximation,
+    name: APPROXIMATED_POINTS_PLOT_NAME,
+    mode: APPROXIMATED_POINTS_PLOT_MODE,
+    type: APPROXIMATED_POINTS_PLOT_TYPE,
+  };
+
+  const notApproximatedPoints = {
+    x: x_notUseInApproximation,
+    y: y_notUseInApproximation,
+    name: NOT_APPROXIMATED_POINTS_PLOT_NAME,
+    mode: NOT_APPROXIMATED_POINTS_PLOT_MODE,
+    type: NOT_APPROXIMATED_POINTS_PLOT_TYPE,
+  };
+
 
   // TODO: подбирать b-value для фрагмента середины графика после среза начального и конечного фрагментов с низким коэффициентом наклона
 
@@ -147,50 +163,22 @@ export const BValuePlot = ({geoEvents, step}) => {
     return;
   }
 
-  console.log("graphics data")
-  console.log(approximatedPoints)
-  console.log(notApproximatedPoints)
-  console.log(trace_function)
   return (
-  <Plot
-    data={[approximatedPoints, notApproximatedPoints, trace_function]}
-    layout={{
-      width: 600,
-      height: 400,
-      title: plotTitle,
-      xaxis: {
-        title: "Magnitude",
-        range: [MAGNITUDE_MIN, MAGNITUDE_MAX]},
-      yaxis: {
-        title: "Lg N",
-        range: [0, 3]},
-    }}
-    onClick = {(data) => {
-      const newDatasets = splitDatasets(data, approximatedPoints, notApproximatedPoints);
-      setApproximatedPoints({
-        x: newDatasets.useInApproximation_x,
-        y: newDatasets.useInApproximation_y,
-        name: APPROXIMATED_POINTS_PLOT_NAME,
-        mode: APPROXIMATED_POINTS_PLOT_MODE,
-        type: APPROXIMATED_POINTS_PLOT_TYPE,
-      });
-      setNotApproximatedPoints({
-        x: newDatasets.notUseInApproximation_x,
-        y: newDatasets.notUseInApproximation_y,
-        name: NOT_APPROXIMATED_POINTS_PLOT_NAME,
-        mode: NOT_APPROXIMATED_POINTS_PLOT_MODE,
-        type: NOT_APPROXIMATED_POINTS_PLOT_TYPE,
-      });
-      const approximated = approximate(newDatasets.useInApproximation_x, newDatasets.useInApproximation_y);
-      setTrace_function({
-        x: approximated.x_predicted_plot,
-        y: approximated.y_predicted_plot,
-        name: PREDICTED_FUNCTION_PLOT_NAME,
-        mode: PREDICTED_FUNCTION_PLOT_MODE,
-        type: PREDICTED_FUNCTION_PLOT_TYPE,
-      });
-      setBeta1_th(approximated.beta_1_th);
-      setBeta2_th(approximated.beta_2_th)
-    }}
-  />);
+    <Plot
+      data={[approximatedPoints, notApproximatedPoints, trace_function]}
+      layout={{
+        width: 600,
+        height: 400,
+        title: plotTitle,
+        xaxis: {
+          title: "Magnitude",
+          range: [MAGNITUDE_MIN, MAGNITUDE_MAX]},
+        yaxis: {
+          title: "Lg N",
+          range: [0, 3]},
+      }}
+      onClick = {(data) => {
+        setSelectedPoint({ x: data.points[0].x, y: data.points[0].y});
+      }}
+    />);
 }

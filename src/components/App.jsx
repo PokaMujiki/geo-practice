@@ -80,9 +80,6 @@ export const App = () => {
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
   // TODO: попытаться загрузить ивенты снова, связаться с человеком который это уже делал
 
-  console.log("selected")
-  console.log(selectedGeoEvents)
-
   return (
     <div className="App">
       <div className="event_card_wrapper">
