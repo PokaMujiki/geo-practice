@@ -14,12 +14,13 @@ import {format} from "date-fns";
 import {BValuePlot} from "./BValuePlot";
 import {RepeatabilityPlot} from "./RepeatabilityPlot";
 import {Slider} from "@consta/uikit/Slider";
+import {EventsList} from "./EventsList";
 
 export const App = () => {
   const [center, setCenter] = useState({
     lat: 51.2881,
     lng: 53.3528,
-    zoom: 7
+    zoom: 12
   });
 
   const [startTime, setStartTime] = useState(new Date('2021-10-01T00:00:00'));
@@ -29,7 +30,7 @@ export const App = () => {
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
   const [step, setStep] = useState(0.05);
-  const [openedGeoEvent, setOpenedGeoEvent] = useState([]);
+  const [map, setMap] = useState();
 
   useEffect(() => {
     const setInitialStations = async (network) => {
@@ -60,7 +61,7 @@ export const App = () => {
       // });
 
       // const response = await fetch(query + params.toString());
-      const response = await fetch(BASENAME_API + "event/1/jan_jul_events.xml");
+      const response = await fetch(BASENAME_API + "event/1/1000plus_events.xml");
       const data = await response.text();
 
       setGeoEvents(parseGeoEvents(data))
@@ -82,17 +83,15 @@ export const App = () => {
 
   return (
     <div className="App">
-      <div className="event_card_wrapper">
-        { geoEvents?.map((item, index) =>
-          <EventCard geoEvent={item} setOpenedGeoEvent={setOpenedGeoEvent} key={index}/>) }
-      </div>
+      <EventsList geoEvents={geoEvents} map={map}/>
       <div className="map_wrapper">
         <MapComponent
           center={center}
           stations={stations}
           geoEvents={geoEvents}
-          openedGeoEvent={openedGeoEvent}
-          setSelectedGeoEvents={setSelectedGeoEvents}/>
+          setSelectedGeoEvents={setSelectedGeoEvents}
+          map={map}
+          setMap={setMap}/>
 
         <div className="map_related_wrapper">
           <Theme preset={presetGpnDark}>

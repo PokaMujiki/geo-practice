@@ -8,7 +8,7 @@ import {LayersControl} from "react-leaflet";
 import {Events} from "./Events";
 import L from "leaflet";
 
-export const MapComponent = ({center, stations, geoEvents, openedGeoEvent, setSelectedGeoEvents}) => {
+export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents, setMap}) => {
   const geoEventsComponent = useMemo(() => {
     return geoEvents?.map((item, index) =>
       <GeoEvent geoEvent={item} key={index}/>);
@@ -16,7 +16,11 @@ export const MapComponent = ({center, stations, geoEvents, openedGeoEvent, setSe
 
   // TODO: починить линейку
   return (
-    <MapContainer center={[center.lng, center.lat]} zoom={center.zoom} preferCanvas={true} renderer={L.canvas()} >
+    <MapContainer center={[center.lng, center.lat]}
+                  zoom={center.zoom}
+                  preferCanvas={true}
+                  renderer={L.canvas()}
+                  whenReady={(e) => setMap(e.target)}>
       <ScaleControl imperial={false}/>
       {/*<LeafletRuler/>*/}
       <TileLayer

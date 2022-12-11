@@ -1,0 +1,14 @@
+.list-view {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.list-view ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-view li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
