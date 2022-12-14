@@ -31,8 +31,17 @@ export const GeoEvent = ({geoEvent}) => {
     weight: 1,
   };
 
+  const selectedPathOptions = {
+    fillColor: "blue",
+    fillOpacity: 0.5,
+    color: "black",
+    weight: 1,
+  };
+
   return (
-    <CircleMarker center={[geoEvent.latitude, geoEvent.longitude]} radius={geoEvent.magnitude > 0 ? 5 + geoEvent.magnitude * 3 : 5} pathOptions={pathOptions}>
+    <CircleMarker center={[geoEvent.latitude, geoEvent.longitude]}
+                  radius={geoEvent.magnitude > 0 ? 5 + geoEvent.magnitude * 3 : 5}
+                  pathOptions={geoEvent?.selected ? selectedPathOptions : pathOptions}>
       <Popup>
         <p> Event type: {geoEvent.type} </p>
         <p> Date: {geoEvent.time} </p>

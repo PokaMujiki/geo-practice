@@ -2,26 +2,23 @@ import React, {useEffect, useState} from 'react';
 import '../styles/App.css';
 import '../styles/Map.css';
 import '../styles/event_card.css';
-import '../styles/date_time_picker.css';
-import '../styles/b_value_plot_wrapper.css';
-import {EventCard} from "./EventCard";
 import {MapComponent} from "./map_components/MapComponent";
 import {parseGeoEvents, parseStations} from "../lib/parsers";
 import {BASENAME_API} from "../lib/constants";
 import {Theme, presetGpnDark} from '@consta/uikit/Theme';
 import {DatePicker} from "@consta/uikit/DatePicker";
-import {format} from "date-fns";
 import {BValuePlot} from "./BValuePlot";
 import {RepeatabilityPlot} from "./RepeatabilityPlot";
-import {Slider} from "@consta/uikit/Slider";
 import {EventsList} from "./EventsList";
+import {enUS} from "date-fns/locale";
+import {TextFieldLeftCaption} from "./TextFieldLeftCaption";
 
 export const App = () => {
-  const [center, setCenter] = useState({
-    lat: 51.2881,
-    lng: 53.3528,
+  const initialCenter = {
+    lat: 51.306,
+    lng: 53.2706,
     zoom: 12
-  });
+  };
 
   const [startTime, setStartTime] = useState(new Date('2021-10-01T00:00:00'));
   const [endTime, setEndTime] = useState(new Date('2021-10-31T23:59:59'));
@@ -29,7 +26,6 @@ export const App = () => {
   const [geoEvents, setGeoEvents] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
-  const [step, setStep] = useState(0.05);
   const [map, setMap] = useState();
 
   useEffect(() => {
@@ -64,18 +60,23 @@ export const App = () => {
       const response = await fetch(BASENAME_API + "event/1/1000plus_events.xml");
       const data = await response.text();
 
+      const test = parseGeoEvents(data);
+      test[0].excluded = true;
+
       setGeoEvents(parseGeoEvents(data))
+      setSelectedGeoEvents(test)
     }
 
     setInitialEvents().catch(console.error);
   }, [startTime, endTime, eventsLimit]);
 
-  //TODO: добавить input field для eventsLimit
-  //TODO: добавить checkbox для включения интерактивности pop-ups
-  //TODO: добавить checkbox для показа станций
-  //TODO: сделать скоролл для контейнера с карточками
+  const set1 = (items) => {
+    console.log("set event");
+    setGeoEvents(items)
+  }
 
-  // TODO: добавить возможность выбора интервала для аппроксимации
+  //TODO: добавить checkbox для включения интерактивности pop-ups
+
   // TODO: https://www.usgs.gov/
   // TODO: https://earthquake.usgs.gov/earthquakes/map/?extent=3.16246,-146.16211&extent=65.40344,-5.53711
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
@@ -83,51 +84,48 @@ export const App = () => {
 
   return (
     <div className="App">
-      <EventsList geoEvents={geoEvents} map={map}/>
-      <div className="map_wrapper">
+      <div className="all_events_container">
+        <EventsList header="All events" geoEvents={geoEvents} map={map}/>
+      </div>
+      <div className="map_container">
         <MapComponent
-          center={center}
+          center={initialCenter}
           stations={stations}
           geoEvents={geoEvents}
           setSelectedGeoEvents={setSelectedGeoEvents}
           map={map}
-          setMap={setMap}/>
-
-        <div className="map_related_wrapper">
+          setMap={setMap}
+          setGeoEvents={set1}/>
+        <div className="options_container">
           <Theme preset={presetGpnDark}>
-            <div className="map_options_wrapper">
+            <div className="options_wrapper">
+              <TextFieldLeftCaption type="number" value={eventsLimit} setValue={setEventsLimit} caption="Max events: " />
               <DatePicker
-                className="date_time_picker"
                 type="date-time-range"
                 value={[startTime, endTime]}
                 style={{zIndex: 3}}
+                locale={enUS}
                 format="dd.MM.yyyy HH:mm:ss"
                 onChange={({value: [newStartTime, newEndTime]}) => {
                   setStartTime(newStartTime);
-                  setEndTime(newEndTime);
-              }} />
-              <div className="sliders_wrapper">
-                <Slider
-                  label="step"
-                  onChange={({value}) => setStep(value)}
-                  value={step}
-                  min={0.01}
-                  max={0.1}
-                  withTooltip
-                  step={0.001}
-                />
-              </div>
+                  setEndTime(newEndTime);}} />
             </div>
           </Theme>
-          {selectedGeoEvents.length > 0 &&
-            <div className="plots_wrapper">
-              <BValuePlot geoEvents={selectedGeoEvents}
-                          step={step}/>
-              <RepeatabilityPlot geoEvents={selectedGeoEvents}/>
-            </div>
-          }
         </div>
       </div>
+      <div className="selected_events_container">
+        <EventsList header={"Selected events"} geoEvents={selectedGeoEvents} map={map}></EventsList>
+      </div>
+      {selectedGeoEvents.length > 0 &&
+        <div className="graph_1_container">
+          <BValuePlot geoEvents={selectedGeoEvents}/>
+        </div>
+      }
+      {selectedGeoEvents.length > 0 &&
+        <div className="graph_2_container">
+          <RepeatabilityPlot geoEvents={geoEvents}/>
+        </div>
+      }
     </div>
   );
 }

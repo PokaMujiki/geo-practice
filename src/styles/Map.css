@@ -4,7 +4,9 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
-    height: 200%;
+    align-self: stretch;
+    flex-grow: 1;
+    height: 95%;
     flex-basis: 70%;
 }
 
@@ -14,20 +16,17 @@
     flex-flow: column nowrap;
 }
 
-.map_options_wrapper {
+.map_options_wrapper1 {
     display: flex;
     flex-flow: row nowrap;
-}
-
-.sliders_wrapper {
-    padding: 0 20px;
-    align-self: stretch;
-    flex-grow: 1;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .leaflet-container {
-    height: 45%;
+    height: 100%;
     width: 100%;
     z-index: 1;
-    border-radius: 10px;
+    border-radius: 5px;
 }

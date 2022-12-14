@@ -61,7 +61,7 @@ export const parseGeoEvents = (data) => {
     events[i].depthUncertainty = origin.getElementsByTagName("depth")?.[0]
       ?.getElementsByTagName("uncertainty")?.[0]
       ?.childNodes[0]?.nodeValue; // may be missing
-    events[i].selectedOnMap = false;
+    events[i].selected = false;
   }
 
   return events;

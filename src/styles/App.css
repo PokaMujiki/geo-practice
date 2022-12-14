@@ -14,12 +14,74 @@ body {
   text-align: center;
   background-color: #282c34;
   align-items: flex-start;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 240%;
+
+  padding: 80px 60px 0 40px;
+
+  display: grid;
+  grid-template-columns: 14fr minmax(310px, 5fr);
+  grid-template-rows: 8fr fit-content(70px) 7fr 7fr;
+  grid-template-areas:
+    "map                 all_events"
+    "options             all_events"
+    "b_value_graph       selected_events"
+    "repeatability_graph selected_events";
+  column-gap: 40px;
+  row-gap: 40px;
+}
+
+.App p {
+  margin: 0;
+  text-align: center;
+  color: #bbc3c8;
+  line-height: 26px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+.all_events_container {
+  grid-area: all_events;
+
   height: 100%;
+}
+
+.map_container {
+  grid-area: map;
+
+  position: relative;
+  height: 100%;
+}
+
+.options_container {
+  grid-area: options;
   display: flex;
-  flex-flow: row wrap;
-  padding: 100px 20px 20px 20px;
-  box-sizing: border-box;
+  align-content: center;
+
+  padding: 10px 0 0 10px;
+}
+
+.options_wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   justify-content: flex-start;
+  gap: 80px;
+}
+
+.selected_events_container {
+  grid-area: selected_events;
+
+  height: 100%;
+  padding-bottom: 40px;
+}
+
+.graph_1_container {
+  grid-area: b_value_graph;
+  height: 100%;
+}
+
+.graph_2_container {
+  grid-area: repeatability_graph;
+  padding-bottom: 40px;
+  height: 100%;
 }

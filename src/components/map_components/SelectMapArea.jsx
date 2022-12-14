@@ -1,7 +1,7 @@
 import SelectArea from 'leaflet-area-select';
 import {useMap} from "react-leaflet";
 
-export const SelectMapArea = ({geoEvents, setSelectedGeoEvents}) => {
+export const SelectMapArea = ({geoEvents, setSelectedGeoEvents, setGeoEvents}) => {
   let map = useMap();
   map.selectArea.enable();
   map.on('areaselected', (e) => {
@@ -21,17 +21,19 @@ export const SelectMapArea = ({geoEvents, setSelectedGeoEvents}) => {
 
       if (geoEvent.latitude <= e.bounds._northEast.lat && geoEvent.latitude >= e.bounds._southWest.lat
         && geoEvent.longitude <= e.bounds._northEast.lng && geoEvent.longitude >= e.bounds._southWest.lng) {
-        geoEvent.selectedOnMap = true;
+        geoEvent.selected = true;
         // console.log("selected lng: " + geoEvent.longitude + " lat: " + geoEvent.latitude);
         totalSelected++;
       }
       else {
-        geoEvent.selectedOnMap = false;
+        geoEvent.selected = false;
       }
     })
 
+    setGeoEvents(geoEvents);
+
     // console.log("total selected: " + totalSelected);
-    setSelectedGeoEvents(geoEvents.filter(item => item.selectedOnMap));
+    setSelectedGeoEvents(geoEvents.filter(item => item.selected));
   });
 
   return null;

@@ -1,0 +1,13 @@
+.repeatability_graph_wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #2e333d;
+    border-radius: 10px;
+}
+
+.repeatability_graph {
+    width: 95%;
+    height: 100%;
+}

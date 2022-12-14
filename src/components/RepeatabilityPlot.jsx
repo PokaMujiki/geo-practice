@@ -1,6 +1,7 @@
 import Plot from "react-plotly.js";
 import React from "react";
 import {format} from "date-fns";
+import '../styles/repeatability_graph_wrapper.css';
 
 export const RepeatabilityPlot = ({geoEvents}) => {
   if (!geoEvents?.length) {
@@ -31,23 +32,49 @@ export const RepeatabilityPlot = ({geoEvents}) => {
     mode: 'markers',
     type: 'scatter',
     marker: {
-      color: 'rgb(17, 157, 255)',
+      color: "#fa2f2f",
+      opacity: 0.5,
       size: 4,
     },
   }
 
   return (
-    <div className="repeatability_plot_wrapper">
+    <div className="repeatability_graph_wrapper">
       <Plot
+        className="repeatability_graph"
         data={[trace_function]}
         layout={{
-          width: "full",
-          height: "full",
-          title: plotTitle,
-          yaxis: {
-            title: "Magnitude",
-            range: [min_magnitude - 0.5, max_magnitude + 0.5],
+          title: {
+            text: plotTitle,
           },
+
+          autosize: true,
+
+          plot_bgcolor: "#333945",
+          paper_bgcolor: "#2e333d",
+          font: {
+            color: "#d3d4d0",
+            size: 16,
+            family: "Inter",
+            weigh: 400,
+          },
+          showlegend: false,
+
+          yaxis: {
+            title: {
+              text: "Magnitude",
+              standoff: 40,
+            },
+            range: [min_magnitude - 0.5, max_magnitude + 0.5],
+            gridcolor: "gray",
+            zerolinecolor: "green",
+            tickcolor: "transparent",
+          },
+          xaxis: {
+            gridcolor: "gray",
+            zerolinecolor: "green",
+            tickcolor: "transparent",
+          }
         }}
       />
   </div>);

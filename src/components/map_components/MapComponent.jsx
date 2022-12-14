@@ -8,11 +8,11 @@ import {LayersControl} from "react-leaflet";
 import {Events} from "./Events";
 import L from "leaflet";
 
-export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents, setMap}) => {
-  const geoEventsComponent = useMemo(() => {
-    return geoEvents?.map((item, index) =>
-      <GeoEvent geoEvent={item} key={index}/>);
-  }, [geoEvents]);
+export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents, setMap, setGeoEvents}) => {
+  // const geoEventsComponent = useMemo(() => {
+  //   return geoEvents?.map((item, index) =>
+  //     <GeoEvent geoEvent={item} key={index}/>);
+  // }, [geoEvents]);
 
   // TODO: починить линейку
   return (
@@ -27,7 +27,7 @@ export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents,
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <SelectMapArea geoEvents={geoEvents} setSelectedGeoEvents={setSelectedGeoEvents}/>
+      <SelectMapArea geoEvents={geoEvents} setSelectedGeoEvents={setSelectedGeoEvents} setGeoEvents={setGeoEvents}/>
       <LayersControl>
         <LayersControl.Overlay name="Stations" checked>
           <LayerGroup>
@@ -36,9 +36,12 @@ export const MapComponent = ({center, stations, geoEvents, setSelectedGeoEvents,
         </LayersControl.Overlay>
         <LayersControl.Overlay name="Events" checked>
           <LayerGroup>
+            {geoEvents?.map((item, index) =>
+              <GeoEvent geoEvent={item} key={index}/>)}
+
             {/*<Events geoEvents={geoEvents}/>*/}
             {/*{ geoEvents?.map((item, index) => <GeoEvent geoEvent={item} openedGeoEvent={openedGeoEvent} key={index}/>) }*/}
-            {geoEventsComponent}
+            {/*{geoEventsComponent}*/}
           </LayerGroup>
         </LayersControl.Overlay>
       </LayersControl>
