@@ -237,12 +237,15 @@ export const BValuePlot = ({ geoEvents }) => {
         }}
       />
       <div className="b_value_data">
-        <TextFieldLeftCaption
-          value={step}
-          setValue={validatedSet}
-          type="number"
-          caption="Approximation step"
-        />
+        <div className="b_value_legends"></div>
+        <div className="b_value_options">
+          <TextFieldLeftCaption
+            value={step}
+            setValue={validatedSet}
+            type="number"
+            caption="Approximation step"
+          />
+        </div>
       </div>
     </div>
   );

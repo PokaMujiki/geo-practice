@@ -1,5 +1,6 @@
 .textfield_with_caption {
     display: flex;
+    justify-content: center;
     gap: 10px;
 }
 

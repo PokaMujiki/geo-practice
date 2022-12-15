@@ -9,8 +9,27 @@
 
 .b_value_data {
     grid-area: b_value_data;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: stretch;
+    justify-content: stretch;
+    gap: 40px;
+}
+
+.b_value_legends {
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     background-color: #2e333d;
+}
+
+.b_value_options {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #2e333d;
+    justify-content: flex-end;
+    padding-top: 20px;
 }
 
 .b_value_graph {
