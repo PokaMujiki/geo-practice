@@ -1,27 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import '../styles/App.css';
-import '../styles/Map.css';
-import '../styles/event_card.css';
-import {MapComponent} from "./map_components/MapComponent";
-import {parseGeoEvents, parseStations} from "../lib/parsers";
-import {BASENAME_API} from "../lib/constants";
-import {Theme, presetGpnDark} from '@consta/uikit/Theme';
-import {DatePicker} from "@consta/uikit/DatePicker";
-import {BValuePlot} from "./BValuePlot";
-import {RepeatabilityPlot} from "./RepeatabilityPlot";
-import {EventsList} from "./EventsList";
-import {enUS} from "date-fns/locale";
-import {TextFieldLeftCaption} from "./TextFieldLeftCaption";
+import React, { useEffect, useState } from "react";
+import "../styles/App.css";
+import "../styles/Map.css";
+import "../styles/event_card.css";
+import { MapComponent } from "./map_components/MapComponent";
+import { parseGeoEvents, parseStations } from "../lib/parsers";
+import { BASENAME_API } from "../lib/constants";
+import { Theme, presetGpnDark } from "@consta/uikit/Theme";
+import { DatePicker } from "@consta/uikit/DatePicker";
+import { BValuePlot } from "./BValuePlot";
+import { RepeatabilityPlot } from "./RepeatabilityPlot";
+import { EventsList } from "./EventsList";
+import { enUS } from "date-fns/locale";
+import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 
 export const App = () => {
   const initialCenter = {
     lat: 51.306,
     lng: 53.2706,
-    zoom: 12
+    zoom: 12,
   };
 
-  const [startTime, setStartTime] = useState(new Date('2021-10-01T00:00:00'));
-  const [endTime, setEndTime] = useState(new Date('2021-10-31T23:59:59'));
+  const [startTime, setStartTime] = useState(new Date("2021-10-01T00:00:00"));
+  const [endTime, setEndTime] = useState(new Date("2021-10-31T23:59:59"));
   const [eventsLimit, setEventsLimit] = useState(10);
   const [geoEvents, setGeoEvents] = useState([]);
   const [stations, setStations] = useState([]);
@@ -36,7 +36,7 @@ export const App = () => {
       const data = await response.text();
 
       setStations(parseStations(data));
-    }
+    };
     setInitialStations("").catch(console.error);
   }, []);
 
@@ -57,23 +57,25 @@ export const App = () => {
       // });
 
       // const response = await fetch(query + params.toString());
-      const response = await fetch(BASENAME_API + "event/1/1000plus_events.xml");
+      const response = await fetch(
+        BASENAME_API + "event/1/1000plus_events.xml"
+      );
       const data = await response.text();
 
       const test = parseGeoEvents(data);
       test[0].excluded = true;
 
-      setGeoEvents(parseGeoEvents(data))
-      setSelectedGeoEvents(test)
-    }
+      setGeoEvents(parseGeoEvents(data));
+      setSelectedGeoEvents(test);
+    };
 
     setInitialEvents().catch(console.error);
   }, [startTime, endTime, eventsLimit]);
 
   const set1 = (items) => {
     console.log("set event");
-    setGeoEvents(items)
-  }
+    setGeoEvents(items);
+  };
 
   //TODO: добавить checkbox для включения интерактивности pop-ups
 
@@ -85,7 +87,7 @@ export const App = () => {
   return (
     <div className="App">
       <div className="all_events_container">
-        <EventsList header="All events" geoEvents={geoEvents} map={map}/>
+        <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
       </div>
       <div className="map_container">
         <MapComponent
@@ -95,39 +97,44 @@ export const App = () => {
           setSelectedGeoEvents={setSelectedGeoEvents}
           map={map}
           setMap={setMap}
-          setGeoEvents={set1}/>
+          setGeoEvents={set1}
+        />
         <div className="options_container">
           <Theme preset={presetGpnDark}>
             <div className="options_wrapper">
-              <TextFieldLeftCaption type="number" value={eventsLimit} setValue={setEventsLimit} caption="Max events: " />
+              <TextFieldLeftCaption
+                type="number"
+                value={eventsLimit}
+                setValue={setEventsLimit}
+                caption="Max events: "
+              />
               <DatePicker
                 type="date-time-range"
                 value={[startTime, endTime]}
-                style={{zIndex: 3}}
+                style={{ zIndex: 3 }}
                 locale={enUS}
                 format="dd.MM.yyyy HH:mm:ss"
-                onChange={({value: [newStartTime, newEndTime]}) => {
+                onChange={({ value: [newStartTime, newEndTime] }) => {
                   setStartTime(newStartTime);
-                  setEndTime(newEndTime);}} />
+                  setEndTime(newEndTime);
+                }}
+              />
             </div>
           </Theme>
         </div>
       </div>
-      <div className="selected_events_container">
-        <EventsList header={"Selected events"} geoEvents={selectedGeoEvents} map={map}></EventsList>
-      </div>
-      {selectedGeoEvents.length > 0 &&
+      {selectedGeoEvents.length > 0 && (
         <div className="graph_1_container">
-          <BValuePlot geoEvents={selectedGeoEvents}/>
+          <BValuePlot geoEvents={selectedGeoEvents} />
         </div>
-      }
-      {selectedGeoEvents.length > 0 &&
+      )}
+      {selectedGeoEvents.length > 0 && (
         <div className="graph_2_container">
-          <RepeatabilityPlot geoEvents={geoEvents}/>
+          <RepeatabilityPlot geoEvents={geoEvents} />
         </div>
-      }
+      )}
     </div>
   );
-}
+};
 
 export default App;
