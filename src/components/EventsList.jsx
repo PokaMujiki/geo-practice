@@ -5,6 +5,11 @@ import { MagnitudeIcon } from "./icons/MagnitudeIcon";
 import { ArrowUpIcon } from "./icons/ArrowUpIcon";
 import { ArrowDownIcon } from "./icons/ArrowDownIcon";
 import { ClockIcon } from "./icons/ClockIcon";
+import { SelectedEventsIcon } from "./icons/SelectedEventsIcon";
+import {
+  DEFAULT_GEO_EVENT_FILL_COLOR,
+  DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
+} from "../lib/constants";
 
 export const EventsList = ({ header: headerText, geoEvents, map }) => {
   const sortByTime = (arr, ascending) => {
@@ -25,6 +30,8 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
 
   const [clockArrowUp, setClockArrowUp] = useState(false);
   const [magnArrowUp, setMagnArrowUp] = useState(false);
+  const [firstShowSelected, setFirstShowSelected] = useState(false);
+
   const [gEvents, setGEvents] = useState(geoEvents);
 
   useEffect(() => {
@@ -32,6 +39,21 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
       geoEvents.sort((a, b) => Number(b.magnitude) - Number(a.magnitude))
     );
   }, [geoEvents]);
+
+  const onClickSelectedEvents = () => {
+    // TODO: доделать логику
+    let selected = [];
+    let notSelected = [];
+
+    console.log(firstShowSelected);
+
+    gEvents.map((geoEvent) =>
+      geoEvent?.selected ? selected.push(geoEvent) : notSelected.push(geoEvent)
+    );
+
+    setGEvents([...selected, ...notSelected]);
+    setFirstShowSelected(!firstShowSelected);
+  };
 
   const onClickClockArrow = () => {
     setGEvents(sortByTime(gEvents, clockArrowUp));
@@ -48,21 +70,33 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
       <div className="event_card_container_header">
         {headerText}
         <div className="icons_wrapper">
-          <div className="clock_icons">
-            <ClockIcon />
-            {clockArrowUp ? (
-              <ArrowUpIcon onClick={onClickClockArrow} />
-            ) : (
-              <ArrowDownIcon onClick={onClickClockArrow} />
-            )}
+          <div className="selected_events_icon">
+            <SelectedEventsIcon
+              onClick={onClickSelectedEvents}
+              circlesFill={
+                firstShowSelected
+                  ? DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR
+                  : DEFAULT_GEO_EVENT_FILL_COLOR
+              }
+            />
           </div>
-          <div className="magn_icons">
-            <MagnitudeIcon />
-            {magnArrowUp ? (
-              <ArrowUpIcon onClick={onClickMagnArrow} />
-            ) : (
-              <ArrowDownIcon onClick={onClickMagnArrow} />
-            )}
+          <div className="icons_container">
+            <div className="clock_icons">
+              <ClockIcon />
+              {clockArrowUp ? (
+                <ArrowUpIcon onClick={onClickClockArrow} />
+              ) : (
+                <ArrowDownIcon onClick={onClickClockArrow} />
+              )}
+            </div>
+            <div className="magn_icons">
+              <MagnitudeIcon />
+              {magnArrowUp ? (
+                <ArrowUpIcon onClick={onClickMagnArrow} />
+              ) : (
+                <ArrowDownIcon onClick={onClickMagnArrow} />
+              )}
+            </div>
           </div>
         </div>
       </div>
