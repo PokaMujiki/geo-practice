@@ -77,8 +77,6 @@ export const App = () => {
     setGeoEvents(items);
   };
 
-  //TODO: добавить checkbox для включения интерактивности pop-ups
-
   // TODO: https://www.usgs.gov/
   // TODO: https://earthquake.usgs.gov/earthquakes/map/?extent=3.16246,-146.16211&extent=65.40344,-5.53711
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
@@ -125,14 +123,15 @@ export const App = () => {
       </div>
       {selectedGeoEvents.length > 0 && (
         <div className="graph_1_container">
-          <BValuePlot geoEvents={selectedGeoEvents} />
+          <BValuePlot
+            seismicEvents={selectedGeoEvents}
+            setSeismicEvents={setSelectedGeoEvents}
+          />
         </div>
       )}
-      {selectedGeoEvents.length > 0 && (
-        <div className="graph_2_container">
-          <RepeatabilityPlot geoEvents={geoEvents} />
-        </div>
-      )}
+      <div className="graph_2_container">
+        <RepeatabilityPlot geoEvents={geoEvents} />
+      </div>
     </div>
   );
 };

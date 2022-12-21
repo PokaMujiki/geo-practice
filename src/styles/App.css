@@ -43,8 +43,8 @@ body {
 .all_events_container {
   grid-area: all_events;
   position: sticky;
-  top: 60px;
-  padding-bottom: 40px;
+  top: 20px;
+  padding-bottom: 30px;
 
   height: 100%;
 }

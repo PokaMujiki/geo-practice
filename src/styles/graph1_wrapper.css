@@ -1,8 +1,8 @@
 .graph1_wrapper {
     display: grid;
     grid-template-areas:
-            "b_value_graph b_value_data";
-    grid-template-columns: 3fr 1fr;
+            "b_value_data b_value_graph";
+    grid-template-columns: 1fr 3fr;
     gap: 40px;
     height: 100%;
 }
@@ -11,25 +11,39 @@
     grid-area: b_value_data;
     display: flex;
     flex-flow: column nowrap;
-    align-content: stretch;
-    justify-content: stretch;
+    justify-content: center;
     gap: 40px;
 }
 
 .b_value_legends {
     width: 100%;
-    height: 100%;
     border-radius: 10px;
     background-color: #2e333d;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.b_value_info {
+    width: 100%;
+    border-radius: 10px;
+    background-color: #2e333d;
+    justify-content: flex-end;
+    padding: 20px 0;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .b_value_options {
     width: 100%;
-    height: 100%;
     border-radius: 10px;
     background-color: #2e333d;
     justify-content: flex-end;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 .b_value_graph {
