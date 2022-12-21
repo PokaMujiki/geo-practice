@@ -1,7 +1,11 @@
 import Plot from "react-plotly.js";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import "../styles/graph1_wrapper.css";
+import {
+  DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
+  DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
+} from "../lib/constants";
 
 const MAGNITUDE_MIN = -1.3;
 const MAGNITUDE_MAX = 3.3;
@@ -19,30 +23,7 @@ const PREDICTED_FUNCTION_PLOT_NAME = "prediction";
 const PREDICTED_FUNCTION_PLOT_MODE = "lines";
 const PREDICTED_FUNCTION_PLOT_TYPE = "scatter";
 
-const splitDatasets = (point, all_y, all_x) => {
-  let useInApproximation_x = [];
-  let useInApproximation_y = [];
-  let notUseInApproximation_x = [];
-  let notUseInApproximation_y = [];
-
-  for (let i = 0; i < all_y.length; i++) {
-    if (point.x <= all_x[i]) {
-      useInApproximation_y.push(all_y[i]);
-      useInApproximation_x.push(all_x[i]);
-    } else {
-      notUseInApproximation_y.push(all_y[i]);
-      notUseInApproximation_x.push(all_x[i]);
-    }
-  }
-
-  return {
-    useInApproximation_y,
-    useInApproximation_x,
-    notUseInApproximation_y,
-    notUseInApproximation_x,
-  };
-};
-
+// approximates given set of points by linear function (ax + b)
 const approximate = (x_points, y_points) => {
   const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
   const y_sum = y_points.reduce((prev, cur) => prev + cur, 0);
@@ -100,89 +81,137 @@ const calculatePoint = (geoEvents, step) => {
   };
 };
 
-export const BValuePlot = ({ geoEvents }) => {
+const filterPoints = (
+  x_points,
+  y_points,
+  selectedRightPoint,
+  selectedLeftPoint
+) => {
+  let middleIndex = Math.floor(x_points.length / 2);
+  let included = { x: [], y: [] };
+  let excluded = { x: [], y: [] };
+
+  for (let i = 0; i < middleIndex; i++) {
+    if (x_points[i] < selectedLeftPoint.x) {
+      excluded.x.push(x_points[i]);
+      excluded.y.push(y_points[i]);
+    } else {
+      included.x.push(x_points[i]);
+      included.y.push(y_points[i]);
+    }
+  }
+
+  for (let i = middleIndex; i < x_points.length; i++) {
+    if (x_points[i] > selectedRightPoint.x) {
+      excluded.x.push(x_points[i]);
+      excluded.y.push(y_points[i]);
+    } else {
+      included.x.push(x_points[i]);
+      included.y.push(y_points[i]);
+    }
+  }
+
+  return { included, excluded };
+};
+
+const updateExcludedSeismicEvents = (
+  seismicEvents,
+  setSeismicEvents,
+  selectedRightPoint,
+  selectedLeftPoint
+) => {
+  setSeismicEvents(
+    seismicEvents.map((item) => {
+      if (
+        item.selected &&
+        (item.magnitude < selectedLeftPoint.x ||
+          item.magnitude > selectedRightPoint)
+      ) {
+        item.excluded = true;
+      }
+
+      return item;
+    })
+  );
+};
+
+export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
+  const onGraphPointClick = (clickedPoint) => {
+    let x_middle = x_points[Math.floor(x_points.length / 2)];
+    if (clickedPoint.x < x_middle) {
+      setSelectedLeftPoint(clickedPoint);
+    } else {
+      setSelectedRightPoint(clickedPoint);
+    }
+  };
+
   const [step, setStep] = useState(0.05);
+  const [selectedRightPoint, setSelectedRightPoint] = useState({
+    x: 100,
+    y: 100000,
+  });
+  const [selectedLeftPoint, setSelectedLeftPoint] = useState({
+    x: -1,
+    y: -1,
+  });
 
   const { x_points, y_points } = useMemo(
-    () => calculatePoint(geoEvents, step),
-    [geoEvents, step]
+    () =>
+      calculatePoint(
+        seismicEvents.filter((item) => item.selected),
+        step
+      ),
+    [seismicEvents, step]
   );
+
+  let filteredPoints = filterPoints(
+    x_points,
+    y_points,
+    selectedRightPoint,
+    selectedLeftPoint
+  );
+
+  // updateExcludedSeismicEvents(
+  //   seismicEvents,
+  //   setSeismicEvents,
+  //   selectedRightPoint,
+  //   selectedLeftPoint
+  // );
+
   let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
-    approximate(x_points, y_points);
-  let x_use = x_points;
-  let y_use = y_points;
-  let x_notUse = [];
-  let y_notUse = [];
+    approximate(filteredPoints.included.x, filteredPoints.included.y);
 
-  const [x_trace, setX_trace] = useState(x_predicted_plot);
-  const [y_trace, setY_trace] = useState(y_predicted_plot);
-
-  const [x_useInApproximation, setX_useInApproximation] = useState(x_use);
-  const [y_useInApproximation, setY_useInApproximation] = useState(y_use);
-
-  const [x_notUseInApproximation, setX_notUseInApproximation] =
-    useState(x_notUse);
-  const [y_notUseInApproximation, setY_notUseInApproximation] =
-    useState(y_notUse);
-
-  const [beta1_th, setBeta1_th] = useState(beta_1_th);
-  const [beta2_th, setBeta2_th] = useState(beta_2_th);
-
-  const [selectedPoint, setSelectedPoint] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const dataset = splitDatasets(selectedPoint, y_points, x_points);
-    setX_useInApproximation(dataset.useInApproximation_x);
-    setY_useInApproximation(dataset.useInApproximation_y);
-
-    setX_notUseInApproximation(dataset.notUseInApproximation_x);
-    setY_notUseInApproximation(dataset.notUseInApproximation_y);
-
-    const approximated = approximate(
-      dataset.useInApproximation_x,
-      dataset.useInApproximation_y
-    );
-
-    setX_trace(approximated.x_predicted_plot);
-    setY_trace(approximated.y_predicted_plot);
-
-    setBeta1_th(approximated.beta_1_th);
-    setBeta2_th(approximated.beta_2_th);
-  }, [selectedPoint, step, geoEvents, x_points, y_points]);
-
-  const plotTitle = `b-value: ${-beta2_th.toFixed(
-    3
-  )}, a-value: ${beta1_th.toFixed(3)}`;
-
-  const trace_function = {
-    x: x_trace,
-    y: y_trace,
+  const approximatedFunctionTrace = {
+    x: x_predicted_plot,
+    y: y_predicted_plot,
     name: PREDICTED_FUNCTION_PLOT_NAME,
     mode: PREDICTED_FUNCTION_PLOT_MODE,
     type: PREDICTED_FUNCTION_PLOT_TYPE,
   };
 
-  const approximatedPoints = {
-    x: x_useInApproximation,
-    y: y_useInApproximation,
+  const usedInApproximationTrace = {
+    x: filteredPoints.included.x,
+    y: filteredPoints.included.y,
     name: APPROXIMATED_POINTS_PLOT_NAME,
     mode: APPROXIMATED_POINTS_PLOT_MODE,
     type: APPROXIMATED_POINTS_PLOT_TYPE,
+    marker: {
+      color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
+    },
   };
 
-  const notApproximatedPoints = {
-    x: x_notUseInApproximation,
-    y: y_notUseInApproximation,
+  console.log(filteredPoints.excluded.y);
+
+  const notUsedInApproximationTrace = {
+    x: filteredPoints.excluded.x,
+    y: filteredPoints.excluded.y,
     name: NOT_APPROXIMATED_POINTS_PLOT_NAME,
     mode: NOT_APPROXIMATED_POINTS_PLOT_MODE,
     type: NOT_APPROXIMATED_POINTS_PLOT_TYPE,
+    marker: {
+      color: DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
+    },
   };
-
-  // TODO: подбирать b-value для фрагмента середины графика после среза начального и конечного фрагментов с низким коэффициентом наклона
-
-  if (!geoEvents.length) {
-    return;
-  }
 
   const validatedSet = (v) => {
     const numberV = Number(v);
@@ -196,7 +225,11 @@ export const BValuePlot = ({ geoEvents }) => {
     <div className="graph1_wrapper">
       <Plot
         className="b_value_graph"
-        data={[approximatedPoints, notApproximatedPoints, trace_function]}
+        data={[
+          usedInApproximationTrace,
+          notUsedInApproximationTrace,
+          approximatedFunctionTrace,
+        ]}
         layout={{
           plot_bgcolor: "#333945",
           paper_bgcolor: "#2e333d",
@@ -207,7 +240,7 @@ export const BValuePlot = ({ geoEvents }) => {
             weigh: 400,
           },
           autosize: true,
-          title: plotTitle,
+          title: "b-value graph",
           showlegend: false,
 
           xaxis: {
@@ -232,18 +265,38 @@ export const BValuePlot = ({ geoEvents }) => {
             dtick: 0.5,
           },
         }}
-        onClick={(data) => {
-          setSelectedPoint({ x: data.points[0].x, y: data.points[0].y });
-        }}
+        onClick={(data) =>
+          onGraphPointClick({ x: data.points[0].x, y: data.points[0].y })
+        }
       />
       <div className="b_value_data">
-        <div className="b_value_legends"></div>
+        <div className="b_value_legends">
+          <p>
+            {" "}
+            <span style={{ color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR }}>
+              blue points{" "}
+            </span>{" "}
+            are used in approximation
+          </p>
+          <p>
+            {" "}
+            <span style={{ color: DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR }}>
+              orange points{" "}
+            </span>{" "}
+            are excluded from approximation{" "}
+          </p>
+        </div>
+        <div className="b_value_info">
+          <p>b-value: {beta_2_th.toFixed(3)}</p>
+          <p>a-value: {beta_1_th.toFixed(3)}</p>
+          <p>approximation error: TBA</p>
+        </div>
         <div className="b_value_options">
           <TextFieldLeftCaption
             value={step}
             setValue={validatedSet}
             type="number"
-            caption="Approximation step"
+            caption="Step to place points"
           />
         </div>
       </div>
