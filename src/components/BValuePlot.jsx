@@ -287,7 +287,7 @@ export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
           </p>
         </div>
         <div className="b_value_info">
-          <p>b-value: {beta_2_th.toFixed(3)}</p>
+          <p>b-value: {-beta_2_th.toFixed(3)}</p>
           <p>a-value: {beta_1_th.toFixed(3)}</p>
           <p>approximation error: TBA</p>
         </div>

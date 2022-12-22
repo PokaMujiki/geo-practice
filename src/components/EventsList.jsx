@@ -10,7 +10,9 @@ import {
   DEFAULT_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../lib/constants";
+import { partition } from "../lib/helpers";
 
+// TODO: fix initial sort
 export const EventsList = ({ header: headerText, geoEvents, map }) => {
   const sortByTime = (arr, ascending) => {
     if (ascending) {
@@ -33,6 +35,10 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
   const [firstShowSelected, setFirstShowSelected] = useState(false);
 
   const [gEvents, setGEvents] = useState(geoEvents);
+  const [lastSortType, setLastSortType] = useState({
+    type: "magn",
+    asc: true,
+  });
 
   useEffect(() => {
     setGEvents(
@@ -41,27 +47,49 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
   }, [geoEvents]);
 
   const onClickSelectedEvents = () => {
-    // TODO: доделать логику
-    let selected = [];
-    let notSelected = [];
+    let firstSelected = !firstShowSelected;
 
-    console.log(firstShowSelected);
+    if (firstSelected) {
+      let parts = partition(gEvents, (item) => item.selected);
+      setGEvents([...parts.pass, ...parts.fail]);
+    } else {
+      if (lastSortType.type === "magn") {
+        setGEvents(sortByMagn(gEvents, lastSortType.asc));
+      } else {
+        setGEvents(sortByTime(gEvents, lastSortType.asc));
+      }
+    }
 
-    gEvents.map((geoEvent) =>
-      geoEvent?.selected ? selected.push(geoEvent) : notSelected.push(geoEvent)
-    );
-
-    setGEvents([...selected, ...notSelected]);
     setFirstShowSelected(!firstShowSelected);
   };
 
   const onClickClockArrow = () => {
-    setGEvents(sortByTime(gEvents, clockArrowUp));
+    if (firstShowSelected) {
+      let parts = partition(gEvents, (item) => item.selected);
+      setGEvents([
+        ...sortByTime(parts.pass, clockArrowUp),
+        ...sortByTime(parts.fail, clockArrowUp),
+      ]);
+    } else {
+      setGEvents(sortByTime(gEvents, clockArrowUp));
+    }
+
+    setLastSortType({ type: "time", asc: clockArrowUp });
     setClockArrowUp(!clockArrowUp);
   };
 
   const onClickMagnArrow = () => {
-    setGEvents(sortByMagn(gEvents, magnArrowUp));
+    if (firstShowSelected) {
+      let parts = partition(gEvents, (item) => item.selected);
+      setGEvents([
+        ...sortByMagn(parts.pass, magnArrowUp),
+        ...sortByMagn(parts.fail, magnArrowUp),
+      ]);
+    } else {
+      setGEvents(sortByMagn(gEvents, magnArrowUp));
+    }
+
+    setLastSortType({ type: "magn", asc: magnArrowUp });
     setMagnArrowUp(!magnArrowUp);
   };
 
