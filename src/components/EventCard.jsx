@@ -16,7 +16,7 @@ export const EventCard = ({ geoEvent, map }) => {
   }
 
   return (
-    <div className="event_card" style={border}>
+    <div className="content_card_lighter event_card" style={border}>
       <p>
         {date} {time}
       </p>

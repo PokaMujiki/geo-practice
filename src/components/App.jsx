@@ -84,7 +84,7 @@ export const App = () => {
 
   return (
     <div className="App">
-      <div className="all_events_container">
+      <div className="content_card_dark all_events_container">
         <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
       </div>
       <div className="map_container">
@@ -122,16 +122,11 @@ export const App = () => {
         </div>
       </div>
       {selectedGeoEvents.length > 0 && (
-        <div className="graph_1_container">
           <BValuePlot
             seismicEvents={selectedGeoEvents}
-            setSeismicEvents={setSelectedGeoEvents}
           />
-        </div>
       )}
-      <div className="graph_2_container">
-        <RepeatabilityPlot geoEvents={geoEvents} />
-      </div>
+      <RepeatabilityPlot geoEvents={geoEvents} />
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import Plot from "react-plotly.js";
 import React, { useMemo, useState } from "react";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import "../styles/graph1_wrapper.css";
+import "../styles/b_value_graph_container.css";
+import "../styles/content_cards.css";
 import {
   DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
@@ -135,7 +136,7 @@ const updateExcludedSeismicEvents = (
   );
 };
 
-export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
+export const BValuePlot = ({ seismicEvents }) => {
   const onGraphPointClick = (clickedPoint) => {
     let x_middle = x_points[Math.floor(x_points.length / 2)];
     if (clickedPoint.x < x_middle) {
@@ -222,9 +223,9 @@ export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
   };
 
   return (
-    <div className="graph1_wrapper">
+    <div className="b_value_graph_container">
       <Plot
-        className="b_value_graph"
+        className="content_card_dark b_value_graph"
         data={[
           usedInApproximationTrace,
           notUsedInApproximationTrace,
@@ -269,8 +270,8 @@ export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
           onGraphPointClick({ x: data.points[0].x, y: data.points[0].y })
         }
       />
-      <div className="b_value_data">
-        <div className="b_value_legends">
+      <div className="b_value_panels_wrapper">
+        <div className="content_card_dark b_value_legends">
           <p>
             {" "}
             <span style={{ color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR }}>
@@ -286,12 +287,12 @@ export const BValuePlot = ({ seismicEvents, setSeismicEvents }) => {
             are excluded from approximation{" "}
           </p>
         </div>
-        <div className="b_value_info">
+        <div className="content_card_dark b_value_info">
           <p>b-value: {-beta_2_th.toFixed(3)}</p>
           <p>a-value: {beta_1_th.toFixed(3)}</p>
           <p>approximation error: TBA</p>
         </div>
-        <div className="b_value_options">
+        <div className="content_card_dark b_value_options">
           <TextFieldLeftCaption
             value={step}
             setValue={validatedSet}

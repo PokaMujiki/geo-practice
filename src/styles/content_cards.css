@@ -1,0 +1,10 @@
+.content_card_dark {
+    border-radius: 10px;
+    background-color: #2e333d;
+}
+
+.content_card_lighter {
+    border-radius: 10px;
+    background-color: #333945;
+}
+

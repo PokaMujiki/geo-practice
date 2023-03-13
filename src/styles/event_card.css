@@ -1,9 +1,7 @@
 .event_card_container {
     display: flex;
     flex-flow: column nowrap;
-    background-color: #2e333d;
     justify-content: flex-start;
-    border-radius: 10px;
     height: 100%;
 }
 
@@ -39,11 +37,9 @@
 }
 
 .event_card {
-    background-color: #333945;
     width: 85%;
     margin-bottom: 20px;
     font-size: 18px;
-    border-radius: 15px;
     padding: 10px;
     overflow-wrap: break-word;
     justify-content: left;
@@ -52,11 +48,9 @@
 }
 
 .event_card_selected {
-    background-color: #333945;
     width: 85%;
     margin-bottom: 20px;
     font-size: 18px;
-    border-radius: 15px;
     padding: 10px;
     overflow-wrap: break-word;
     justify-content: left;
