@@ -13,6 +13,7 @@ import { LayersControl } from "react-leaflet";
 import { Events } from "./Events";
 import L from "leaflet";
 import { ProfileCreator } from "./ProfileCreator";
+import { Test } from "./Test";
 
 export const MapComponent = ({
   center,
@@ -21,6 +22,8 @@ export const MapComponent = ({
   setSelectedGeoEvents,
   setMap,
   setGeoEvents,
+  profiles,
+  setProfiles,
 }) => {
   // const geoEventsComponent = useMemo(() => {
   //   return geoEvents?.map((item, index) =>
@@ -37,7 +40,7 @@ export const MapComponent = ({
       whenReady={(e) => setMap(e.target)}
     >
       <ScaleControl imperial={false} />
-      {/*<LeafletRuler/>*/}
+      <LeafletRuler />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -67,7 +70,7 @@ export const MapComponent = ({
           </LayerGroup>
         </LayersControl.Overlay>
       </LayersControl>
-      <ProfileCreator />
+      <ProfileCreator profiles={profiles} setProfiles={setProfiles} />
     </MapContainer>
   );
 };

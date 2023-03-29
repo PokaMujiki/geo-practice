@@ -12,6 +12,7 @@ import { RepeatabilityPlot } from "./RepeatabilityPlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
+import { ProfilesContainer } from "./ProfilesContainer";
 
 export const App = () => {
   const initialCenter = {
@@ -27,6 +28,7 @@ export const App = () => {
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
   const [map, setMap] = useState();
+  const [profiles, setProfiles] = useState([]);
 
   useEffect(() => {
     const setInitialStations = async (network) => {
@@ -96,6 +98,8 @@ export const App = () => {
           map={map}
           setMap={setMap}
           setGeoEvents={set1}
+          profiles={profiles}
+          setProfiles={setProfiles}
         />
         <div className="options_container">
           <Theme preset={presetGpnDark}>
@@ -121,10 +125,9 @@ export const App = () => {
           </Theme>
         </div>
       </div>
+      {/*<ProfilesContainer profiles={profiles} setProfiles={setProfiles} />*/}
       {selectedGeoEvents.length > 0 && (
-          <BValuePlot
-            seismicEvents={selectedGeoEvents}
-          />
+        <BValuePlot seismicEvents={selectedGeoEvents} />
       )}
       <RepeatabilityPlot geoEvents={geoEvents} />
     </div>
