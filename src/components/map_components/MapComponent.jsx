@@ -10,10 +10,9 @@ import { GeoEvent } from "./GeoEvent";
 import LeafletRuler from "./leaflet-ruler/code/LeafletRuler";
 import { SelectMapArea } from "./SelectMapArea";
 import { LayersControl } from "react-leaflet";
-import { Events } from "./Events";
 import L from "leaflet";
 import { ProfileCreator } from "./ProfileCreator";
-import { Test } from "./Test";
+import { MouseWheelEnableOnFocus } from "./MouseWheel";
 
 export const MapComponent = ({
   center,
@@ -40,7 +39,8 @@ export const MapComponent = ({
       whenReady={(e) => setMap(e.target)}
     >
       <ScaleControl imperial={false} />
-      <LeafletRuler />
+      <MouseWheelEnableOnFocus />
+      {/*<LeafletRuler />*/}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

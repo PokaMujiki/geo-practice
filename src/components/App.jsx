@@ -23,7 +23,7 @@ export const App = () => {
 
   const [startTime, setStartTime] = useState(new Date("2021-10-01T00:00:00"));
   const [endTime, setEndTime] = useState(new Date("2021-10-31T23:59:59"));
-  const [eventsLimit, setEventsLimit] = useState(10);
+  const [eventsLimit, setEventsLimit] = useState(1000);
   const [geoEvents, setGeoEvents] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedGeoEvents, setSelectedGeoEvents] = useState([]);
@@ -74,15 +74,9 @@ export const App = () => {
     setInitialEvents().catch(console.error);
   }, [startTime, endTime, eventsLimit]);
 
-  const set1 = (items) => {
-    console.log("set event");
-    setGeoEvents(items);
-  };
-
   // TODO: https://www.usgs.gov/
   // TODO: https://earthquake.usgs.gov/earthquakes/map/?extent=3.16246,-146.16211&extent=65.40344,-5.53711
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
-  // TODO: попытаться загрузить ивенты снова, связаться с человеком который это уже делал
 
   return (
     <div className="App">
@@ -97,7 +91,7 @@ export const App = () => {
           setSelectedGeoEvents={setSelectedGeoEvents}
           map={map}
           setMap={setMap}
-          setGeoEvents={set1}
+          setGeoEvents={setGeoEvents}
           profiles={profiles}
           setProfiles={setProfiles}
         />
