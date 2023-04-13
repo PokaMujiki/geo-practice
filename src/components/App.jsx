@@ -80,50 +80,50 @@ export const App = () => {
 
   return (
     <div className="App">
-      <div className="content_card_dark all_events_container">
-        <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
-      </div>
-      <div className="map_container">
-        <MapComponent
-          center={initialCenter}
-          stations={stations}
-          geoEvents={geoEvents}
-          setSelectedGeoEvents={setSelectedGeoEvents}
-          map={map}
-          setMap={setMap}
-          setGeoEvents={setGeoEvents}
-          profiles={profiles}
-          setProfiles={setProfiles}
-        />
-        <div className="options_container">
-          <Theme preset={presetGpnDark}>
-            <div className="options_wrapper">
-              <TextFieldLeftCaption
-                type="number"
-                value={eventsLimit}
-                setValue={setEventsLimit}
-                caption="Max events: "
-              />
-              <DatePicker
-                type="date-time-range"
-                value={[startTime, endTime]}
-                style={{ zIndex: 3 }}
-                locale={enUS}
-                format="dd.MM.yyyy HH:mm:ss"
-                onChange={({ value: [newStartTime, newEndTime] }) => {
-                  setStartTime(newStartTime);
-                  setEndTime(newEndTime);
-                }}
-              />
-            </div>
-          </Theme>
+      <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
+      <div className="map_content">
+        <div className="map_container">
+          <MapComponent
+            center={initialCenter}
+            stations={stations}
+            geoEvents={geoEvents}
+            setSelectedGeoEvents={setSelectedGeoEvents}
+            map={map}
+            setMap={setMap}
+            setGeoEvents={setGeoEvents}
+            profiles={profiles}
+            setProfiles={setProfiles}
+          />
+          <div className="options_container">
+            <Theme preset={presetGpnDark}>
+              <div className="options_wrapper">
+                <TextFieldLeftCaption
+                  type="number"
+                  value={eventsLimit}
+                  setValue={setEventsLimit}
+                  caption="Max events: "
+                />
+                <DatePicker
+                  type="date-time-range"
+                  value={[startTime, endTime]}
+                  style={{ zIndex: 3 }}
+                  locale={enUS}
+                  format="dd.MM.yyyy HH:mm:ss"
+                  onChange={({ value: [newStartTime, newEndTime] }) => {
+                    setStartTime(newStartTime);
+                    setEndTime(newEndTime);
+                  }}
+                />
+              </div>
+            </Theme>
+          </div>
         </div>
+        {/*<ProfilesContainer profiles={profiles} setProfiles={setProfiles} />*/}
+        {selectedGeoEvents.length > 0 && (
+          <BValuePlot seismicEvents={selectedGeoEvents} />
+        )}
+        {/*<RepeatabilityPlot geoEvents={geoEvents} />*/}
       </div>
-      {/*<ProfilesContainer profiles={profiles} setProfiles={setProfiles} />*/}
-      {selectedGeoEvents.length > 0 && (
-        <BValuePlot seismicEvents={selectedGeoEvents} />
-      )}
-      <RepeatabilityPlot geoEvents={geoEvents} />
     </div>
   );
 };

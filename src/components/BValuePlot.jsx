@@ -223,7 +223,7 @@ export const BValuePlot = ({ seismicEvents }) => {
   };
 
   return (
-    <div className="b_value_graph_container">
+    <div className="b_value_graph_wrapper">
       <Plot
         className="content_card_dark b_value_graph"
         data={[

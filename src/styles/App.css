@@ -1,29 +1,8 @@
 #root {
-  height: 100%;
 }
 
 body {
-  height: 100%;
-}
-
-.App {
-  text-align: center;
-  align-items: flex-start;
-  height: 240%;
-
-  padding: 80px 60px 40px 60px;
-
-  display: grid;
-  grid-template-columns: 14fr minmax(310px, 5fr);
-  grid-template-rows: 8fr fit-content(70px) 1fr 6fr 7fr;
-  grid-template-areas:
-    "map                 all_events"
-    "options             all_events"
-    "b_value_graph       all_events"
-    "b_value_graph       ."
-    "repeatability_graph .";
-  column-gap: 40px;
-  row-gap: 40px;
+  height: 300%;
 }
 
 p {
@@ -35,17 +14,30 @@ p {
   font-family: 'Inter', sans-serif;
 }
 
-.all_events_container {
-  grid-area: all_events;
-  position: sticky;
-  top: 20px;
-  height: 100%;
+.App {
+  text-align: center;
+  justify-content: center;
+  flex-flow: row-reverse;
+  display: flex;
+  align-self: stretch;
+  gap: 2%;
+  padding-top: 60px;
+}
+
+.map_content {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 70%;
+  gap: 2%;
 }
 
 .map_container {
-  grid-area: map;
-  position: relative;
-  height: 100%;
+  align-self: stretch;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .options_container {

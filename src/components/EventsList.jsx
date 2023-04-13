@@ -94,7 +94,7 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
   };
 
   return (
-    <div className="event_card_container">
+    <div className="event_card_container content_card_dark">
       <div className="event_card_container_header">
         {headerText}
         <div className="icons_wrapper">

@@ -37,6 +37,7 @@ export const MapComponent = ({
       preferCanvas={true}
       renderer={L.canvas()}
       whenReady={(e) => setMap(e.target)}
+      scrollWheelZoom={false}
     >
       <ScaleControl imperial={false} />
       <MouseWheelEnableOnFocus />
