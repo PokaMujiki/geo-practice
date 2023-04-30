@@ -64,11 +64,7 @@ export const App = () => {
       );
       const data = await response.text();
 
-      const test = parseGeoEvents(data);
-      test[0].excluded = true;
-
       setGeoEvents(parseGeoEvents(data));
-      setSelectedGeoEvents(test);
     };
 
     setInitialEvents().catch(console.error);
@@ -87,10 +83,10 @@ export const App = () => {
             center={initialCenter}
             stations={stations}
             geoEvents={geoEvents}
+            selectedGeoEvents={selectedGeoEvents}
             setSelectedGeoEvents={setSelectedGeoEvents}
             map={map}
             setMap={setMap}
-            setGeoEvents={setGeoEvents}
             profiles={profiles}
             setProfiles={setProfiles}
           />

@@ -7,14 +7,7 @@ import {
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../../lib/constants";
 
-const getGeoEventIcon = (_iconSize) => {
-  return L.icon({
-    iconUrl: "./icons/geo_event_icon.svg",
-    iconSize: [_iconSize, _iconSize],
-  });
-};
-
-export const GeoEvent = ({ geoEvent }) => {
+export const GeoEvent = ({ geoEvent, isSelected }) => {
   // const popupRef = useRef();
   // const map = useMap();
   //
@@ -45,7 +38,7 @@ export const GeoEvent = ({ geoEvent }) => {
     <CircleMarker
       center={[geoEvent.latitude, geoEvent.longitude]}
       radius={geoEvent.magnitude > 0 ? 5 + geoEvent.magnitude * 3 : 5}
-      pathOptions={geoEvent?.selected ? selectedPathOptions : pathOptions}
+      pathOptions={isSelected ? selectedPathOptions : pathOptions}
     >
       <Popup>
         <p> Event type: {geoEvent.type} </p>

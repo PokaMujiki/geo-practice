@@ -1,40 +1,33 @@
-import SelectArea from 'leaflet-area-select';
-import {useMap} from "react-leaflet";
+import SelectArea from "leaflet-area-select";
+import { useMap } from "react-leaflet";
+import { useEffect } from "react";
+import L from "leaflet";
 
-export const SelectMapArea = ({geoEvents, setSelectedGeoEvents, setGeoEvents}) => {
+export const SelectMapArea = ({ geoEvents, setSelectedGeoEvents }) => {
   let map = useMap();
-  map.selectArea.enable();
-  map.on('areaselected', (e) => {
-    let totalSelected = 0;
 
-    // eslint-disable-next-line array-callback-return
-    geoEvents.map(geoEvent => {
-      // console.log("event data: ");
-      // console.log(geoEvent.latitude);
-      // console.log(geoEvent.longitude);
-      //
-      // console.log("state: ")
-      // console.log(geoEvent.latitude <= e.bounds._northEast.lat)
-      // console.log(geoEvent.latitude >= e.bounds._southWest.lat)
-      // console.log(geoEvent.longitude <= e.bounds._northEast.lng)
-      // console.log(geoEvent.longitude >= e.bounds._southWest.lng)
+  useEffect(() => {
+    if (!map) return;
 
-      if (geoEvent.latitude <= e.bounds._northEast.lat && geoEvent.latitude >= e.bounds._southWest.lat
-        && geoEvent.longitude <= e.bounds._northEast.lng && geoEvent.longitude >= e.bounds._southWest.lng) {
-        geoEvent.selected = true;
-        // console.log("selected lng: " + geoEvent.longitude + " lat: " + geoEvent.latitude);
-        totalSelected++;
+    map.selectArea.enable();
+  }, [map]);
+
+  const selected = [];
+
+  map.on("areaselected", (e) => {
+    const properBounds = L.latLngBounds([
+      e.bounds._northEast,
+      e.bounds._southWest,
+    ]);
+
+    geoEvents.map((item) => {
+      if (properBounds.contains(L.latLng([item.latitude, item.longitude]))) {
+        selected.push(item);
       }
-      else {
-        geoEvent.selected = false;
-      }
-    })
+    });
 
-    setGeoEvents(geoEvents);
-
-    // console.log("total selected: " + totalSelected);
-    setSelectedGeoEvents(geoEvents.filter(item => item.selected));
+    setSelectedGeoEvents(selected);
   });
 
   return null;
-}
+};

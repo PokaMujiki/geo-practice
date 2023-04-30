@@ -50,6 +50,7 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
     let firstSelected = !firstShowSelected;
 
     if (firstSelected) {
+      // TODO: change logic
       let parts = partition(gEvents, (item) => item.selected);
       setGEvents([...parts.pass, ...parts.fail]);
     } else {
