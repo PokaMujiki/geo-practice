@@ -201,8 +201,6 @@ export const BValuePlot = ({ seismicEvents }) => {
     },
   };
 
-  console.log(filteredPoints.excluded.y);
-
   const notUsedInApproximationTrace = {
     x: filteredPoints.excluded.x,
     y: filteredPoints.excluded.y,

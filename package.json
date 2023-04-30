@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@turf/destination": "^6.5.0",
     "@turf/distance": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
+    "@turf/length": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "date-fns": "^2.29.3",
     "leaflet": "^1.9.3",

@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .textfield_with_caption p {

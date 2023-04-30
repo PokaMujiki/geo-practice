@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/App.css";
 import "../styles/Map.css";
 import "../styles/event_card.css";
-import { MapComponent } from "./map_components/MapComponent";
+import { MapComponent } from "./map-components/MapComponent";
 import { parseGeoEvents, parseStations } from "../lib/parsers";
 import { BASENAME_API } from "../lib/constants";
 import { Theme, presetGpnDark } from "@consta/uikit/Theme";
@@ -12,7 +12,7 @@ import { RepeatabilityPlot } from "./RepeatabilityPlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import { ProfilesContainer } from "./ProfilesContainer";
+import { ProfilesContainer } from "./profile-components/ProfilesContainer";
 
 export const App = () => {
   const initialCenter = {
@@ -60,7 +60,7 @@ export const App = () => {
 
       // const response = await fetch(query + params.toString());
       const response = await fetch(
-        BASENAME_API + "event/1/1000plus_events.xml"
+        /*BASENAME_API + "event/1/1000plus_events.xml"*/ "http://84.237.89.72:8080/fdsnws/event/1/query"
       );
       const data = await response.text();
 
@@ -118,11 +118,15 @@ export const App = () => {
             </Theme>
           </div>
         </div>
-        {/*<ProfilesContainer profiles={profiles} setProfiles={setProfiles} />*/}
+        <ProfilesContainer
+          profiles={profiles}
+          setProfiles={setProfiles}
+          geoEvents={geoEvents}
+        />
         {selectedGeoEvents.length > 0 && (
           <BValuePlot seismicEvents={selectedGeoEvents} />
         )}
-        {/*<RepeatabilityPlot geoEvents={geoEvents} />*/}
+        <RepeatabilityPlot geoEvents={geoEvents} />
       </div>
     </div>
   );

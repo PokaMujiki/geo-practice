@@ -116,6 +116,7 @@ export const RepeatabilityPlot = ({ geoEvents }) => {
           showlegend: false,
 
           yaxis: {
+            automargin: true,
             title: {
               text: "Magnitude",
               standoff: 40,

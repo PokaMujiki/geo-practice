@@ -29,7 +29,7 @@ export const MapComponent = ({
   //     <GeoEvent geoEvent={item} key={index}/>);
   // }, [geoEvents]);
 
-  // TODO: починить линейку
+  // TODO: remove this component
   return (
     <MapContainer
       center={[center.lng, center.lat]}
@@ -41,7 +41,7 @@ export const MapComponent = ({
     >
       <ScaleControl imperial={false} />
       <MouseWheelEnableOnFocus />
-      {/*<LeafletRuler />*/}
+      <LeafletRuler />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
