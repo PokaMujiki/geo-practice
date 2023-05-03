@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/App.css";
 import "../styles/Map.css";
 import "../styles/event_card.css";
-import { MapComponent } from "./map-components/MapComponent";
+import { Map } from "./map-components/Map";
 import { parseGeoEvents, parseStations } from "../lib/parsers";
 import { BASENAME_API } from "../lib/constants";
 import { Theme, presetGpnDark } from "@consta/uikit/Theme";
@@ -59,7 +59,7 @@ export const App = () => {
       // const response = await fetch(query + params.toString());
       const response = await fetch(
         BASENAME_API +
-          "event/1/1000plus_events.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
+          "event/1/random_uncertainty.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
       );
       const data = await response.text();
 
@@ -79,7 +79,7 @@ export const App = () => {
       <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
       <div className="map_content">
         <div className="map_container">
-          <MapComponent
+          <Map
             center={initialCenter}
             stations={stations}
             geoEvents={geoEvents}

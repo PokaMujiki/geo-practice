@@ -8,10 +8,7 @@ import { lineString } from "@turf/helpers";
 import * as turf from "@turf/turf";
 import Plot from "react-plotly.js";
 import React from "react";
-import {
-  DEFAULT_GEO_EVENT_FILL_COLOR,
-  DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
-} from "../../lib/constants";
+import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
 
 export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let profilePoints = pointsInParallelPolygon(profileInfo, geoEvents);
@@ -29,10 +26,16 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let maxDepth = Number.MIN_VALUE;
   let minDepth = Number.MAX_VALUE;
   for (let i = 0; i < profilePoints.length; i++) {
+    if (!profilePoints[i].depth) {
+      // no depth data
+      continue;
+    }
+
     let toProject = myPoint2TurfPoint(profilePoints[i]);
     const projectedPoint = turf.nearestPointOnLine(line, toProject);
-    distances.push(turf.distance(start, projectedPoint) * 1000); // to meters
-    // todo: если нету разброса или даже глубины то что тогда делать?
+    distances.push(
+      Number(turf.distance(start, projectedPoint) * 1000).toFixed(0)
+    ); // to meters
     const currentDepth = Number(profilePoints[i].depth);
     depths.push(currentDepth);
     if (currentDepth > maxDepth) {
@@ -54,6 +57,12 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
       color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
     },
   };
+
+  if (maxDepth === Number.MIN_VALUE) {
+    // no events with depth data, make plot look better
+    maxDepth = 15000;
+    minDepth = 0;
+  }
 
   return (
     <>

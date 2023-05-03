@@ -3,7 +3,7 @@ import { ProfileOptions } from "./ProfileOptions";
 import "../../styles/profile.css";
 
 export const ProfilesContainer = ({ profiles, setProfiles, geoEvents }) => {
-  if (!geoEvents[0]?.depthUncertainty) {
+  if (!geoEvents[0]?.depth) {
     return null;
   }
   return (

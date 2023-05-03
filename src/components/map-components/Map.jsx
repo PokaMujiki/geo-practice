@@ -15,7 +15,7 @@ import { ProfileCreator } from "./ProfileCreator";
 import { MouseWheelEnableOnFocus } from "./MouseWheel";
 import { getUnselectedEvents } from "../../lib/helpers";
 
-export const MapComponent = ({
+export const Map = ({
   center,
   stations,
   geoEvents,

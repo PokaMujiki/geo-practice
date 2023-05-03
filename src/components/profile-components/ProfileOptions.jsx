@@ -15,6 +15,18 @@ export const ProfileOptions = ({
 
   let profilePoints = pointsInParallelPolygon(currentProfile, geoEvents);
 
+  let eventsNoDepthDataCount = 0;
+  let eventsNoUncertaintyDataCount = 0;
+
+  for (let i = 0; i < profilePoints.length; i++) {
+    if (!profilePoints[i].depth) {
+      eventsNoDepthDataCount++;
+      eventsNoUncertaintyDataCount++;
+    } else if (!profilePoints[i].depthUncertainty) {
+      eventsNoUncertaintyDataCount++;
+    }
+  }
+
   const setWidth = (value) => {
     let updatedProfiles = [...profiles];
     updatedProfiles[profileIndex].width = value;
@@ -29,7 +41,11 @@ export const ProfileOptions = ({
         setValue={setWidth}
         caption="Profile width in meters: "
       />
-      <p>profile contains {profilePoints.length} events</p>
+      <p>Profile contains {profilePoints.length} events</p>
+      <p>{eventsNoDepthDataCount} events have no depth data</p>
+      <p>
+        {eventsNoUncertaintyDataCount} events have no depth uncertainty data
+      </p>
     </div>
   );
 };
