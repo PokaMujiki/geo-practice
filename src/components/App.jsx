@@ -31,9 +31,7 @@ export const App = () => {
   const [profiles, setProfiles] = useState([]);
 
   useEffect(() => {
-    const setInitialStations = async (network) => {
-      // const query = BASENAME_API + "station/1/query?";
-      // const response = await fetch(query);
+    const setInitialStations = async () => {
       const response = await fetch(BASENAME_API + "station/1/stations.xml");
       const data = await response.text();
 
@@ -60,11 +58,13 @@ export const App = () => {
 
       // const response = await fetch(query + params.toString());
       const response = await fetch(
-        /*BASENAME_API + "event/1/1000plus_events.xml"*/ "http://84.237.89.72:8080/fdsnws/event/1/query"
+        BASENAME_API +
+          "event/1/1000plus_events.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
       );
       const data = await response.text();
 
       setGeoEvents(parseGeoEvents(data));
+      setSelectedGeoEvents([]);
     };
 
     setInitialEvents().catch(console.error);
@@ -122,7 +122,10 @@ export const App = () => {
         {selectedGeoEvents.length > 0 && (
           <BValuePlot seismicEvents={selectedGeoEvents} />
         )}
-        <RepeatabilityPlot geoEvents={geoEvents} />
+        <RepeatabilityPlot
+          geoEvents={geoEvents}
+          selectedGeoEvents={selectedGeoEvents}
+        />
       </div>
     </div>
   );

@@ -7,8 +7,9 @@ import {
   DEFAULT_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../lib/constants";
+import { getUnselectedEvents } from "../lib/helpers";
 
-export const RepeatabilityPlot = ({ geoEvents }) => {
+export const RepeatabilityPlot = ({ geoEvents, selectedGeoEvents }) => {
   if (!geoEvents?.length) {
     return;
   }
@@ -32,9 +33,12 @@ export const RepeatabilityPlot = ({ geoEvents }) => {
 
   let max_magnitude = Number(geoEvents[0].magnitude);
   let min_magnitude = Number(geoEvents[0].magnitude);
-  for (let i = 0; i < geoEvents.length; i++) {
-    let x = format(new Date(geoEvents[i].time), "yyyy-MM-dd HH:mm:ss");
-    let y = Number(geoEvents[i].magnitude);
+
+  const unselected = getUnselectedEvents(geoEvents, selectedGeoEvents);
+
+  for (let i = 0; i < unselected.length; i++) {
+    let x = format(new Date(unselected[i].time), "yyyy-MM-dd HH:mm:ss");
+    let y = Number(unselected[i].magnitude);
 
     if (y > max_magnitude) {
       max_magnitude = y;
@@ -43,16 +47,23 @@ export const RepeatabilityPlot = ({ geoEvents }) => {
       min_magnitude = y;
     }
 
-    if (geoEvents[i].selected) {
-      selectedSeismicEvents.x.push(x);
-      selectedSeismicEvents.y.push(y);
-    } else if (geoEvents[i].excluded) {
-      excludedSeismicEvents.x.push(x);
-      excludedSeismicEvents.y.push(y);
-    } else {
-      seismicEvents.x.push(x);
-      seismicEvents.y.push(y);
+    seismicEvents.x.push(x);
+    seismicEvents.y.push(y);
+  }
+
+  for (let i = 0; i < selectedGeoEvents.length; i++) {
+    let x = format(new Date(selectedGeoEvents[i].time), "yyyy-MM-dd HH:mm:ss");
+    let y = Number(selectedGeoEvents[i].magnitude);
+
+    if (y > max_magnitude) {
+      max_magnitude = y;
     }
+    if (y < min_magnitude) {
+      min_magnitude = y;
+    }
+
+    selectedSeismicEvents.x.push(x);
+    selectedSeismicEvents.y.push(y);
   }
 
   const seismicEventsTrace = {

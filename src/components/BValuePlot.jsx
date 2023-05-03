@@ -63,7 +63,7 @@ const approximate = (x_points, y_points) => {
   };
 };
 
-const calculatePoint = (geoEvents, step) => {
+const calculatePoints = (geoEvents, step) => {
   const y_points = [];
   const x_points = [];
 
@@ -115,27 +115,6 @@ const filterPoints = (
   return { included, excluded };
 };
 
-const updateExcludedSeismicEvents = (
-  seismicEvents,
-  setSeismicEvents,
-  selectedRightPoint,
-  selectedLeftPoint
-) => {
-  setSeismicEvents(
-    seismicEvents.map((item) => {
-      if (
-        item.selected &&
-        (item.magnitude < selectedLeftPoint.x ||
-          item.magnitude > selectedRightPoint)
-      ) {
-        item.excluded = true;
-      }
-
-      return item;
-    })
-  );
-};
-
 export const BValuePlot = ({ seismicEvents }) => {
   const onGraphPointClick = (clickedPoint) => {
     let x_middle = x_points[Math.floor(x_points.length / 2)];
@@ -157,11 +136,7 @@ export const BValuePlot = ({ seismicEvents }) => {
   });
 
   const { x_points, y_points } = useMemo(
-    () =>
-      calculatePoint(
-        seismicEvents.filter((item) => item.selected),
-        step
-      ),
+    () => calculatePoints(seismicEvents, step),
     [seismicEvents, step]
   );
 
@@ -171,13 +146,6 @@ export const BValuePlot = ({ seismicEvents }) => {
     selectedRightPoint,
     selectedLeftPoint
   );
-
-  // updateExcludedSeismicEvents(
-  //   seismicEvents,
-  //   setSeismicEvents,
-  //   selectedRightPoint,
-  //   selectedLeftPoint
-  // );
 
   let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
     approximate(filteredPoints.included.x, filteredPoints.included.y);
