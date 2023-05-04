@@ -60,10 +60,10 @@ export const App = () => {
       // });
 
       // const response = await fetch(query + params.toString());
-      const response = await fetch(
-        BASENAME_API +
-          "event/1/random_uncertainty.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
-      );
+      // const response = await fetch(
+      //   BASENAME_API +
+      //     "event/1/random_uncertainty.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
+      // );
       // const data = await response.text();
       const data = eventsExample;
 
