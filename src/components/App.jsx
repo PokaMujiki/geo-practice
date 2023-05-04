@@ -13,8 +13,8 @@ import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import { ProfilesContainer } from "./profile-components/ProfilesContainer";
-import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
 import { eventsExample } from "./server-responses-mocks/EventsServerResponseExample";
+import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
 
 export const App = () => {
   const initialCenter = {
@@ -64,8 +64,8 @@ export const App = () => {
         BASENAME_API +
           "event/1/random_uncertainty.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
       );
-      const data = await response.text();
-      // const data = eventsExample;
+      // const data = await response.text();
+      const data = eventsExample;
 
       setGeoEvents(parseGeoEvents(data));
       setSelectedGeoEvents([]);
