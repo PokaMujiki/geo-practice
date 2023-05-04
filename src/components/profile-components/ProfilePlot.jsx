@@ -23,6 +23,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
 
   let distances = [];
   let depths = [];
+  let uncertainty = [];
   let maxDepth = Number.MIN_VALUE;
   let minDepth = Number.MAX_VALUE;
   for (let i = 0; i < profilePoints.length; i++) {
@@ -31,11 +32,14 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
       continue;
     }
 
-    let toProject = myPoint2TurfPoint(profilePoints[i]);
+    const toProject = myPoint2TurfPoint(profilePoints[i]);
     const projectedPoint = turf.nearestPointOnLine(line, toProject);
-    distances.push(
-      Number(turf.distance(start, projectedPoint) * 1000).toFixed(0)
-    ); // to meters
+
+    const currentDistance = Number(
+      turf.distance(start, projectedPoint) * 1000
+    ).toFixed(0); // to meters
+    distances.push(currentDistance);
+
     const currentDepth = Number(profilePoints[i].depth);
     depths.push(currentDepth);
     if (currentDepth > maxDepth) {
@@ -44,6 +48,25 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
     if (currentDepth < minDepth) {
       minDepth = currentDepth;
     }
+
+    if (!profilePoints[i].depthUncertainty) {
+      continue;
+    }
+
+    const currentUncertainty = Number(profilePoints[i].depthUncertainty);
+    uncertainty.push({
+      type: "line",
+      x0: currentDistance,
+      x1: currentDistance,
+      y0: currentDepth - currentUncertainty,
+      y1: currentDepth + currentUncertainty,
+      line: {
+        color: "rgb(214,214,213)",
+        width: 1,
+        dash: "solid",
+      },
+      opacity: 0.3,
+    });
   }
 
   let maxDistance = turf.distance(start, end) * 1000; // to meters
@@ -59,7 +82,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   };
 
   if (maxDepth === Number.MIN_VALUE) {
-    // no events with depth data, make plot look better
+    // no events with depth data, make axis borders look better
     maxDepth = 15000;
     minDepth = 0;
   }
@@ -73,6 +96,8 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
           title: {
             text: "distribution of hypocenters along a linear profile",
           },
+
+          shapes: uncertainty,
 
           autosize: true,
 
@@ -92,7 +117,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
               text: "depth in meters",
               standoff: 40,
             },
-            range: [maxDepth + 100, minDepth - 100],
+            range: [maxDepth + 700, minDepth - 700],
             gridcolor: "gray",
             zerolinecolor: "green",
             tickcolor: "transparent",
@@ -109,6 +134,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
             tickcolor: "transparent",
           },
         }}
+        onHover={(data) => console.log(data)}
       />
     </>
   );
