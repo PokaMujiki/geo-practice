@@ -1,10 +1,9 @@
 import { format } from "date-fns";
 import { PointerIcon } from "./icons/PointerIcon";
 import { FLYTO_ANIMATION_DURATION } from "../lib/constants";
+import { toNormalDate, toNormalTime } from "../lib/helpers";
 
 export const EventCard = ({ geoEvent, map }) => {
-  const date = format(new Date(geoEvent.time), "yyyy MMM do");
-  const time = format(new Date(geoEvent.time), "HH:mm:ss");
   let border;
 
   if (geoEvent?.selected) {
@@ -18,7 +17,7 @@ export const EventCard = ({ geoEvent, map }) => {
   return (
     <div className="content_card_lighter event_card" style={border}>
       <p>
-        {date} {time}
+        {toNormalDate(geoEvent.time)} {toNormalTime(geoEvent.time)}
       </p>
       <p>
         <span>

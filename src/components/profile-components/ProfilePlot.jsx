@@ -9,6 +9,7 @@ import * as turf from "@turf/turf";
 import Plot from "react-plotly.js";
 import React from "react";
 import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
+import { toNormalDate, toNormalTime } from "../../lib/helpers";
 
 export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let profilePoints = pointsInParallelPolygon(profileInfo, geoEvents);
@@ -24,13 +25,25 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let distances = [];
   let depths = [];
   let uncertainty = [];
+  let eventsSpecificOrder = [];
   let maxDepth = Number.MIN_VALUE;
   let minDepth = Number.MAX_VALUE;
+
   for (let i = 0; i < profilePoints.length; i++) {
     if (!profilePoints[i].depth) {
       // no depth data
       continue;
     }
+
+    eventsSpecificOrder.push({
+      magnitude: profilePoints[i].magnitude,
+      magnitudeType: profilePoints[i].magnitudeType,
+      depthUncertainty: profilePoints[i].depthUncertainty,
+      time:
+        toNormalDate(profilePoints[i].time) +
+        " " +
+        toNormalTime(profilePoints[i].time),
+    });
 
     const toProject = myPoint2TurfPoint(profilePoints[i]);
     const projectedPoint = turf.nearestPointOnLine(line, toProject);
@@ -74,11 +87,19 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let trace = {
     x: distances,
     y: depths,
+    customdata: eventsSpecificOrder,
     mode: "markers",
     type: "scatter",
     marker: {
       color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
     },
+    hovertemplate:
+      "%{yaxis.title.text}: %{y}<br>" +
+      "%{xaxis.title.text}: %{x}<br>" +
+      "magnitude: %{customdata.magnitude} (%{customdata.magnitudeType})<br>" +
+      "date: %{customdata.time}<br>" +
+      "unsertainty(meters): %{customdata.depthUncertainty}" +
+      "<extra></extra>",
   };
 
   if (maxDepth === Number.MIN_VALUE) {
@@ -86,6 +107,8 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
     maxDepth = 15000;
     minDepth = 0;
   }
+
+  console.log(eventsSpecificOrder);
 
   return (
     <>
@@ -134,7 +157,6 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
             tickcolor: "transparent",
           },
         }}
-        onHover={(data) => console.log(data)}
       />
     </>
   );
