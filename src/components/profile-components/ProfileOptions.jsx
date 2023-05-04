@@ -39,7 +39,7 @@ export const ProfileOptions = ({
         type="number"
         value={width}
         setValue={setWidth}
-        caption="Profile width in meters: "
+        caption="Profile width(km): "
       />
       <p>Profile contains {profilePoints.length} events</p>
       <p>{eventsNoDepthDataCount} events have no depth data</p>

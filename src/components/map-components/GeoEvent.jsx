@@ -6,6 +6,7 @@ import {
   DEFAULT_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../../lib/constants";
+import { toNormalDate, toNormalTime } from "../../lib/helpers";
 
 export const GeoEvent = ({ geoEvent, isSelected }) => {
   // const popupRef = useRef();
@@ -34,6 +35,8 @@ export const GeoEvent = ({ geoEvent, isSelected }) => {
     weight: 1,
   };
 
+  // todo: better css
+
   return (
     <CircleMarker
       center={[geoEvent.latitude, geoEvent.longitude]}
@@ -42,7 +45,10 @@ export const GeoEvent = ({ geoEvent, isSelected }) => {
     >
       <Popup>
         <p> Event type: {geoEvent.type} </p>
-        <p> Date: {geoEvent.time} </p>
+        <p>
+          {" "}
+          Date: {toNormalDate(geoEvent.time)} {toNormalTime(geoEvent.time)}
+        </p>
         <p>
           {" "}
           Magnitude: {geoEvent.magnitude} {geoEvent.magnitudeType}{" "}

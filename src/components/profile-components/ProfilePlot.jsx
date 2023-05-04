@@ -9,6 +9,7 @@ import * as turf from "@turf/turf";
 import Plot from "react-plotly.js";
 import React from "react";
 import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
+import { toNormalDate, toNormalTime } from "../../lib/helpers";
 
 export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let profilePoints = pointsInParallelPolygon(profileInfo, geoEvents);
@@ -23,19 +24,35 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
 
   let distances = [];
   let depths = [];
+  let uncertainty = [];
+  let eventsSpecificOrder = [];
   let maxDepth = Number.MIN_VALUE;
   let minDepth = Number.MAX_VALUE;
+
   for (let i = 0; i < profilePoints.length; i++) {
     if (!profilePoints[i].depth) {
       // no depth data
       continue;
     }
 
-    let toProject = myPoint2TurfPoint(profilePoints[i]);
+    eventsSpecificOrder.push({
+      magnitude: profilePoints[i].magnitude,
+      magnitudeType: profilePoints[i].magnitudeType,
+      depthUncertainty: profilePoints[i].depthUncertainty,
+      time:
+        toNormalDate(profilePoints[i].time) +
+        " " +
+        toNormalTime(profilePoints[i].time),
+    });
+
+    const toProject = myPoint2TurfPoint(profilePoints[i]);
     const projectedPoint = turf.nearestPointOnLine(line, toProject);
-    distances.push(
-      Number(turf.distance(start, projectedPoint) * 1000).toFixed(0)
-    ); // to meters
+
+    const currentDistance = Number(
+      turf.distance(start, projectedPoint) * 1000
+    ).toFixed(0); // to meters
+    distances.push(currentDistance);
+
     const currentDepth = Number(profilePoints[i].depth);
     depths.push(currentDepth);
     if (currentDepth > maxDepth) {
@@ -44,6 +61,25 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
     if (currentDepth < minDepth) {
       minDepth = currentDepth;
     }
+
+    if (!profilePoints[i].depthUncertainty) {
+      continue;
+    }
+
+    const currentUncertainty = Number(profilePoints[i].depthUncertainty);
+    uncertainty.push({
+      type: "line",
+      x0: currentDistance,
+      x1: currentDistance,
+      y0: currentDepth - currentUncertainty,
+      y1: currentDepth + currentUncertainty,
+      line: {
+        color: "rgb(214,214,213)",
+        width: 1,
+        dash: "solid",
+      },
+      opacity: 0.3,
+    });
   }
 
   let maxDistance = turf.distance(start, end) * 1000; // to meters
@@ -51,18 +87,28 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let trace = {
     x: distances,
     y: depths,
+    customdata: eventsSpecificOrder,
     mode: "markers",
     type: "scatter",
     marker: {
       color: DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
     },
+    hovertemplate:
+      "%{yaxis.title.text}: %{y}<br>" +
+      "%{xaxis.title.text}: %{x}<br>" +
+      "magnitude: %{customdata.magnitude} (%{customdata.magnitudeType})<br>" +
+      "date: %{customdata.time}<br>" +
+      "unsertainty(meters): %{customdata.depthUncertainty}" +
+      "<extra></extra>",
   };
 
   if (maxDepth === Number.MIN_VALUE) {
-    // no events with depth data, make plot look better
+    // no events with depth data, make axis borders look better
     maxDepth = 15000;
     minDepth = 0;
   }
+
+  console.log(eventsSpecificOrder);
 
   return (
     <>
@@ -73,6 +119,8 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
           title: {
             text: "distribution of hypocenters along a linear profile",
           },
+
+          shapes: uncertainty,
 
           autosize: true,
 
@@ -92,7 +140,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
               text: "depth in meters",
               standoff: 40,
             },
-            range: [maxDepth + 100, minDepth - 100],
+            range: [maxDepth + 700, minDepth - 700],
             gridcolor: "gray",
             zerolinecolor: "green",
             tickcolor: "transparent",
