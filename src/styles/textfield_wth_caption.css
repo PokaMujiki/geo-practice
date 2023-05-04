@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .textfield_with_caption p {
@@ -36,4 +38,17 @@ input::-webkit-inner-spin-button {
 .textfield_with_caption__textfield:focus {
     outline: none;
     border: 1px solid #0593ff;
+}
+
+/* disable arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }

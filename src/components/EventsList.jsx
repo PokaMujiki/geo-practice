@@ -50,6 +50,7 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
     let firstSelected = !firstShowSelected;
 
     if (firstSelected) {
+      // TODO: change logic
       let parts = partition(gEvents, (item) => item.selected);
       setGEvents([...parts.pass, ...parts.fail]);
     } else {
@@ -94,7 +95,7 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
   };
 
   return (
-    <div className="event_card_container">
+    <div className="event_card_container content_card_dark">
       <div className="event_card_container_header">
         {headerText}
         <div className="icons_wrapper">

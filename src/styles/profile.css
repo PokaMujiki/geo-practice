@@ -1,0 +1,29 @@
+.profile_wrapper {
+    height: 40vh;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+}
+
+.profile_options {
+    flex-basis: 20%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 40px;
+    align-self: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.profile_plot {
+    flex-basis: 80%;
+    overflow: hidden;
+    height: 100%;
+}
+
+.leaflet-container.crosshair-cursor-enabled {
+    cursor:crosshair;
+}

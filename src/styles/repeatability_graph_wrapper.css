@@ -1,7 +1,6 @@
 .repeatability_graph_wrapper {
-    grid-area: repeatability_graph;
-
-    height: 100%;
+    height: 60vh;
+    min-height: 600px;
     width: 100%;
     display: flex;
     justify-content: center;
