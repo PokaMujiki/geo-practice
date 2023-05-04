@@ -1,8 +1,7 @@
 import { TextFieldLeftCaption } from "../TextFieldLeftCaption";
+import React, { useEffect, useState } from "react";
+import { useDebounce } from "../../hooks/useDebounce";
 import L from "leaflet";
-import { getParallelPolygon } from "../../lib/parallel";
-import React from "react";
-import { pointsInParallelPolygon } from "./ProfileHelpers";
 
 export const ProfileOptions = ({
   profiles,
@@ -11,27 +10,51 @@ export const ProfileOptions = ({
   profileIndex,
 }) => {
   const currentProfile = profiles[profileIndex];
-  const width = currentProfile.width;
+  const [width, setWidth] = useState(currentProfile.width);
 
-  let profilePoints = pointsInParallelPolygon(currentProfile, geoEvents);
+  const debouncedWidth = useDebounce(width, 750);
+
+  useEffect(() => {
+    let updatedProfiles = [...profiles];
+    updatedProfiles[profileIndex].width = debouncedWidth;
+    setProfiles(updatedProfiles);
+  }, [debouncedWidth]);
+
+  if (!currentProfile?.bounds) return;
 
   let eventsNoDepthDataCount = 0;
   let eventsNoUncertaintyDataCount = 0;
 
-  for (let i = 0; i < profilePoints.length; i++) {
-    if (!profilePoints[i].depth) {
+  const profileEvents = [];
+
+  geoEvents.map((item) => {
+    if (
+      currentProfile.bounds.contains(L.latLng(item.latitude, item.longitude))
+    ) {
+      profileEvents.push(item);
+    }
+  });
+
+  console.log(profileEvents);
+
+  for (let i = 0; i < profileEvents.length; i++) {
+    if (!profileEvents[i].depth) {
       eventsNoDepthDataCount++;
       eventsNoUncertaintyDataCount++;
-    } else if (!profilePoints[i].depthUncertainty) {
+    } else if (!profileEvents[i].depthUncertainty) {
       eventsNoUncertaintyDataCount++;
     }
   }
 
-  const setWidth = (value) => {
-    let updatedProfiles = [...profiles];
-    updatedProfiles[profileIndex].width = value;
-    setProfiles(updatedProfiles);
-  };
+  console.log(
+    profileEvents.map((item) => {
+      console.log(
+        profiles[profileIndex].bounds.contains(
+          L.latLng(item.latitude, item.longitude)
+        )
+      );
+    })
+  );
 
   return (
     <div className="profile_options content_card_dark">
@@ -41,7 +64,7 @@ export const ProfileOptions = ({
         setValue={setWidth}
         caption="Profile width(km): "
       />
-      <p>Profile contains {profilePoints.length} events</p>
+      <p>Profile contains {profileEvents.length} events</p>
       <p>{eventsNoDepthDataCount} events have no depth data</p>
       <p>
         {eventsNoUncertaintyDataCount} events have no depth uncertainty data

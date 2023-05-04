@@ -14,6 +14,7 @@ import L from "leaflet";
 import { ProfileCreator } from "./ProfileCreator";
 import { MouseWheelEnableOnFocus } from "./MouseWheel";
 import { getUnselectedEvents } from "../../lib/helpers";
+import { Profile } from "./Profile";
 
 export const Map = ({
   center,
@@ -82,7 +83,16 @@ export const Map = ({
           <LayerGroup>{geoEventsMemo}</LayerGroup>
         </LayersControl.Overlay>
       </LayersControl>
-      <ProfileCreator profiles={profiles} setProfiles={setProfiles} />
+      <ProfileCreator setProfiles={setProfiles} />
+      {profiles?.length &&
+        profiles.map((item, index) => (
+          <Profile
+            profiles={profiles}
+            setProfiles={setProfiles}
+            profileIndex={index}
+            key={index}
+          />
+        ))}
     </MapContainer>
   );
 };

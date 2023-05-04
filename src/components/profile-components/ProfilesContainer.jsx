@@ -1,11 +1,34 @@
 import { ProfilePlot } from "./ProfilePlot";
 import { ProfileOptions } from "./ProfileOptions";
 import "../../styles/profile.css";
+import L from "leaflet";
 
 export const ProfilesContainer = ({ profiles, setProfiles, geoEvents }) => {
-  if (!geoEvents[0]?.depth) {
-    return null;
-  }
+  // const allProfilesEvents = []; // contains events for every profile
+
+  // for (let i = 0; i < geoEvents.length; i++) {
+  //   for (let j = 0; j < profiles.length; j++) {
+  //     if (!profiles[j]?.bounds) {
+  //       allProfilesEvents[j] = [];
+  //       continue;
+  //     }
+  //
+  //     if (
+  //       profiles[j].bounds.contains(
+  //         L.latLng(geoEvents[i].latitude, geoEvents[i].longitude)
+  //       )
+  //     ) {
+  //       if (!allProfilesEvents[j]?.length) {
+  //         allProfilesEvents[j] = [geoEvents[i]];
+  //       } else {
+  //         allProfilesEvents[j].push(geoEvents[i]);
+  //       }
+  //     }
+  //   }
+  // }
+
+  console.log(profiles);
+
   return (
     <>
       {profiles?.map((item, index) => (

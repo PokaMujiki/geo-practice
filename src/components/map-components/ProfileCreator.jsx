@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Polygon, Polyline, useMapEvents } from "react-leaflet";
-import { getParallelPolygon } from "../../lib/parallel";
+import { Polyline, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 
-export const ProfileCreator = ({ profiles, setProfiles }) => {
+export const ProfileCreator = ({ setProfiles }) => {
   const [clickPositions, setClickPositions] = useState([]);
   const [enabled, setEnabled] = useState(false);
   const [currentMousePos, setCurrentMousePos] = useState(null);
@@ -37,6 +36,7 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
     },
     keypress: (e) => {
       if (!map) return;
+
       // enter/leave creating profiles mode
       if (e.originalEvent.key === "P" || e.originalEvent.key === "p") {
         if (enabled && clickPositions.length % 2 !== 0) {
@@ -51,7 +51,9 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
         }
         setEnabled((prevState) => !prevState);
       }
+
       // if has clicked position without profile, removes it, else removes last profile
+      // profile remover
       if (
         enabled &&
         (e.originalEvent.key === "D" || e.originalEvent.key === "d")
@@ -69,11 +71,6 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
     },
   });
 
-  // let lines = [];
-  // for (let i = 0; i < clickPositions.length - 1; i += 2) {
-  //   lines.push([clickPositions[i], clickPositions[i + 1]]);
-  // }
-
   return (
     <>
       {clickPositions.length % 2 !== 0 && currentMousePos && (
@@ -86,20 +83,6 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
           key={Number.MAX_VALUE}
         />
       )}
-      {profiles?.length > 0 &&
-        profiles.map((item, index) => (
-          <>
-            <Polyline positions={item.positions} key={index} color="red" />
-            <Polygon
-              positions={getParallelPolygon(
-                item.positions[0],
-                item.positions[1],
-                item.width
-              )}
-              key={index + 10000}
-            />
-          </>
-        ))}
     </>
   );
 };
