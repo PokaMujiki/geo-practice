@@ -13,8 +13,6 @@ import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import { ProfilesContainer } from "./profile-components/ProfilesContainer";
-import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
-import { eventsExample } from "./server-responses-mocks/EventsServerResponseExample";
 
 export const App = () => {
   const initialCenter = {
@@ -34,9 +32,8 @@ export const App = () => {
 
   useEffect(() => {
     const setInitialStations = async () => {
-      // const response = await fetch(BASENAME_API + "station/1/stations.xml");
-      // const data = await response.text();
-      const data = stationsExample;
+      const response = await fetch(BASENAME_API + "station/1/stations.xml");
+      const data = await response.text();
 
       setStations(parseStations(data));
     };
