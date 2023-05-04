@@ -32,7 +32,6 @@ export const getUnselectedEvents = (events, selectedEvents) => {
 
 export const toNormalDate = (date) => {
   return format(new Date(date), "yyyy MMM do");
-  const time = format(new Date(geoEvent.time), "HH:mm:ss");
 };
 
 export const toNormalTime = (date) => {

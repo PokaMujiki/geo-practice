@@ -108,8 +108,6 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
     minDepth = 0;
   }
 
-  console.log(eventsSpecificOrder);
-
   return (
     <>
       <Plot

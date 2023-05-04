@@ -14,7 +14,6 @@ export const GeoEvent = ({ geoEvent, isSelected }) => {
   //
   // useEffect(() => {
   //
-  //   console.log("fasfasdf");
   //   const popup = popupRef.current;
   //   if (!!popup && !!map) {
   //     map.openPopup(popup);
