@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Polyline, useMapEvents } from "react-leaflet";
 import L from "leaflet";
+import { getParallelPolygon } from "../../lib/parallel";
 
 export const ProfileCreator = ({ setProfiles }) => {
   const [clickPositions, setClickPositions] = useState([]);
   const [enabled, setEnabled] = useState(false);
   const [currentMousePos, setCurrentMousePos] = useState(null);
 
-  const popLastArray = (array) => {
+  const popLast = (array) => {
     if (!array.length) {
       return [];
     }
@@ -20,13 +21,22 @@ export const ProfileCreator = ({ setProfiles }) => {
       if (!map || !enabled) return;
 
       if (clickPositions.length % 2 === 1) {
+        // add new profile
         const l = clickPositions.length;
         setProfiles((prev) => {
+          const profileDefaultWidth = 2;
+          const polygonPositions = getParallelPolygon(
+            clickPositions[l - 1],
+            e.latlng,
+            profileDefaultWidth
+          );
+
           return [
             ...prev,
             {
               positions: [clickPositions[l - 1], e.latlng],
               width: 2,
+              polygonPositions: polygonPositions,
             },
           ];
         });
@@ -40,7 +50,7 @@ export const ProfileCreator = ({ setProfiles }) => {
       // enter/leave creating profiles mode
       if (e.originalEvent.key === "P" || e.originalEvent.key === "p") {
         if (enabled && clickPositions.length % 2 !== 0) {
-          setClickPositions(popLastArray(clickPositions));
+          setClickPositions(popLast(clickPositions));
         }
         // change cursor
         if (!enabled) {
@@ -59,9 +69,9 @@ export const ProfileCreator = ({ setProfiles }) => {
         (e.originalEvent.key === "D" || e.originalEvent.key === "d")
       ) {
         if (clickPositions.length % 2 !== 0) {
-          setClickPositions(popLastArray(clickPositions));
+          setClickPositions(popLast(clickPositions));
         } else {
-          setProfiles((prev) => popLastArray(prev));
+          setProfiles((prev) => popLast(prev));
         }
       }
     },

@@ -7,21 +7,7 @@ import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
 import { toNormalDate, toNormalTime } from "../../lib/helpers";
 import L from "leaflet";
 
-export const ProfilePlot = ({ profileInfo, geoEvents }) => {
-  if (!profileInfo?.bounds) {
-    return;
-  }
-
-  const profileEvents = [];
-
-  geoEvents.map((item) => {
-    if (profileInfo.bounds.contains(L.latLng(item.latitude, item.longitude))) {
-      profileEvents.push(item);
-    }
-  });
-
-  console.log(profileEvents);
-
+export const ProfilePlot = ({ profileInfo, profileEvents }) => {
   const start = LatLng2TurfPoint(profileInfo.positions[0]);
   const end = LatLng2TurfPoint(profileInfo.positions[1]);
 

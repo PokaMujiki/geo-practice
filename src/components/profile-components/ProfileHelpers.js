@@ -29,3 +29,20 @@ export const myPoint2TurfPoint = (myPoint) => {
 export const LatLng2TurfPoint = (LatLng) => {
   return point([LatLng.lng, LatLng.lat]);
 };
+
+// transforms polygon positions to turfjs format
+export const leafletPolygonPos2TurfPolygonPos = (polygonPositions) => {
+  if (!polygonPositions?.length) {
+    return [];
+  }
+
+  const updatedPositions = [];
+
+  polygonPositions.map((item) => {
+    updatedPositions.push([item.lng, item.lat]);
+  });
+
+  updatedPositions.push(updatedPositions[0]);
+
+  return updatedPositions;
+};

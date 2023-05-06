@@ -12,7 +12,7 @@ import { RepeatabilityPlot } from "./RepeatabilityPlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import { ProfilesContainer } from "./profile-components/ProfilesContainer";
+import { ProfileContainer } from "./profile-components/ProfileContainer";
 
 export const App = () => {
   const initialCenter = {
@@ -58,7 +58,7 @@ export const App = () => {
 
       // const response = await fetch(query + params.toString());
       const response = await fetch(
-        BASENAME_API +
+        BASENAME_API + //"response270422.xml"
           "event/1/random_uncertainty.xml" /*"http://84.237.89.72:8080/fdsnws/event/1/query"*/
       );
       const data = await response.text();
@@ -114,11 +114,17 @@ export const App = () => {
             </Theme>
           </div>
         </div>
-        <ProfilesContainer
-          profiles={profiles}
-          setProfiles={setProfiles}
-          geoEvents={geoEvents}
-        />
+        <>
+          {profiles?.map((item, index) => (
+            <ProfileContainer
+              profiles={profiles}
+              setProfiles={setProfiles}
+              profileIndex={index}
+              geoEvents={geoEvents}
+              key={index}
+            />
+          ))}
+        </>
         {selectedGeoEvents.length > 0 && (
           <BValuePlot seismicEvents={selectedGeoEvents} />
         )}
