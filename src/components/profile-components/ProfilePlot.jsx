@@ -7,7 +7,11 @@ import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
 import { toNormalDate, toNormalTime } from "../../lib/helpers";
 import L from "leaflet";
 
-export const ProfilePlot = ({ profileInfo, profileEvents }) => {
+export const ProfilePlot = ({
+  profileInfo,
+  profileEvents,
+  showUncertainty,
+}) => {
   const start = LatLng2TurfPoint(profileInfo.positions[0]);
   const end = LatLng2TurfPoint(profileInfo.positions[1]);
 
@@ -21,7 +25,6 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
   let uncertainty = [];
   let eventsSpecificOrder = [];
   let maxDepth = Number.MIN_VALUE;
-  let minDepth = Number.MAX_VALUE;
 
   for (let i = 0; i < profileEvents.length; i++) {
     if (!profileEvents[i].depth) {
@@ -51,9 +54,6 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
     depths.push(currentDepth);
     if (currentDepth > maxDepth) {
       maxDepth = currentDepth;
-    }
-    if (currentDepth < minDepth) {
-      minDepth = currentDepth;
     }
 
     if (!profileEvents[i].depthUncertainty) {
@@ -99,7 +99,6 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
   if (maxDepth === Number.MIN_VALUE) {
     // no events with depth data, make axis borders look better
     maxDepth = 15000;
-    minDepth = 0;
   }
 
   return (
@@ -112,7 +111,7 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
             text: "distribution of hypocenters along a linear profile",
           },
 
-          shapes: uncertainty,
+          shapes: showUncertainty ? uncertainty : [],
 
           autosize: true,
 
@@ -132,9 +131,8 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
               text: "depth in meters",
               standoff: 40,
             },
-            range: [maxDepth + 700, minDepth - 700],
+            range: [maxDepth + 700, 0],
             gridcolor: "gray",
-            zerolinecolor: "green",
             tickcolor: "transparent",
           },
           xaxis: {
@@ -145,7 +143,6 @@ export const ProfilePlot = ({ profileInfo, profileEvents }) => {
             },
             range: [-10, maxDistance + 10],
             gridcolor: "gray",
-            zerolinecolor: "green",
             tickcolor: "transparent",
           },
         }}

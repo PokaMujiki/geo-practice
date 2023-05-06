@@ -8,6 +8,8 @@ export const ProfileOptions = ({
   setProfiles,
   profileEvents,
   profileIndex,
+  showUncertainty,
+  setShowUncertainty,
 }) => {
   const currentProfile = profiles[profileIndex];
   const [width, setWidth] = useState(currentProfile.width);
@@ -52,6 +54,15 @@ export const ProfileOptions = ({
       <p>
         {eventsNoUncertaintyDataCount} events have no depth uncertainty data
       </p>
+      <span>
+        <input
+          type="checkbox"
+          checked={showUncertainty}
+          onChange={() => setShowUncertainty(!showUncertainty)}
+          style={{ marginRight: 10 }}
+        />
+        show uncertainty
+      </span>
     </div>
   );
 };

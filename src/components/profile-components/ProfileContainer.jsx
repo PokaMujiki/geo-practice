@@ -3,6 +3,7 @@ import { ProfilePlot } from "./ProfilePlot";
 import turf from "turf";
 import { leafletPolygonPos2TurfPolygonPos } from "./ProfileHelpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
+import { useState } from "react";
 
 export const ProfileContainer = ({
   profiles,
@@ -10,6 +11,7 @@ export const ProfileContainer = ({
   profileIndex,
   geoEvents,
 }) => {
+  const [showUncertainty, setShowUncertainty] = useState(true);
   const currentProfile = profiles[profileIndex];
 
   const polygon = turf.polygon([
@@ -35,8 +37,14 @@ export const ProfileContainer = ({
         setProfiles={setProfiles}
         profileEvents={profileEvents}
         profileIndex={profileIndex}
+        showUncertainty={showUncertainty}
+        setShowUncertainty={setShowUncertainty}
       />
-      <ProfilePlot profileInfo={currentProfile} profileEvents={profileEvents} />
+      <ProfilePlot
+        profileInfo={currentProfile}
+        profileEvents={profileEvents}
+        showUncertainty={showUncertainty}
+      />
     </div>
   );
 };
