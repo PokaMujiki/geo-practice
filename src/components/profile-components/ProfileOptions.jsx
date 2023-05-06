@@ -1,37 +1,45 @@
 import { TextFieldLeftCaption } from "../TextFieldLeftCaption";
-import L from "leaflet";
+import React, { useEffect, useState } from "react";
+import { useDebounce } from "../../hooks/useDebounce";
 import { getParallelPolygon } from "../../lib/parallel";
-import React from "react";
-import { pointsInParallelPolygon } from "./ProfileHelpers";
 
 export const ProfileOptions = ({
   profiles,
   setProfiles,
-  geoEvents,
+  profileEvents,
   profileIndex,
+  showUncertainty,
+  setShowUncertainty,
 }) => {
   const currentProfile = profiles[profileIndex];
-  const width = currentProfile.width;
+  const [width, setWidth] = useState(currentProfile.width);
 
-  let profilePoints = pointsInParallelPolygon(currentProfile, geoEvents);
+  const debouncedWidth = useDebounce(width, 750);
+
+  useEffect(() => {
+    const polygonPositions = getParallelPolygon(
+      currentProfile.positions[0],
+      currentProfile.positions[1],
+      debouncedWidth
+    );
+
+    let updatedProfiles = [...profiles];
+    updatedProfiles[profileIndex].polygonPositions = polygonPositions;
+    updatedProfiles[profileIndex].width = debouncedWidth;
+    setProfiles(updatedProfiles);
+  }, [debouncedWidth]);
 
   let eventsNoDepthDataCount = 0;
   let eventsNoUncertaintyDataCount = 0;
 
-  for (let i = 0; i < profilePoints.length; i++) {
-    if (!profilePoints[i].depth) {
+  for (let i = 0; i < profileEvents.length; i++) {
+    if (!profileEvents[i].depth) {
       eventsNoDepthDataCount++;
       eventsNoUncertaintyDataCount++;
-    } else if (!profilePoints[i].depthUncertainty) {
+    } else if (!profileEvents[i].depthUncertainty) {
       eventsNoUncertaintyDataCount++;
     }
   }
-
-  const setWidth = (value) => {
-    let updatedProfiles = [...profiles];
-    updatedProfiles[profileIndex].width = value;
-    setProfiles(updatedProfiles);
-  };
 
   return (
     <div className="profile_options content_card_dark">
@@ -41,11 +49,20 @@ export const ProfileOptions = ({
         setValue={setWidth}
         caption="Profile width(km): "
       />
-      <p>Profile contains {profilePoints.length} events</p>
+      <p>Profile contains {profileEvents.length} events</p>
       <p>{eventsNoDepthDataCount} events have no depth data</p>
       <p>
         {eventsNoUncertaintyDataCount} events have no depth uncertainty data
       </p>
+      <span>
+        <input
+          type="checkbox"
+          checked={showUncertainty}
+          onChange={() => setShowUncertainty(!showUncertainty)}
+          style={{ marginRight: 10 }}
+        />
+        show uncertainty
+      </span>
     </div>
   );
 };

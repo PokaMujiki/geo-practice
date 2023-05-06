@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Polygon, Polyline, useMapEvents } from "react-leaflet";
-import { getParallelPolygon } from "../../lib/parallel";
+import { Polyline, useMapEvents } from "react-leaflet";
 import L from "leaflet";
+import { getParallelPolygon } from "../../lib/parallel";
 
-export const ProfileCreator = ({ profiles, setProfiles }) => {
+export const ProfileCreator = ({ setProfiles }) => {
   const [clickPositions, setClickPositions] = useState([]);
   const [enabled, setEnabled] = useState(false);
   const [currentMousePos, setCurrentMousePos] = useState(null);
 
-  const popLastArray = (array) => {
+  const popLast = (array) => {
     if (!array.length) {
       return [];
     }
@@ -21,13 +21,22 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
       if (!map || !enabled) return;
 
       if (clickPositions.length % 2 === 1) {
+        // add new profile
         const l = clickPositions.length;
         setProfiles((prev) => {
+          const profileDefaultWidth = 2;
+          const polygonPositions = getParallelPolygon(
+            clickPositions[l - 1],
+            e.latlng,
+            profileDefaultWidth
+          );
+
           return [
             ...prev,
             {
               positions: [clickPositions[l - 1], e.latlng],
               width: 2,
+              polygonPositions: polygonPositions,
             },
           ];
         });
@@ -37,10 +46,11 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
     },
     keypress: (e) => {
       if (!map) return;
+
       // enter/leave creating profiles mode
       if (e.originalEvent.key === "P" || e.originalEvent.key === "p") {
         if (enabled && clickPositions.length % 2 !== 0) {
-          setClickPositions(popLastArray(clickPositions));
+          setClickPositions(popLast(clickPositions));
         }
         // change cursor
         if (!enabled) {
@@ -51,15 +61,17 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
         }
         setEnabled((prevState) => !prevState);
       }
+
       // if has clicked position without profile, removes it, else removes last profile
+      // profile remover
       if (
         enabled &&
         (e.originalEvent.key === "D" || e.originalEvent.key === "d")
       ) {
         if (clickPositions.length % 2 !== 0) {
-          setClickPositions(popLastArray(clickPositions));
+          setClickPositions(popLast(clickPositions));
         } else {
-          setProfiles((prev) => popLastArray(prev));
+          setProfiles((prev) => popLast(prev));
         }
       }
     },
@@ -68,11 +80,6 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
       setCurrentMousePos(e.latlng);
     },
   });
-
-  // let lines = [];
-  // for (let i = 0; i < clickPositions.length - 1; i += 2) {
-  //   lines.push([clickPositions[i], clickPositions[i + 1]]);
-  // }
 
   return (
     <>
@@ -86,20 +93,6 @@ export const ProfileCreator = ({ profiles, setProfiles }) => {
           key={Number.MAX_VALUE}
         />
       )}
-      {profiles?.length > 0 &&
-        profiles.map((item, index) => (
-          <>
-            <Polyline positions={item.positions} key={index} color="red" />
-            <Polygon
-              positions={getParallelPolygon(
-                item.positions[0],
-                item.positions[1],
-                item.width
-              )}
-              key={index + 10000}
-            />
-          </>
-        ))}
     </>
   );
 };

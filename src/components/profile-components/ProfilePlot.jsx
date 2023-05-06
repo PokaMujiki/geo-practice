@@ -1,19 +1,17 @@
-import L from "leaflet";
-import {
-  LatLng2TurfPoint,
-  myPoint2TurfPoint,
-  pointsInParallelPolygon,
-} from "./ProfileHelpers";
+import { LatLng2TurfPoint, myPoint2TurfPoint } from "./ProfileHelpers";
 import { lineString } from "@turf/helpers";
 import * as turf from "@turf/turf";
 import Plot from "react-plotly.js";
 import React from "react";
 import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
 import { toNormalDate, toNormalTime } from "../../lib/helpers";
+import L from "leaflet";
 
-export const ProfilePlot = ({ profileInfo, geoEvents }) => {
-  let profilePoints = pointsInParallelPolygon(profileInfo, geoEvents);
-
+export const ProfilePlot = ({
+  profileInfo,
+  profileEvents,
+  showUncertainty,
+}) => {
   const start = LatLng2TurfPoint(profileInfo.positions[0]);
   const end = LatLng2TurfPoint(profileInfo.positions[1]);
 
@@ -27,25 +25,24 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   let uncertainty = [];
   let eventsSpecificOrder = [];
   let maxDepth = Number.MIN_VALUE;
-  let minDepth = Number.MAX_VALUE;
 
-  for (let i = 0; i < profilePoints.length; i++) {
-    if (!profilePoints[i].depth) {
+  for (let i = 0; i < profileEvents.length; i++) {
+    if (!profileEvents[i].depth) {
       // no depth data
       continue;
     }
 
     eventsSpecificOrder.push({
-      magnitude: profilePoints[i].magnitude,
-      magnitudeType: profilePoints[i].magnitudeType,
-      depthUncertainty: profilePoints[i].depthUncertainty,
+      magnitude: profileEvents[i].magnitude,
+      magnitudeType: profileEvents[i].magnitudeType,
+      depthUncertainty: profileEvents[i].depthUncertainty,
       time:
-        toNormalDate(profilePoints[i].time) +
+        toNormalDate(profileEvents[i].time) +
         " " +
-        toNormalTime(profilePoints[i].time),
+        toNormalTime(profileEvents[i].time),
     });
 
-    const toProject = myPoint2TurfPoint(profilePoints[i]);
+    const toProject = myPoint2TurfPoint(profileEvents[i]);
     const projectedPoint = turf.nearestPointOnLine(line, toProject);
 
     const currentDistance = Number(
@@ -53,20 +50,17 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
     ).toFixed(0); // to meters
     distances.push(currentDistance);
 
-    const currentDepth = Number(profilePoints[i].depth);
+    const currentDepth = Number(profileEvents[i].depth);
     depths.push(currentDepth);
     if (currentDepth > maxDepth) {
       maxDepth = currentDepth;
     }
-    if (currentDepth < minDepth) {
-      minDepth = currentDepth;
-    }
 
-    if (!profilePoints[i].depthUncertainty) {
+    if (!profileEvents[i].depthUncertainty) {
       continue;
     }
 
-    const currentUncertainty = Number(profilePoints[i].depthUncertainty);
+    const currentUncertainty = Number(profileEvents[i].depthUncertainty);
     uncertainty.push({
       type: "line",
       x0: currentDistance,
@@ -105,7 +99,6 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
   if (maxDepth === Number.MIN_VALUE) {
     // no events with depth data, make axis borders look better
     maxDepth = 15000;
-    minDepth = 0;
   }
 
   return (
@@ -118,7 +111,7 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
             text: "distribution of hypocenters along a linear profile",
           },
 
-          shapes: uncertainty,
+          shapes: showUncertainty ? uncertainty : [],
 
           autosize: true,
 
@@ -138,9 +131,8 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
               text: "depth in meters",
               standoff: 40,
             },
-            range: [maxDepth + 700, minDepth - 700],
+            range: [maxDepth + 700, 0],
             gridcolor: "gray",
-            zerolinecolor: "green",
             tickcolor: "transparent",
           },
           xaxis: {
@@ -151,7 +143,6 @@ export const ProfilePlot = ({ profileInfo, geoEvents }) => {
             },
             range: [-10, maxDistance + 10],
             gridcolor: "gray",
-            zerolinecolor: "green",
             tickcolor: "transparent",
           },
         }}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/App.css";
 import "../styles/Map.css";
 import "../styles/event_card.css";
+import "../styles/profile.css";
 import { Map } from "./map-components/Map";
 import { parseGeoEvents, parseStations } from "../lib/parsers";
 import { BASENAME_API } from "../lib/constants";
@@ -12,9 +13,7 @@ import { RepeatabilityPlot } from "./RepeatabilityPlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import { ProfilesContainer } from "./profile-components/ProfilesContainer";
-import { eventsExample } from "./server-responses-mocks/EventsServerResponseExample";
-import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
+import { ProfileContainer } from "./profile-components/ProfilesContainer";
 
 export const App = () => {
   const initialCenter = {
@@ -118,11 +117,17 @@ export const App = () => {
             </Theme>
           </div>
         </div>
-        <ProfilesContainer
-          profiles={profiles}
-          setProfiles={setProfiles}
-          geoEvents={geoEvents}
-        />
+        <>
+          {profiles?.map((item, index) => (
+            <ProfileContainer
+              profiles={profiles}
+              setProfiles={setProfiles}
+              profileIndex={index}
+              geoEvents={geoEvents}
+              key={index}
+            />
+          ))}
+        </>
         {selectedGeoEvents.length > 0 && (
           <BValuePlot seismicEvents={selectedGeoEvents} />
         )}
