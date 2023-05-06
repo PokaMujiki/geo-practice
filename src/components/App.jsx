@@ -13,7 +13,9 @@ import { RepeatabilityPlot } from "./RepeatabilityPlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import { ProfileContainer } from "./profile-components/ProfilesContainer";
+import { ProfileContainer } from "./profile-components/ProfileContainer";
+import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
+import { eventsExample } from "./server-responses-mocks/EventsServerResponseExample";
 
 export const App = () => {
   const initialCenter = {
