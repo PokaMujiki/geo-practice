@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/App.css";
 import "../styles/Map.css";
 import "../styles/event_card.css";
+import "../styles/profile.css";
 import { Map } from "./map-components/Map";
 import { parseGeoEvents, parseStations } from "../lib/parsers";
 import { BASENAME_API } from "../lib/constants";
