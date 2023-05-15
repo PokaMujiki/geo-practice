@@ -9,7 +9,7 @@ import { BASENAME_API } from "../lib/constants";
 import { Theme, presetGpnDark } from "@consta/uikit/Theme";
 import { DatePicker } from "@consta/uikit/DatePicker";
 import { BValuePlot } from "./BValuePlot";
-import { RepeatabilityPlot } from "./RepeatabilityPlot";
+import { EventsByTimePlot } from "./EventsByTimePlot";
 import { EventsList } from "./EventsList";
 import { enUS } from "date-fns/locale";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
@@ -138,7 +138,7 @@ export const App = () => {
         {selectedGeoEvents.length > 0 && (
           <BValuePlot seismicEvents={selectedGeoEvents} />
         )}
-        <RepeatabilityPlot
+        <EventsByTimePlot
           geoEvents={geoEvents}
           selectedGeoEvents={selectedGeoEvents}
         />

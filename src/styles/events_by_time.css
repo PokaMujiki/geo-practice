@@ -1,4 +1,4 @@
-.repeatability_graph_wrapper {
+.events_by_time_graph_wrapper {
     height: 60vh;
     min-height: 600px;
     width: 100%;
@@ -8,7 +8,7 @@
     border-radius: 10px;
 }
 
-.repeatability_graph {
+.events_by_time_graph {
     width: 95%;
     height: 100%;
 }
