@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { PointerIcon } from "./icons/PointerIcon";
 import { FLYTO_ANIMATION_DURATION } from "../lib/constants";
 import { toNormalDate, toNormalTime } from "../lib/helpers";
@@ -8,10 +7,6 @@ export const EventCard = ({ geoEvent, map }) => {
 
   if (geoEvent?.selected) {
     border = { border: "1px solid #0593ff" };
-  }
-
-  if (geoEvent?.excluded) {
-    border = { border: "1px solid #ffc53a" };
   }
 
   return (

@@ -13,7 +13,29 @@ import {
 import { partition } from "../lib/helpers";
 
 // TODO: fix initial sort
-export const EventsList = ({ header: headerText, geoEvents, map }) => {
+export const EventsList = ({
+  header: headerText,
+  geoEvents,
+  selectedEvents,
+  map,
+}) => {
+  const markSelected = (geoEvents) => {
+    const events = [];
+
+    for (let i = 0; i < geoEvents.length; i++) {
+      events.push(geoEvents[i]);
+      events[i].selected = false;
+      for (let j = 0; j < selectedEvents.length; j++) {
+        if (geoEvents[i].id === selectedEvents[j].id) {
+          events[i].selected = true;
+          break;
+        }
+      }
+    }
+
+    return events;
+  };
+
   const sortByTime = (arr, ascending) => {
     if (ascending) {
       return arr.sort(
@@ -34,7 +56,12 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
   const [magnArrowUp, setMagnArrowUp] = useState(false);
   const [firstShowSelected, setFirstShowSelected] = useState(false);
 
-  const [gEvents, setGEvents] = useState(geoEvents);
+  const [gEvents, setGEvents] = useState(
+    markSelected(geoEvents).sort(
+      (a, b) => Number(b.magnitude) - Number(a.magnitude)
+    )
+  );
+
   const [lastSortType, setLastSortType] = useState({
     type: "magn",
     asc: true,
@@ -42,7 +69,9 @@ export const EventsList = ({ header: headerText, geoEvents, map }) => {
 
   useEffect(() => {
     setGEvents(
-      geoEvents.sort((a, b) => Number(b.magnitude) - Number(a.magnitude))
+      markSelected(geoEvents).sort(
+        (a, b) => Number(b.magnitude) - Number(a.magnitude)
+      )
     );
   }, [geoEvents]);
 
