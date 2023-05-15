@@ -1,7 +1,7 @@
 import Plot from "react-plotly.js";
 import React from "react";
 import { format } from "date-fns";
-import "../styles/repeatability_graph_wrapper.css";
+import "../styles/events_by_time.css";
 import {
   DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
   DEFAULT_GEO_EVENT_FILL_COLOR,
@@ -9,12 +9,12 @@ import {
 } from "../lib/constants";
 import { getUnselectedEvents } from "../lib/helpers";
 
-export const RepeatabilityPlot = ({ geoEvents, selectedGeoEvents }) => {
+export const EventsByTimePlot = ({ geoEvents, selectedGeoEvents }) => {
   if (!geoEvents?.length) {
     return;
   }
 
-  const plotTitle = `Repeatability plot for all events`;
+  const plotTitle = `Events magnitude by time plot for all events`;
 
   let seismicEvents = {
     x: [],
@@ -101,9 +101,9 @@ export const RepeatabilityPlot = ({ geoEvents, selectedGeoEvents }) => {
   };
 
   return (
-    <div className="repeatability_graph_wrapper">
+    <div className="events_by_time_graph_wrapper">
       <Plot
-        className="repeatability_graph"
+        className="events_by_time_graph"
         data={[
           seismicEventsTrace,
           selectedSeismicEventsTrace,
