@@ -81,7 +81,12 @@ export const App = () => {
 
   return (
     <div className="App">
-      <EventsList header="Events catalog" geoEvents={geoEvents} map={map} />
+      <EventsList
+        header="Events catalog"
+        geoEvents={geoEvents}
+        selectedEvents={selectedGeoEvents}
+        map={map}
+      />
       <div className="map_content">
         <div className="map_container">
           <Map
