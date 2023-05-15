@@ -5,7 +5,6 @@ import Plot from "react-plotly.js";
 import React from "react";
 import { DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR } from "../../lib/constants";
 import { toNormalDate, toNormalTime } from "../../lib/helpers";
-import L from "leaflet";
 
 export const ProfilePlot = ({
   profileInfo,
@@ -108,7 +107,11 @@ export const ProfilePlot = ({
         data={[trace]}
         layout={{
           title: {
-            text: "distribution of hypocenters along a linear profile",
+            text:
+              "distribution of hypocenters along a linear profile " +
+              profileInfo.profileNames[0] +
+              "-" +
+              profileInfo.profileNames[1],
           },
 
           shapes: showUncertainty ? uncertainty : [],

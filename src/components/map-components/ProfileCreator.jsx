@@ -24,6 +24,18 @@ export const ProfileCreator = ({ setProfiles }) => {
         // add new profile
         const l = clickPositions.length;
         setProfiles((prev) => {
+          const names = [];
+          if (!prev?.length) {
+            names.push("A", "B");
+          } else {
+            names.push(
+              String.fromCharCode(
+                prev[prev.length - 1].profileNames[1].charCodeAt(0) + 1
+              )
+            );
+            names.push(String.fromCharCode(names[0].charCodeAt(0) + 1));
+          }
+
           const profileDefaultWidth = 2;
           const polygonPositions = getParallelPolygon(
             clickPositions[l - 1],
@@ -37,6 +49,7 @@ export const ProfileCreator = ({ setProfiles }) => {
               positions: [clickPositions[l - 1], e.latlng],
               width: 2,
               polygonPositions: polygonPositions,
+              profileNames: names,
             },
           ];
         });

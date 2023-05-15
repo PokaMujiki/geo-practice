@@ -1,7 +1,6 @@
 import {
   LayerGroup,
   MapContainer,
-  Polygon,
   ScaleControl,
   TileLayer,
 } from "react-leaflet";
@@ -81,16 +80,6 @@ export const Map = ({
         profiles.map((item, index) => (
           <Profile profiles={profiles} profileIndex={index} key={index} />
         ))}
-      {/*<Polygon*/}
-      {/*  color="red"*/}
-      {/*  positions={[*/}
-      {/*    [51.355035827777435, 53.14594917479043],*/}
-      {/*    [51.35610854585277, 53.17273912014637],*/}
-      {/*    [51.338159194971, 53.174586655284074],*/}
-      {/*    [51.33708647689564, 53.14779666668072],*/}
-      {/*    [51.33708647689564, 53.14779666668072],*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </MapContainer>
   );
 };
