@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Polyline, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { getParallelPolygon } from "../../lib/parallel";
+import {
+  getDeleteLatestProfileHotkey,
+  getEnterLeaveProfileCreatingModeHotkey,
+} from "../../lib/hotkeys";
 
 export const ProfileCreator = ({ setProfiles }) => {
   const [clickPositions, setClickPositions] = useState([]);
@@ -61,7 +65,12 @@ export const ProfileCreator = ({ setProfiles }) => {
       if (!map) return;
 
       // enter/leave creating profiles mode
-      if (e.originalEvent.key === "P" || e.originalEvent.key === "p") {
+      if (
+        e.originalEvent.key ===
+          getEnterLeaveProfileCreatingModeHotkey().toUpperCase() ||
+        e.originalEvent.key ===
+          getEnterLeaveProfileCreatingModeHotkey().toLowerCase()
+      ) {
         if (enabled && clickPositions.length % 2 !== 0) {
           setClickPositions(popLast(clickPositions));
         }
@@ -79,7 +88,8 @@ export const ProfileCreator = ({ setProfiles }) => {
       // profile remover
       if (
         enabled &&
-        (e.originalEvent.key === "D" || e.originalEvent.key === "d")
+        (e.originalEvent.key === getDeleteLatestProfileHotkey().toUpperCase() ||
+          e.originalEvent.key === getDeleteLatestProfileHotkey().toLowerCase())
       ) {
         if (clickPositions.length % 2 !== 0) {
           setClickPositions(popLast(clickPositions));

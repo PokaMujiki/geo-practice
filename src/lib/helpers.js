@@ -37,3 +37,15 @@ export const toNormalDate = (date) => {
 export const toNormalTime = (date) => {
   return format(new Date(date), "HH:mm:ss");
 };
+
+export const isPositiveNumber = (str) => {
+  // match positive numbers
+  const positiveNumberRegex = /^[0-9]+(\.[0-9]+)?$/;
+  return positiveNumberRegex.test(str);
+};
+
+export const isPositiveInteger = (str) => {
+  // match positive integers
+  const positiveIntegerRegex = /^[1-9][0-9]*$/;
+  return positiveIntegerRegex.test(str);
+};

@@ -2,6 +2,7 @@ import { TextFieldLeftCaption } from "../TextFieldLeftCaption";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { getParallelPolygon } from "../../lib/parallel";
+import { isPositiveNumber } from "../../lib/helpers";
 
 export const ProfileOptions = ({
   profiles,
@@ -46,7 +47,9 @@ export const ProfileOptions = ({
       <TextFieldLeftCaption
         type="number"
         value={width}
-        setValue={setWidth}
+        onChange={(e) =>
+          isPositiveNumber(e.target.value) ? setWidth(e) : null
+        }
         caption="Profile width(km): "
       />
       <p>Profile contains {profileEvents.length} events</p>

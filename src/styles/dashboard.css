@@ -5,23 +5,14 @@ body {
   height: 300%;
 }
 
-p, span{
-  margin: 0;
-  text-align: center;
-  color: #bbc3c8;
-  line-height: 26px;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-}
-
-.App {
+.dashboard {
   text-align: center;
   justify-content: center;
   flex-flow: row-reverse;
   display: flex;
   align-self: stretch;
   gap: 2%;
-  padding-top: 60px;
+  padding-top: 30px;
 }
 
 .map_content {

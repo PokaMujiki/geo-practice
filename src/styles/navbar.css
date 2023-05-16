@@ -1,0 +1,39 @@
+.nav {
+    background-color: #2e333d;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 2rem;
+    padding: 10px 8rem;
+    color: #bbc3c8;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.dashboard-title {
+    font-size: 30px;
+}
+
+.nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    font-size: 20px;
+}
+
+.nav a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+}
+
+.nav li.active {
+}
+
+.nav li:hover {
+}

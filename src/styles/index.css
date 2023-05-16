@@ -16,3 +16,12 @@ code {
 * {
   box-sizing: border-box;
 }
+
+p, span {
+  margin: 0;
+  text-align: center;
+  color: #bbc3c8;
+  line-height: 26px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
