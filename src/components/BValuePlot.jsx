@@ -1,5 +1,5 @@
 import Plot from "react-plotly.js";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import "../styles/b_value_graph_container.css";
 import "../styles/content_cards.css";
@@ -136,6 +136,13 @@ export const BValuePlot = ({ seismicEvents }) => {
     y: -1,
   });
 
+  const [predictedPlotData, setPredictedPlotData] = useState({
+    x_predicted_plot: [],
+    y_predicted_plot: [],
+  });
+  const [beta1, setBeta1] = useState();
+  const [beta2, setBeta2] = useState();
+
   const { x_points, y_points } = useMemo(
     () => calculatePoints(seismicEvents, step),
     [seismicEvents, step]
@@ -148,12 +155,40 @@ export const BValuePlot = ({ seismicEvents }) => {
     selectedLeftPoint
   );
 
-  let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
-    approximate(filteredPoints.included.x, filteredPoints.included.y);
+  const worker = new Worker("../workers/b-valueWorker.js");
+
+  const handleWorkerMessage = (event) => {
+    const { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
+      event.data;
+    setPredictedPlotData({ x_predicted_plot, y_predicted_plot });
+    setBeta1(beta_1_th);
+    setBeta2(beta_2_th);
+  };
+
+  useEffect(() => {
+    worker.addEventListener("message", handleWorkerMessage);
+    worker.postMessage({
+      x_points: filteredPoints.included.x,
+      y_points: filteredPoints.included.y,
+    });
+    return () => {
+      worker.removeEventListener("message", handleWorkerMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    worker.postMessage({
+      x_points: filteredPoints.included.x,
+      y_points: filteredPoints.included.y,
+    });
+  }, [selectedLeftPoint, selectedRightPoint]);
+
+  // let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
+  //   approximate(filteredPoints.included.x, filteredPoints.included.y);
 
   const approximatedFunctionTrace = {
-    x: x_predicted_plot,
-    y: y_predicted_plot,
+    x: predictedPlotData.x_predicted_plot,
+    y: predictedPlotData.y_predicted_plot,
     name: PREDICTED_FUNCTION_PLOT_NAME,
     mode: PREDICTED_FUNCTION_PLOT_MODE,
     type: PREDICTED_FUNCTION_PLOT_TYPE,
@@ -257,8 +292,8 @@ export const BValuePlot = ({ seismicEvents }) => {
           </p>
         </div>
         <div className="content_card_dark b_value_info">
-          <p>b-value: {-beta_2_th.toFixed(3)}</p>
-          <p>a-value: {beta_1_th.toFixed(3)}</p>
+          <p>b-value: {-beta2?.toFixed(3)}</p>
+          <p>a-value: {beta1?.toFixed(3)}</p>
           <p>approximation error: TBA</p>
         </div>
         <div className="content_card_dark b_value_options">
