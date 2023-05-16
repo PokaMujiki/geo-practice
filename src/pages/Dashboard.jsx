@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "../styles/App.css";
-import "../styles/Map.css";
+import "../styles/dashboard.css";
+import "../styles/map.css";
 import "../styles/event_card.css";
 import "../styles/profile.css";
-import { Map } from "./map-components/Map";
+import { Map } from "../components/map-components/Map";
 import { parseGeoEvents, parseStations } from "../lib/parsers";
 import { BASENAME_API } from "../lib/constants";
 import { Theme, presetGpnDark } from "@consta/uikit/Theme";
 import { DatePicker } from "@consta/uikit/DatePicker";
-import { BValuePlot } from "./BValuePlot";
-import { EventsByTimePlot } from "./EventsByTimePlot";
-import { EventsList } from "./EventsList";
+import { BValuePlot } from "../components/BValuePlot";
+import { EventsByTimePlot } from "../components/EventsByTimePlot";
+import { EventsList } from "../components/EventsList";
 import { enUS } from "date-fns/locale";
-import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
-import { ProfileContainer } from "./profile-components/ProfileContainer";
-import { stationsExample } from "./server-responses-mocks/StationsServerResponseExample";
-import { eventsExample } from "./server-responses-mocks/EventsServerResponseExample";
+import { TextFieldLeftCaption } from "../components/TextFieldLeftCaption";
+import { ProfileContainer } from "../components/profile-components/ProfileContainer";
+import { stationsExample } from "../components/server-responses-mocks/StationsServerResponseExample";
+import { eventsExample } from "../components/server-responses-mocks/EventsServerResponseExample";
+import { isPositiveInteger } from "../lib/helpers";
 
-export const App = () => {
+export const Dashboard = () => {
   const initialCenter = {
     lat: 51.306,
     lng: 53.2706,
@@ -79,8 +80,10 @@ export const App = () => {
   // TODO: https://earthquake.usgs.gov/earthquakes/map/?extent=3.16246,-146.16211&extent=65.40344,-5.53711
   // TODO: https://stationview.raspberryshake.org/#/?lat=43.72109&lon=22.95633&zoom=4.231
 
+  // todo: validate set beter for eventsLimit
+
   return (
-    <div className="App">
+    <div className="dashboard">
       <EventsList
         header="Events catalog"
         geoEvents={geoEvents}
@@ -106,7 +109,11 @@ export const App = () => {
                 <TextFieldLeftCaption
                   type="number"
                   value={eventsLimit}
-                  setValue={setEventsLimit}
+                  onChange={(e) =>
+                    isPositiveInteger(e.target.value)
+                      ? setEventsLimit(e.target.value)
+                      : null
+                  }
                   caption="Max events: "
                 />
                 <DatePicker
@@ -147,4 +154,4 @@ export const App = () => {
   );
 };
 
-export default App;
+export default Dashboard;
