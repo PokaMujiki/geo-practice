@@ -25,45 +25,6 @@ const PREDICTED_FUNCTION_PLOT_NAME = "prediction";
 const PREDICTED_FUNCTION_PLOT_MODE = "lines";
 const PREDICTED_FUNCTION_PLOT_TYPE = "scatter";
 
-// approximates given set of points by linear function (ax + b)
-const approximate = (x_points, y_points) => {
-  const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
-  const y_sum = y_points.reduce((prev, cur) => prev + cur, 0);
-  const x_mean = x_sum / x_points.length;
-  const y_mean = y_sum / y_points.length;
-
-  // function
-  // f(M) = lg(N) = a - b * M
-  // theory:
-  // y_i = beta_1 + beta_2 * x_i
-
-  let beta_2_th_numerator = 0;
-  let beta_2_th_denominator = 0;
-  for (let i = 0; i < y_points.length; i++) {
-    beta_2_th_numerator += (y_points[i] - y_mean) * (x_points[i] - x_mean);
-    beta_2_th_denominator += (x_points[i] - x_mean) * (x_points[i] - x_mean);
-  }
-
-  const beta_2_th = beta_2_th_numerator / beta_2_th_denominator; // b-value
-  const beta_1_th = y_mean - beta_2_th * x_mean; // a-value
-
-  let x_predicted_plot = [];
-  let y_predicted_plot = [];
-  for (let i = 0; i < PREDICTED_PLOT_MAX_POINTS; i++) {
-    x_predicted_plot[i] =
-      MAGNITUDE_MIN +
-      (i * (MAGNITUDE_MAX - MAGNITUDE_MIN)) / PREDICTED_PLOT_MAX_POINTS;
-    y_predicted_plot[i] = beta_1_th + beta_2_th * x_predicted_plot[i];
-  }
-
-  return {
-    x_predicted_plot,
-    y_predicted_plot,
-    beta_1_th,
-    beta_2_th,
-  };
-};
-
 const calculatePoints = (geoEvents, step) => {
   const y_points = [];
   const x_points = [];
@@ -155,7 +116,9 @@ export const BValuePlot = ({ seismicEvents }) => {
     selectedLeftPoint
   );
 
-  const worker = new Worker("../workers/b-valueWorker.js");
+  const worker = new Worker(
+    new URL("../workers/b-valueWorker.js", import.meta.url)
+  );
 
   const handleWorkerMessage = (event) => {
     const { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
@@ -182,9 +145,6 @@ export const BValuePlot = ({ seismicEvents }) => {
       y_points: filteredPoints.included.y,
     });
   }, [selectedLeftPoint, selectedRightPoint]);
-
-  // let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
-  //   approximate(filteredPoints.included.x, filteredPoints.included.y);
 
   const approximatedFunctionTrace = {
     x: predictedPlotData.x_predicted_plot,

@@ -2,6 +2,7 @@ const MAGNITUDE_MIN = -1.3;
 const MAGNITUDE_MAX = 3.3;
 const PREDICTED_PLOT_MAX_POINTS = 200;
 
+// approximates given set of points by linear function (ax + b)
 const approximate = (x_points, y_points) => {
   const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
   const y_sum = y_points.reduce((prev, cur) => prev + cur, 0);
@@ -44,7 +45,9 @@ const performHeavyTask = (data) => {
   return approximate(data.x_points, data.y_points);
 };
 
+/* eslint-disable-next-line no-restricted-globals */
 self.addEventListener("message", (event) => {
   const result = performHeavyTask(event.data);
+  /* eslint-disable-next-line no-restricted-globals */
   self.postMessage(result);
 });
