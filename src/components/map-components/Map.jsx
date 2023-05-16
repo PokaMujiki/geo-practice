@@ -43,6 +43,17 @@ export const Map = ({
     );
   }, [geoEvents, selectedGeoEvents]);
 
+  const stationsMemo = useMemo(() => {
+    if (!stations?.length) return;
+    return (
+      <>
+        {stations?.map((item, index) => (
+          <Station station={item} key={index} />
+        ))}
+      </>
+    );
+  }, [stations]);
+
   return (
     <MapContainer
       center={[center.lng, center.lat]}
@@ -65,11 +76,7 @@ export const Map = ({
       />
       <LayersControl>
         <LayersControl.Overlay name="Stations" checked>
-          <>
-            {stations?.map((item, index) => (
-              <Station station={item} key={index} />
-            ))}
-          </>
+          <LayerGroup>{stationsMemo}</LayerGroup>
         </LayersControl.Overlay>
         <LayersControl.Overlay name="Events" checked>
           <LayerGroup>{geoEventsMemo}</LayerGroup>

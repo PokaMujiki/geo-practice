@@ -1,7 +1,4 @@
-import { CircleMarker, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet";
-import { useEffect, useRef } from "react";
-import { Popup as LeafletPopup } from "leaflet";
+import { CircleMarker, Popup } from "react-leaflet";
 import {
   DEFAULT_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,

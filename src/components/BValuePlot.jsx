@@ -7,6 +7,7 @@ import {
   DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../lib/constants";
+import { isPositiveNumber } from "../lib/helpers";
 
 const MAGNITUDE_MIN = -1.3;
 const MAGNITUDE_MAX = 3.3;
@@ -188,6 +189,8 @@ export const BValuePlot = ({ seismicEvents }) => {
     setStep(numberV);
   };
 
+  // todo validate set better
+
   return (
     <div className="b_value_graph_wrapper">
       <Plot
@@ -261,7 +264,11 @@ export const BValuePlot = ({ seismicEvents }) => {
         <div className="content_card_dark b_value_options">
           <TextFieldLeftCaption
             value={step}
-            setValue={validatedSet}
+            onChange={(e) =>
+              isPositiveNumber(e.target.value)
+                ? validatedSet(e.target.value)
+                : null
+            }
             type="number"
             caption="Step to place points"
           />
