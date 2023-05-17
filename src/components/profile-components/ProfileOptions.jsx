@@ -48,7 +48,7 @@ export const ProfileOptions = ({
         type="number"
         value={width}
         onChange={(e) =>
-          isPositiveNumber(e.target.value) ? setWidth(e) : null
+          isPositiveNumber(e.target.value) ? setWidth(e.target.value) : null
         }
         caption="Profile width(km): "
       />
