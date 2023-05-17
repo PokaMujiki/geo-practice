@@ -1,5 +1,5 @@
 import Plot from "react-plotly.js";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import "../styles/b_value_graph_container.css";
 import "../styles/content_cards.css";
@@ -24,45 +24,6 @@ const APPROXIMATED_POINTS_PLOT_TYPE = "scatter";
 const PREDICTED_FUNCTION_PLOT_NAME = "prediction";
 const PREDICTED_FUNCTION_PLOT_MODE = "lines";
 const PREDICTED_FUNCTION_PLOT_TYPE = "scatter";
-
-// approximates given set of points by linear function (ax + b)
-const approximate = (x_points, y_points) => {
-  const x_sum = x_points.reduce((prev, cur) => prev + cur, 0);
-  const y_sum = y_points.reduce((prev, cur) => prev + cur, 0);
-  const x_mean = x_sum / x_points.length;
-  const y_mean = y_sum / y_points.length;
-
-  // function
-  // f(M) = lg(N) = a - b * M
-  // theory:
-  // y_i = beta_1 + beta_2 * x_i
-
-  let beta_2_th_numerator = 0;
-  let beta_2_th_denominator = 0;
-  for (let i = 0; i < y_points.length; i++) {
-    beta_2_th_numerator += (y_points[i] - y_mean) * (x_points[i] - x_mean);
-    beta_2_th_denominator += (x_points[i] - x_mean) * (x_points[i] - x_mean);
-  }
-
-  const beta_2_th = beta_2_th_numerator / beta_2_th_denominator; // b-value
-  const beta_1_th = y_mean - beta_2_th * x_mean; // a-value
-
-  let x_predicted_plot = [];
-  let y_predicted_plot = [];
-  for (let i = 0; i < PREDICTED_PLOT_MAX_POINTS; i++) {
-    x_predicted_plot[i] =
-      MAGNITUDE_MIN +
-      (i * (MAGNITUDE_MAX - MAGNITUDE_MIN)) / PREDICTED_PLOT_MAX_POINTS;
-    y_predicted_plot[i] = beta_1_th + beta_2_th * x_predicted_plot[i];
-  }
-
-  return {
-    x_predicted_plot,
-    y_predicted_plot,
-    beta_1_th,
-    beta_2_th,
-  };
-};
 
 const calculatePoints = (geoEvents, step) => {
   const y_points = [];
@@ -136,6 +97,13 @@ export const BValuePlot = ({ seismicEvents }) => {
     y: -1,
   });
 
+  const [predictedPlotData, setPredictedPlotData] = useState({
+    x_predicted_plot: [],
+    y_predicted_plot: [],
+  });
+  const [beta1, setBeta1] = useState();
+  const [beta2, setBeta2] = useState();
+
   const { x_points, y_points } = useMemo(
     () => calculatePoints(seismicEvents, step),
     [seismicEvents, step]
@@ -148,12 +116,39 @@ export const BValuePlot = ({ seismicEvents }) => {
     selectedLeftPoint
   );
 
-  let { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
-    approximate(filteredPoints.included.x, filteredPoints.included.y);
+  const worker = new Worker(
+    new URL("../workers/b-valueWorker.js", import.meta.url)
+  );
+
+  const handleWorkerMessage = (event) => {
+    const { x_predicted_plot, y_predicted_plot, beta_1_th, beta_2_th } =
+      event.data;
+    setPredictedPlotData({ x_predicted_plot, y_predicted_plot });
+    setBeta1(beta_1_th);
+    setBeta2(beta_2_th);
+  };
+
+  useEffect(() => {
+    worker.addEventListener("message", handleWorkerMessage);
+    worker.postMessage({
+      x_points: filteredPoints.included.x,
+      y_points: filteredPoints.included.y,
+    });
+    return () => {
+      worker.removeEventListener("message", handleWorkerMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    worker.postMessage({
+      x_points: filteredPoints.included.x,
+      y_points: filteredPoints.included.y,
+    });
+  }, [selectedLeftPoint, selectedRightPoint]);
 
   const approximatedFunctionTrace = {
-    x: x_predicted_plot,
-    y: y_predicted_plot,
+    x: predictedPlotData.x_predicted_plot,
+    y: predictedPlotData.y_predicted_plot,
     name: PREDICTED_FUNCTION_PLOT_NAME,
     mode: PREDICTED_FUNCTION_PLOT_MODE,
     type: PREDICTED_FUNCTION_PLOT_TYPE,
@@ -257,8 +252,8 @@ export const BValuePlot = ({ seismicEvents }) => {
           </p>
         </div>
         <div className="content_card_dark b_value_info">
-          <p>b-value: {-beta_2_th.toFixed(3)}</p>
-          <p>a-value: {beta_1_th.toFixed(3)}</p>
+          <p>b-value: {-beta2?.toFixed(3)}</p>
+          <p>a-value: {beta1?.toFixed(3)}</p>
           <p>approximation error: TBA</p>
         </div>
         <div className="content_card_dark b_value_options">
