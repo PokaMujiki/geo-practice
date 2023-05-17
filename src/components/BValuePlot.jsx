@@ -103,6 +103,9 @@ export const BValuePlot = ({ seismicEvents }) => {
   });
   const [beta1, setBeta1] = useState();
   const [beta2, setBeta2] = useState();
+  const [worker, setWorker] = useState(
+    new Worker(new URL("../workers/b-valueWorker.js", import.meta.url))
+  );
 
   const { x_points, y_points } = useMemo(
     () => calculatePoints(seismicEvents, step),
@@ -114,10 +117,6 @@ export const BValuePlot = ({ seismicEvents }) => {
     y_points,
     selectedRightPoint,
     selectedLeftPoint
-  );
-
-  const worker = new Worker(
-    new URL("../workers/b-valueWorker.js", import.meta.url)
   );
 
   const handleWorkerMessage = (event) => {
