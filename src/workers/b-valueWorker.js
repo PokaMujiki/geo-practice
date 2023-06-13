@@ -1,5 +1,5 @@
 const MAGNITUDE_MIN = -1.3;
-const MAGNITUDE_MAX = 3.3;
+let MAGNITUDE_MAX = 3.3;
 const PREDICTED_PLOT_MAX_POINTS = 200;
 
 // approximates given set of points by linear function (ax + b)
@@ -29,7 +29,7 @@ const approximate = (x_points, y_points) => {
   for (let i = 0; i < PREDICTED_PLOT_MAX_POINTS; i++) {
     x_predicted_plot[i] =
       MAGNITUDE_MIN +
-      (i * (MAGNITUDE_MAX - MAGNITUDE_MIN)) / PREDICTED_PLOT_MAX_POINTS;
+      (i * (MAGNITUDE_MAX + 0.5 - MAGNITUDE_MIN)) / PREDICTED_PLOT_MAX_POINTS;
     y_predicted_plot[i] = beta_1_th + beta_2_th * x_predicted_plot[i];
   }
 
@@ -42,6 +42,7 @@ const approximate = (x_points, y_points) => {
 };
 
 const performHeavyTask = (data) => {
+  MAGNITUDE_MAX = data.MAGNITUDE_MAX;
   return approximate(data.x_points, data.y_points);
 };
 

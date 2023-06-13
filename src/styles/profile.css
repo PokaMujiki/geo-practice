@@ -18,6 +18,19 @@
     padding-bottom: 40px;
 }
 
+.profile_options_width {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.profile_options_width p {
+    margin: 0;
+    align-self: center;
+}
+
 .profile_plot {
     flex-basis: 80%;
     overflow: hidden;

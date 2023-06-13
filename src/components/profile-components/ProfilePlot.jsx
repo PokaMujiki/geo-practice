@@ -134,7 +134,7 @@ export const ProfilePlot = ({
               text: "depth in meters",
               standoff: 40,
             },
-            range: [maxDepth + 700, 0],
+            range: [maxDepth + maxDepth * 0.1, 0],
             gridcolor: "gray",
             tickcolor: "transparent",
           },
