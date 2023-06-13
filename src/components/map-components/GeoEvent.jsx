@@ -6,17 +6,6 @@ import {
 import { toNormalDate, toNormalTime } from "../../lib/helpers";
 
 export const GeoEvent = ({ geoEvent, isSelected }) => {
-  // const popupRef = useRef();
-  // const map = useMap();
-  //
-  // useEffect(() => {
-  //
-  //   const popup = popupRef.current;
-  //   if (!!popup && !!map) {
-  //     map.openPopup(popup);
-  //   }
-  // }, [map, popupRef]);
-
   const pathOptions = {
     fillColor: DEFAULT_GEO_EVENT_FILL_COLOR,
     fillOpacity: 0.5,
@@ -31,12 +20,10 @@ export const GeoEvent = ({ geoEvent, isSelected }) => {
     weight: 1,
   };
 
-  // todo: better css
-
   return (
     <CircleMarker
       center={[geoEvent.latitude, geoEvent.longitude]}
-      radius={geoEvent.magnitude > 0 ? 5 + geoEvent.magnitude * 3 : 5}
+      radius={geoEvent.magnitude > 0 ? 5 + Number(geoEvent.magnitude) : 5}
       pathOptions={isSelected ? selectedPathOptions : pathOptions}
     >
       <Popup>
