@@ -1,17 +1,15 @@
 import Plot from "react-plotly.js";
 import React, { useEffect, useMemo, useState } from "react";
-import { TextFieldLeftCaption } from "./TextFieldLeftCaption";
 import "../styles/b_value_graph_container.css";
 import "../styles/content_cards.css";
 import {
   DEFAULT_EXCLUDED_GEO_EVENT_FILL_COLOR,
   DEFAULT_SELECTED_GEO_EVENT_FILL_COLOR,
 } from "../lib/constants";
-import { isPositiveNumber } from "../lib/helpers";
+import { PositiveNumberInput } from "./PositiveNumberInput";
 
 const MAGNITUDE_MIN = -1.3;
-const MAGNITUDE_MAX = 3.3;
-const PREDICTED_PLOT_MAX_POINTS = 200;
+let MAGNITUDE_MAX = 3.3;
 
 const NOT_APPROXIMATED_POINTS_PLOT_NAME = "points not used in approximation";
 const NOT_APPROXIMATED_POINTS_PLOT_MODE = "markers";
@@ -29,43 +27,48 @@ const calculatePoints = (geoEvents, step) => {
   const y_points = [];
   const x_points = [];
 
-  for (let i = 0; i < (MAGNITUDE_MAX - MAGNITUDE_MIN) / step; i++) {
+  geoEvents.forEach((item) => {
+    if (item.magnitude > MAGNITUDE_MAX) {
+      MAGNITUDE_MAX = Number(item.magnitude);
+    }
+  });
+
+  for (let i = 0; i < MAGNITUDE_MAX / step; i++) {
     x_points[i] = step * i;
     y_points[i] = Math.log10(
       geoEvents.filter((item) => Number(item.magnitude) >= x_points[i]).length
     );
-    if (y_points[i] === 0) {
+    if (isNaN(y_points[i])) {
       break;
     }
   }
+
   return {
     x_points,
     y_points,
   };
 };
 
+const getYMeanValue = (y_points) => {
+  return (y_points[0] + y_points[y_points.length - 1]) / 2;
+};
+
 const filterPoints = (
   x_points,
   y_points,
-  selectedRightPoint,
-  selectedLeftPoint
+  selectedLowerPoint,
+  selectedUpperPoint
 ) => {
-  let middleIndex = Math.floor(x_points.length / 2);
   let included = { x: [], y: [] };
   let excluded = { x: [], y: [] };
 
-  for (let i = 0; i < middleIndex; i++) {
-    if (x_points[i] < selectedLeftPoint.x) {
-      excluded.x.push(x_points[i]);
-      excluded.y.push(y_points[i]);
-    } else {
-      included.x.push(x_points[i]);
-      included.y.push(y_points[i]);
-    }
-  }
+  const yMean = getYMeanValue(y_points);
 
-  for (let i = middleIndex; i < x_points.length; i++) {
-    if (x_points[i] > selectedRightPoint.x) {
+  for (let i = 0; i < y_points.length; i++) {
+    if (
+      (y_points[i] > yMean && x_points[i] < selectedUpperPoint.x) ||
+      (y_points[i] < yMean && x_points[i] > selectedLowerPoint.x)
+    ) {
       excluded.x.push(x_points[i]);
       excluded.y.push(y_points[i]);
     } else {
@@ -79,20 +82,22 @@ const filterPoints = (
 
 export const BValuePlot = ({ seismicEvents }) => {
   const onGraphPointClick = (clickedPoint) => {
-    let x_middle = x_points[Math.floor(x_points.length / 2)];
-    if (clickedPoint.x < x_middle) {
-      setSelectedLeftPoint(clickedPoint);
+    let yMean = getYMeanValue(y_points);
+
+    if (clickedPoint.y > yMean) {
+      setSelectedUpperPoint(clickedPoint);
     } else {
-      setSelectedRightPoint(clickedPoint);
+      setSelectedLowerPoint(clickedPoint);
     }
   };
 
   const [step, setStep] = useState(0.05);
-  const [selectedRightPoint, setSelectedRightPoint] = useState({
+
+  const [selectedLowerPoint, setSelectedLowerPoint] = useState({
     x: 100,
     y: 100000,
   });
-  const [selectedLeftPoint, setSelectedLeftPoint] = useState({
+  const [selectedUpperPoint, setSelectedUpperPoint] = useState({
     x: -1,
     y: -1,
   });
@@ -115,8 +120,8 @@ export const BValuePlot = ({ seismicEvents }) => {
   let filteredPoints = filterPoints(
     x_points,
     y_points,
-    selectedRightPoint,
-    selectedLeftPoint
+    selectedLowerPoint,
+    selectedUpperPoint
   );
 
   const handleWorkerMessage = (event) => {
@@ -132,6 +137,8 @@ export const BValuePlot = ({ seismicEvents }) => {
     worker.postMessage({
       x_points: filteredPoints.included.x,
       y_points: filteredPoints.included.y,
+      MAGNITUDE_MAX: MAGNITUDE_MAX,
+      MAGNITUDE_MIN: MAGNITUDE_MIN,
     });
     return () => {
       worker.removeEventListener("message", handleWorkerMessage);
@@ -142,8 +149,10 @@ export const BValuePlot = ({ seismicEvents }) => {
     worker.postMessage({
       x_points: filteredPoints.included.x,
       y_points: filteredPoints.included.y,
+      MAGNITUDE_MAX: MAGNITUDE_MAX,
+      MAGNITUDE_MIN: MAGNITUDE_MIN,
     });
-  }, [selectedLeftPoint, selectedRightPoint]);
+  }, [selectedUpperPoint, selectedLowerPoint]);
 
   const approximatedFunctionTrace = {
     x: predictedPlotData.x_predicted_plot,
@@ -175,15 +184,11 @@ export const BValuePlot = ({ seismicEvents }) => {
     },
   };
 
-  const validatedSet = (v) => {
-    const numberV = Number(v);
-    if (isNaN(numberV)) {
-      return;
-    }
-    setStep(numberV);
-  };
-
-  // todo validate set better
+  let x_range_left = MAGNITUDE_MIN;
+  let x_range_right = MAGNITUDE_MAX + 0.3;
+  let y_range_bot = -0.3;
+  let y_range_top =
+    1.5 * Number(Math.log10(seismicEvents.length).toFixed(1)) + 0.3;
 
   return (
     <div className="b_value_graph_wrapper">
@@ -209,7 +214,7 @@ export const BValuePlot = ({ seismicEvents }) => {
 
           xaxis: {
             title: "Magnitude",
-            range: [MAGNITUDE_MIN, MAGNITUDE_MAX],
+            range: [x_range_left, x_range_right],
             gridcolor: "gray",
             zerolinecolor: "green",
             tickmode: "linear",
@@ -220,7 +225,7 @@ export const BValuePlot = ({ seismicEvents }) => {
 
           yaxis: {
             title: "Lg N",
-            range: [-0.3, 3.3],
+            range: [y_range_bot, y_range_top],
             gridcolor: "gray",
             zerolinecolor: "green",
             tickcolor: "transparent",
@@ -253,19 +258,12 @@ export const BValuePlot = ({ seismicEvents }) => {
         <div className="content_card_dark b_value_info">
           <p>b-value: {-beta2?.toFixed(3)}</p>
           <p>a-value: {beta1?.toFixed(3)}</p>
-          <p>approximation error: TBA</p>
         </div>
         <div className="content_card_dark b_value_options">
-          <TextFieldLeftCaption
-            value={step}
-            onChange={(e) =>
-              isPositiveNumber(e.target.value)
-                ? validatedSet(e.target.value)
-                : null
-            }
-            type="number"
-            caption="Step to place points"
-          />
+          <div className="b_value_options_step">
+            <p>Step to place points</p>
+            <PositiveNumberInput initialValue={step} setValue={setStep} />
+          </div>
         </div>
       </div>
     </div>

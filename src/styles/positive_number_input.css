@@ -1,0 +1,41 @@
+.positive_number_input {
+    max-width: 100px;
+
+    height: 40px;
+    padding-left: 10px;
+
+    background-color: #22272b;
+    border-radius: 5px;
+    outline:none;
+    border: solid 1px #5d6265;
+
+    font-size: 16px;
+    color: #d3d4d0;
+    line-height: 26px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}
+
+.positive_number_input input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.positive_number_input:focus {
+    outline: none;
+    border: 1px solid #0593ff;
+}
+
+/* disable arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

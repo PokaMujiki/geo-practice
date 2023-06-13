@@ -39,6 +39,19 @@
     padding: 20px 0;
 }
 
+.b_value_options_step {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.b_value_options_step p {
+    margin: 0;
+    align-self: center;
+}
+
 .b_value_graph {
     flex-basis: 80%;
     overflow: hidden;
