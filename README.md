@@ -1,3 +1,5 @@
+# About
+Web application for seismicity analysis with functions for calculating b-value and viewing the distribution of hypocenters along linear profiles. Start this application and visit `/About` page for more info!
 # Requirements
 ## Development server
 node version >= v18.13.0
