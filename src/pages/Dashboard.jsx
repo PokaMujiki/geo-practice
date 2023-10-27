@@ -35,7 +35,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const setInitialStations = async () => {
-      const response = await fetch(BASENAME_API + "station/1/stations.xml");
+      const response = await fetch(BASENAME_API + "station/1/query");
       const data = await response.text();
       setStations(parseStations(data));
     };
