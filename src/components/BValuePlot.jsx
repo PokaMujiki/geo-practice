@@ -38,7 +38,9 @@ const calculatePoints = (geoEvents, step) => {
     y_points[i] = Math.log10(
       geoEvents.filter((item) => Number(item.magnitude) >= x_points[i]).length
     );
-    if (isNaN(y_points[i])) {
+
+    if (isNaN(y_points[i]) || !isFinite(y_points[i])) {
+      y_points[i] = 0;
       break;
     }
   }
