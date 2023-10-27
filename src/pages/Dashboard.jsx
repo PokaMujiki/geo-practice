@@ -53,6 +53,7 @@ export const Dashboard = () => {
         starttime: formattedStartTime,
         endtime: formattedEndTime,
         limit: eventsLimit,
+        includeallmagnitudes: true,
       });
 
       const response = await fetch(query + params.toString());
