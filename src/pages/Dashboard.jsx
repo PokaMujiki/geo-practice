@@ -24,7 +24,7 @@ export const Dashboard = () => {
     zoom: 12,
   };
 
-  const [startTime, setStartTime] = useState(new Date("2021-10-01T00:00:00"));
+  const [startTime, setStartTime] = useState(new Date("2020-10-01T00:00:00"));
   const [endTime, setEndTime] = useState(new Date("2021-10-31T23:59:59"));
   const [eventsLimit, setEventsLimit] = useState(100);
   const [geoEvents, setGeoEvents] = useState([]);
@@ -35,7 +35,12 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const setInitialStations = async () => {
-      const response = await fetch(BASENAME_API + "station/1/query");
+      const params = new URLSearchParams({
+        limit: 100,
+      });
+      const query = BASENAME_API + "station/1/query?";
+
+      const response = await fetch(query + params.toString());
       const data = await response.text();
       setStations(parseStations(data));
     };
